@@ -1,44 +1,76 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+// Libraries
+import React, { useState } from 'react';
+import styled from 'styled-components';
+
+// Assets
+import logoDenma from 'static/images/logo/logo_denma_horizontal_no_motto.png';
+
+// JSX
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import LazyImage from 'components/UI/LazyImage';
 
-const styles = {
-  grow: {
-    flexGrow: 1,
-  },
-  menuButton: {
-    marginLeft: -12,
-    marginRight: 20,
-  },
-};
+// Components
+import Drawer from 'layout/UI/Drawer';
 
-function ButtonAppBar(props) {
-  const { classes } = props;
+const StyledAppBar = styled(AppBar)`
+  && {
+    color: ${props => props.theme.darkColor};
+    background-color: ${props => props.theme.whiteColor};
+    box-shadow: none;
+
+    .spacing {
+      flex-grow: 1;
+    }
+
+    button:first-of-type {
+      margin-left: -12px;
+      margin-right: 20px;
+    }
+
+    button:last-of-type {
+      float: right;
+    }
+  }
+`;
+
+const StyledLogo = styled(LazyImage)`
+  max-width: 200px;
+  height: auto;
+`;
+
+const Navbar = () => {
+  const [isDrawerOpen, setDrawerOpen] = useState(false);
+
   return (
-    <div className={classes.root}>
-      <AppBar position="static">
+    <React.Fragment>
+      <StyledAppBar position="static">
         <Toolbar>
-          <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
+          <StyledLogo
+            src={logoDenma}
+            alt=""
+          />
+          <div className="spacing" />
+          <Button color="inherit">Contact us</Button>
+          <IconButton
+            color="inherit"
+            aria-label="Menu"
+            onClick={() => setDrawerOpen(!isDrawerOpen)}
+          >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" color="inherit" className={classes.grow}>
-            Denma
-          </Typography>
-          <Button color="inherit">Contact us</Button>
         </Toolbar>
-      </AppBar>
-    </div>
+      </StyledAppBar>
+      <Drawer
+        anchor="right"
+        open={isDrawerOpen}
+        closeDrawer={() => setDrawerOpen(false)}
+      />
+    </React.Fragment>
   );
-}
-
-ButtonAppBar.propTypes = {
-  classes: PropTypes.instanceOf(Object).isRequired
 };
 
-export default withStyles(styles)(ButtonAppBar);
+export default Navbar;
