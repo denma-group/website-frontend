@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 // Assets
-import logoDenma from 'static/images/logo/logo_denma_horizontal_no_motto.png';
+import logoDenma from 'static/svg/logo/logo_denma_horizontal_no_motto.svg';
 
 // JSX
 import AppBar from '@material-ui/core/AppBar';
@@ -20,7 +20,6 @@ const StyledAppBar = styled(AppBar)`
   && {
     color: ${props => props.theme.darkColor};
     background-color: ${props => props.theme.whiteColor};
-    box-shadow: none;
 
     .spacing {
       flex-grow: 1;
@@ -38,7 +37,7 @@ const StyledAppBar = styled(AppBar)`
 `;
 
 const StyledLogo = styled(LazyImage)`
-  max-width: 200px;
+  max-width: 224px;
   height: auto;
 `;
 

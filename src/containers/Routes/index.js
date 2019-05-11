@@ -4,9 +4,7 @@ import PropTypes from 'prop-types';
 import { Switch, Route, withRouter } from 'react-router-dom';
 
 // Components
-import LazyImport from 'components/UI/LazyImport';
-import Loader from 'components/UI/Loader';
-import SuspendedRoute from 'components/UI/SuspendedRoute';
+import Homepage from 'containers/Homepage';
 
 const Routes = props => {
   const { location } = props;
@@ -20,7 +18,7 @@ const Routes = props => {
 
   return (
     <Switch>
-      <SuspendedRoute exact path="/" fallback={<Loader />}><LazyImport importedComponent={import('containers/Homepage')} /></SuspendedRoute>
+      <Route exact path="/" component={Homepage} />
       <Route path="/hello-world" render={() => <div>Hello world!</div>} />
     </Switch>
   );
