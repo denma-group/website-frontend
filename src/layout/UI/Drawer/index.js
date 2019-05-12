@@ -12,8 +12,8 @@ import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/InfoOutlined';
-import MailIcon from '@material-ui/icons/Mail';
+import InfoIcon from '@material-ui/icons/Info';
+import WorkIcon from '@material-ui/icons/Work';
 import Typography from '@material-ui/core/Typography';
 import Logo from 'components/SVG/Logos/DenmaHorizontal_NM';
 
@@ -38,36 +38,95 @@ const NavbarDrawer = props => {
       <StyledDivider />
       <List>
         {[
-          ['Inbox', 'The inbox.'], 
-          ['Starred', 'Starred messages!'], 
-          ['Send email', 'Send email!'], 
-          ['Drafts', 'The drafts.']
+          ['About us', 'Meaning of DENMA, and our values'], 
+          ['About our work', 'An overview of how we work alongside our clients'], 
+          ['Contact', 'How to get in touch']
         ].map((text, index) => (
           <StyledListItem button key={text[0]}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+            <ListItemIcon>{index % 2 === 0 ? <InfoIcon /> : <WorkIcon />}</ListItemIcon>
             <ListItemText
-              primary={text[0]}
+              primary={(
+                <StyledListTitle
+                  variant="subheading"
+                >
+                  {text[0]}
+                </StyledListTitle>
+              )}
               secondary={(
-                <Typography
+                <StyledListCaption
                   variant="caption"
                   gutterBottom
-                  style={{
-                    fontWeight: 'normal'
-                  }}
                 >
                   {text[1]}
-                </Typography>
+                </StyledListCaption>
               )}
             />
           </StyledListItem>
         ))}
       </List>
       <StyledDivider />
+      <StyledListHeader variant="title">
+        How we work
+      </StyledListHeader>
       <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
+        {[
+          'Design',
+          'Develop',
+          'Deliver',
+          'Maintain'
+        ].map((text, index) => (
           <StyledListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
+            <ListItemIcon>{index % 2 === 0 ? <InfoIcon /> : <WorkIcon />}</ListItemIcon>
+            <ListItemText
+              primary={(
+                <StyledListTitle
+                  variant="subheading"
+                >
+                  {text}
+                </StyledListTitle>
+              )}
+              secondary={(
+                <StyledListCaption
+                  variant="caption"
+                  gutterBottom
+                >
+                  {text}
+                </StyledListCaption>
+              )}
+            />
+          </StyledListItem>
+        ))}
+      </List>
+      <StyledDivider />
+      <StyledListHeader variant="title">
+        How we help
+      </StyledListHeader>
+      <List>
+        {[
+          'New Enterprises',
+          'Existing Applications',
+          'Marketing Strategies and Analytics',
+          'Tech Consulting'
+        ].map((text, index) => (
+          <StyledListItem button key={text}>
+            <ListItemIcon>{index % 2 === 0 ? <InfoIcon /> : <WorkIcon />}</ListItemIcon>
+            <ListItemText
+              primary={(
+                <StyledListTitle
+                  variant="subheading"
+                >
+                  {text}
+                </StyledListTitle>
+              )}
+              secondary={(
+                <StyledListCaption
+                  variant="caption"
+                  gutterBottom
+                >
+                  {text}
+                </StyledListCaption>
+              )}
+            />
           </StyledListItem>
         ))}
       </List>
@@ -106,40 +165,6 @@ const StyledDrawer = styled(Drawer)`
     .MuiDrawer-paperAnchorRight-89 {
       background-color: ${props => props.theme.navbarBackground};
     }
-    .MuiListItem-button-121:hover {
-      text-decoration: none;
-      background-color: rgba(255, 255, 255, 0.08);
-    }
-  }
-`;
-
-const StyledListItem = styled(ListItem)`
-  &&& {
-    transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-    .MuiListItemText-root-130 span {
-      font-weight: 600;
-    }
-    :hover {
-      text-decoration: none;
-      background-color: rgba(255, 255, 255, 0.08);
-      color: ${props => props.theme.secondary}
-    }
-    :hover * {
-      color: ${props => props.theme.primary}
-    }
-  }
-`;
-
-const StyledLogo = styled(Logo)`
-  width: 100%;
-  height: auto;
-  max-width: 225px;
-`;
-
-const StyledDivider = styled(Divider)`
-  &&& {
-    background-color: ${props => props.theme.whiteColor};
-    opacity: 0.12;
   }
 `;
 
@@ -167,6 +192,19 @@ const LogoWrapper = styled.div`
   }
 `;
 
+const StyledLogo = styled(Logo)`
+  width: 100%;
+  height: auto;
+  max-width: 225px;
+`;
+
+const StyledDivider = styled(Divider)`
+  &&& {
+    background-color: ${props => props.theme.whiteColor};
+    opacity: 0.12;
+  }
+`;
+
 const StyledList = styled.div`
   width: 40vw;
   max-width: 480px;
@@ -174,6 +212,50 @@ const StyledList = styled.div`
   @media (max-width: 720px) {
     width: 100vw;
     max-width: none;
+  }
+`;
+
+const StyledListHeader = styled(Typography)`
+  &&& {
+    display: flex;
+    width: 100%;
+    position: relative;
+    box-sizing: border-box;
+    text-align: left;
+    align-items: center;
+    margin: 0;
+    padding: 19px 11px 11px;
+    justify-content: flex-start;
+    text-decoration: none;
+    user-select: none;
+  }
+}`;
+
+const StyledListTitle = styled(Typography)`
+  &&& {
+    transition: color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    font-weight: 600;
+  }
+`;
+
+const StyledListCaption = styled(Typography)`
+  &&& {
+    opacity: 0.75;
+    font-weight: normal;
+  }
+`;
+
+const StyledListItem = styled(ListItem)`
+  &&& {
+    transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    :hover {
+      text-decoration: none;
+      background-color: rgba(255, 255, 255, 0.08);
+      color: ${props => props.theme.secondary}
+    }
+    :hover ${StyledListTitle} {
+      color: ${props => props.theme.primary}
+    }
   }
 `;
 
