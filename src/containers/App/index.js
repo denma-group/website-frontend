@@ -12,6 +12,29 @@ import LazyImport from 'components/UI/LazyImport';
 import Loader from 'components/UI/Loader';
 import LogoLoader from 'components/UI/LogoLoader';
 
+const App = () => (
+  <ThemeProvider theme={mainTheme}>
+    <Wrapper>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>
+          Denma | Software Development Company
+        </title>
+      </Helmet>
+        <Suspense 
+          fallback={(
+            <Loaders>
+              <StyledLoader size={256} />
+              <StyledLogoLoader />
+            </Loaders>
+          )}
+        >
+          <LazyImport importedComponent={import('containers/Routes')} />
+        </Suspense>
+    </Wrapper>
+  </ThemeProvider>
+);
+
 const Wrapper = styled.main`
   display: flex;
   flex-flow: column;
@@ -38,28 +61,5 @@ const StyledLoader = styled(Loader)`
 const StyledLogoLoader = styled(LogoLoader)`
   ${loaderCss};
 `;
-
-const App = () => (
-  <ThemeProvider theme={mainTheme}>
-    <Wrapper>
-      <Helmet>
-        <meta charSet="utf-8" />
-        <title>
-          Denma | Software Development Company
-        </title>
-      </Helmet>
-      <Suspense 
-        fallback={(
-          <Loaders>
-            <StyledLoader size={256} />
-            <StyledLogoLoader />
-          </Loaders>
-        )}
-      >
-        <LazyImport importedComponent={import('containers/Routes')} />
-      </Suspense>
-    </Wrapper>
-  </ThemeProvider>
-);
 
 export default App;
