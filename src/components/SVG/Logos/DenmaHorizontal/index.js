@@ -1,4 +1,6 @@
+// Libraries
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const LogoDenmaHorizontal = props => (
   <svg
@@ -22,7 +24,7 @@ const LogoDenmaHorizontal = props => (
         </linearGradient>
     </defs>
     <title>
-        logo_denma_svg3
+      {props.title}
     </title>
     <path fill="currentColor" d="M262.64,443.48V354.65h81.62v9.9H272.72v27.86h68.54v9.9H272.72v31.26h71.54v9.9Z" transform="translate(-94.75 -348.69)" />
     <path fill="currentColor" d="M378.32,443.48H368V354.65h16.2l74.93,78.69V354.65h10.24v88.83h-15l-76-79.88Z" transform="translate(-94.75 -348.69)" />
@@ -73,5 +75,13 @@ const LogoDenmaHorizontal = props => (
     <path d="M224.58,441.08a49.62,49.62,0,0,1-18.75,10.44,48.52,48.52,0,0,1-8.19,1.69l-.21,0a49.88,49.88,0,0,1-5.54.3H137.06v-32.4h0V348.69l-16.32,23.72-10.28,14.94v44.94l14.07-14V457.9h0l-.07,8.61h39.72L137.6,487.85h23.46a43.45,43.45,0,0,0,5.11-.3l.19,0a43.7,43.7,0,0,0,15.13-4.75h0a46.28,46.28,0,0,0,10.06-7.19h0l3.64-3.8,16.73-17.46,12.65-13.22h0Z" className="cls-1" transform="translate(-94.75 -348.69)" />
   </svg>
 );
+
+LogoDenmaHorizontal.propTypes = {
+  title: PropTypes.string
+};
+
+LogoDenmaHorizontal.defaultProps = {
+  title: ''
+};
 
 export default LogoDenmaHorizontal;

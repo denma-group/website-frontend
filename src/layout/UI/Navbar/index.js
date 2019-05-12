@@ -18,7 +18,13 @@ const Navbar = () => {
     <React.Fragment>
       <StyledAppBar position="static">
         <Toolbar>
-          <StyledLogo />
+          <a role="button">
+            <StyledLogo
+              alt="Denma Home"
+              title="Denma Home"
+              focusable="false"
+            />
+          </a>
           <div className="spacing" />
           <Button color="inherit">Contact us</Button>
           <IconButton
@@ -69,6 +75,7 @@ const StyledLogo = styled(Logo)`
   width: 100%;
   height: auto;
   max-width: 225px;
+  cursor: pointer;
 `;
 
 export default Navbar;
