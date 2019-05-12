@@ -16,9 +16,8 @@ RoutesWrapper.propTypes = {
   children: PropTypes.node.isRequired
 };
 
-const PageWrapper = styled.section`
-  width: 100%;
-  height: 100%;
+const PageWrapper = styled.main`
+  flex: 1;
 `;
 
 export default RoutesWrapper;
