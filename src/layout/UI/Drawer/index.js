@@ -3,19 +3,30 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+// Icons
+import InfoIcon from '@material-ui/icons/Info';
+import WorkIcon from '@material-ui/icons/GroupWork';
+import ContactIcon from '@material-ui/icons/Mail';
+
+import DesignIcon from '@material-ui/icons/DeveloperBoard';
+import DevelopIcon from '@material-ui/icons/DeveloperMode';
+import DeliverIcon from '@material-ui/icons/HowToReg';
+import MaintainIcon from '@material-ui/icons/Sync';
+
+import NewEnterprisesIcon from '@material-ui/icons/Business';
+import ExistingAppsIcons from '@material-ui/icons/Apps';
+import MarketingIcon from '@material-ui/icons/DataUsage';
+import TechConsultingIcon from '@material-ui/icons/PhoneIphone';
+
 // Components
 import Drawer from '@material-ui/core/Drawer';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/InfoOutlined';
-import MailIcon from '@material-ui/icons/Mail';
 import Typography from '@material-ui/core/Typography';
 import Logo from 'components/SVG/Logos/DenmaHorizontal_NM';
+import ListItem from './ListItem';
 
 const NavbarDrawer = props => {
   const {
@@ -27,10 +38,17 @@ const NavbarDrawer = props => {
   const fullList = (
     <StyledList>
       <LogoWrapper>
-        <StyledLogo />
+        <a role="button">
+          <StyledLogo
+            alt="Denma Home"
+            title="Denma Home"
+            focusable="false"
+          />
+        </a>
         <IconButton
           color="inherit"
           aria-label="Menu"
+          onClick={closeDrawer}
         >
           <MenuIcon />
         </IconButton>
@@ -38,37 +56,51 @@ const NavbarDrawer = props => {
       <StyledDivider />
       <List>
         {[
-          ['Inbox', 'The inbox.'], 
-          ['Starred', 'Starred messages!'], 
-          ['Send email', 'Send email!'], 
-          ['Drafts', 'The drafts.']
-        ].map((text, index) => (
-          <StyledListItem button key={text[0]}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText
-              primary={text[0]}
-              secondary={(
-                <Typography
-                  variant="caption"
-                  gutterBottom
-                  style={{
-                    fontWeight: 'normal'
-                  }}
-                >
-                  {text[1]}
-                </Typography>
-              )}
-            />
-          </StyledListItem>
+          { icon: <InfoIcon />, title: 'About us', caption: 'Meaning of DENMA, and our values' }, 
+          { icon: <WorkIcon />, title: 'About our work', caption: 'An overview of how we work alongside our clients' }, 
+          { icon: <ContactIcon />, title: 'Contact', caption: 'How to get in touch' }, 
+        ].map(item => (
+          <ListItem
+            key={item.title}
+            onClick={closeDrawer}
+            {...item}
+          />
         ))}
       </List>
       <StyledDivider />
+      <StyledListHeader variant="title">
+        How we work
+      </StyledListHeader>
       <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <StyledListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
-          </StyledListItem>
+        {[
+          { icon: <DesignIcon />, title: 'Design', caption: 'Design caption' }, 
+          { icon: <DevelopIcon />, title: 'Develop', caption: 'Develop caption' }, 
+          { icon: <DeliverIcon />, title: 'Deliver', caption: 'Deliver caption' }, 
+          { icon: <MaintainIcon />, title: 'Maintain', caption: 'Maintain caption' }, 
+        ].map(item => (
+          <ListItem
+            key={item.title}
+            onClick={closeDrawer}
+            {...item}
+          />
+        ))}
+      </List>
+      <StyledDivider />
+      <StyledListHeader variant="title">
+        How we help
+      </StyledListHeader>
+      <List>
+        {[
+          { icon: <NewEnterprisesIcon />, title: 'New Enterprises', caption: 'New Enterprises caption' }, 
+          { icon: <ExistingAppsIcons />, title: 'Existing Applications', caption: 'Existing Applications caption' }, 
+          { icon: <MarketingIcon />, title: 'Marketing Strategies and Analytics', caption: 'Marketing Strategies and Analytics caption' }, 
+          { icon: <TechConsultingIcon />, title: 'Tech Consulting', caption: 'Tech Consulting caption' }, 
+        ].map(item => (
+          <ListItem
+            key={item.title}
+            onClick={closeDrawer}
+            {...item}
+          />
         ))}
       </List>
     </StyledList>
@@ -84,7 +116,6 @@ const NavbarDrawer = props => {
       <div
         tabIndex={0}
         role="button"
-        onClick={closeDrawer}
         onKeyDown={closeDrawer}
       >
         {fullList}
@@ -106,40 +137,6 @@ const StyledDrawer = styled(Drawer)`
     .MuiDrawer-paperAnchorRight-89 {
       background-color: ${props => props.theme.navbarBackground};
     }
-    .MuiListItem-button-121:hover {
-      text-decoration: none;
-      background-color: rgba(255, 255, 255, 0.08);
-    }
-  }
-`;
-
-const StyledListItem = styled(ListItem)`
-  &&& {
-    transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-    .MuiListItemText-root-130 span {
-      font-weight: 600;
-    }
-    :hover {
-      text-decoration: none;
-      background-color: rgba(255, 255, 255, 0.08);
-      color: ${props => props.theme.secondary}
-    }
-    :hover * {
-      color: ${props => props.theme.primary}
-    }
-  }
-`;
-
-const StyledLogo = styled(Logo)`
-  width: 100%;
-  height: auto;
-  max-width: 225px;
-`;
-
-const StyledDivider = styled(Divider)`
-  &&& {
-    background-color: ${props => props.theme.whiteColor};
-    opacity: 0.12;
   }
 `;
 
@@ -167,6 +164,20 @@ const LogoWrapper = styled.div`
   }
 `;
 
+const StyledLogo = styled(Logo)`
+  width: 100%;
+  height: auto;
+  max-width: 225px;
+  cursor: pointer;
+`;
+
+const StyledDivider = styled(Divider)`
+  &&& {
+    background-color: ${props => props.theme.whiteColor};
+    opacity: 0.12;
+  }
+`;
+
 const StyledList = styled.div`
   width: 40vw;
   max-width: 480px;
@@ -176,5 +187,21 @@ const StyledList = styled.div`
     max-width: none;
   }
 `;
+
+const StyledListHeader = styled(Typography)`
+  &&& {
+    display: flex;
+    width: 100%;
+    position: relative;
+    box-sizing: border-box;
+    text-align: left;
+    align-items: center;
+    margin: 0;
+    padding: 19px 22px 11px;
+    justify-content: flex-start;
+    text-decoration: none;
+    user-select: none;
+  }
+}`;
 
 export default NavbarDrawer;
