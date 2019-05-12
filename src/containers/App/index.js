@@ -32,11 +32,11 @@ const Loaders = styled.div`
 `;
 
 const StyledLoader = styled(Loader)`
-  ${loaderCss}
+  ${loaderCss};
 `;
 
 const StyledLogoLoader = styled(LogoLoader)`
-  ${loaderCss}
+  ${loaderCss};
 `;
 
 const App = () => (

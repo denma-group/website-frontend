@@ -22,7 +22,7 @@ const InfinityLoader = props => (
       calcMode="linear"
       values="0 50 51;360 50 51"
       keyTimes="0;1"
-      dur="1s"
+      dur="1.5s"
       begin="0s"
       repeatCount="indefinite"
     />
