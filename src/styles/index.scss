@@ -1,0 +1,26 @@
+@import "variables";
+@import "typography";
+
+html,
+body,
+ul,
+ol {
+  margin:  0;
+  padding: 0;
+}
+
+html,
+body,
+#root {
+  color: $base-font-color;
+  background-color: $brand-white;
+  height: 100%;
+  width: 100%;
+}
+
+body *:not(svg) {
+  font: 100% $base-font-family;
+  font-size: $base-font-size;
+  font-weight: $font-normal;
+  line-height: $base-line-height;
+}
