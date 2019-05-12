@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Switch, Route, withRouter } from 'react-router-dom';
 
 // Components
+import RoutesWrapper from 'layout/UI/RoutesWrapper';
 import Homepage from 'containers/Homepage';
 
 const Routes = props => {
@@ -17,10 +18,12 @@ const Routes = props => {
   }, [location]);
 
   return (
-    <Switch>
-      <Route exact path="/" component={Homepage} />
-      <Route path="/hello-world" render={() => <div>Hello world!</div>} />
-    </Switch>
+    <RoutesWrapper>
+      <Switch>
+        <Route exact path="/" component={Homepage} />
+        <Route path="/hello-world" render={() => <div>Hello world!</div>} />
+      </Switch>
+    </RoutesWrapper>
   );
 };
 

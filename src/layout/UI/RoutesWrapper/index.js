@@ -1,24 +1,23 @@
 // Libraries
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+
+// Components
+import Navbar from 'layout/UI/Navbar';
 
 const RoutesWrapper = props => {
-  const { children, ...rest } = props;
+  const { children } = props;
+
   return (
-    <PageWrapper {...rest}>
+    <React.Fragment>
+      <Navbar />
       {children}
-    </PageWrapper>
+    </React.Fragment>
   );
 };
 
 RoutesWrapper.propTypes = {
   children: PropTypes.node.isRequired
 };
-
-const PageWrapper = styled.section`
-  width: 100%;
-  height: 100%;
-`;
 
 export default RoutesWrapper;
