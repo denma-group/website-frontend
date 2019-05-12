@@ -135,7 +135,7 @@ const StyledDrawer = styled(Drawer)`
       color: ${props => props.theme.whiteColor};
     }
     .MuiDrawer-paperAnchorRight-89 {
-      background-color: ${props => props.theme.navbarBackground};
+      background-color: ${props => props.theme.lightDarkColor};
     }
   }
 `;
