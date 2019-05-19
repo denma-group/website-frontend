@@ -16,10 +16,10 @@ const Homepage = props => {
   const backgroundColor = useOnScrollBgColor(
     [
       [totalScreenHeight * 0, theme.lightDarkColor],
-      [totalScreenHeight * 0.25, theme.brandDarkRed],
-      [totalScreenHeight * 0.5, theme.brandRed],
-      [totalScreenHeight * 0.75, theme.brandOrange],
-      [totalScreenHeight * 1, theme.brandWhite],
+      [totalScreenHeight * 0.5, theme.brandDarkRed],
+      [totalScreenHeight * 0.75, theme.brandRed],
+      [totalScreenHeight * 1.25, theme.brandOrange],
+      [totalScreenHeight * 1.5, theme.brandWhite],
     ]
   );
 
@@ -45,7 +45,7 @@ Homepage.propTypes = {
 
 const StyledPageWrapper = styled(PageWrapper)`
   color: ${props => props.theme.whiteColor};
-  background-color: ${props => props.backgroundColor || props.theme.lightDarkColor};
+  background-color: ${props => props.backgroundColor};
   transition: all ease 200ms;
 `;
 
