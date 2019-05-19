@@ -6,6 +6,7 @@ export const mixColors = ([colorOne, colorTwo], mixRatio = [0.5, 0.5, 0.5]) => {
   const mixedColorsRgbArray = [undefined, undefined, undefined];
   // Mixing colors, by RBG properties & respective ratios:
   for (let i = 0; i < 3; i += 1) {
+    // Interpolating each color, to reach the desired color based on the mix ratio.
     mixedColorsRgbArray[i] = linearInterpolation(
       [0, Number(colorOneRgbArray[i])],
       [1, Number(colorTwoRgbArray[i])],
@@ -17,7 +18,7 @@ export const mixColors = ([colorOne, colorTwo], mixRatio = [0.5, 0.5, 0.5]) => {
 
 const rgbStringToArray = string => String(string).replace('rgb(', '').replace(')', '').split(',');
 
-const arrayToRgbString = ([A, B, C]) => `rgb(${A}, ${B}, ${C})`;
+const arrayToRgbString = ([A, B, C]) => `rgb(${Number(A).toFixed(0)}, ${Number(B).toFixed(0)}, ${Number(C).toFixed(0)})`;
 
 /**
  * Linear interpolation function, returns the desired value.

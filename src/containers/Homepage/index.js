@@ -1,5 +1,5 @@
 // Libraries
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { withTheme } from 'styled-components';
 
@@ -12,13 +12,16 @@ import Logo from 'components/SVG/Logos/DenmaHorizontal';
 
 const Homepage = props => {
   const { theme } = props;
-  const [backgroundColor, setBackgroundColor] = useState(theme.lightDarkColor);
-  useOnScrollBgColor(
-    [theme.lightDarkColor, theme.brandRed],    
-    setBackgroundColor
+  const totalScreenHeight = window.innerHeight;
+  const backgroundColor = useOnScrollBgColor(
+    [
+      [totalScreenHeight * 0, theme.lightDarkColor],
+      [totalScreenHeight * 0.25, theme.brandDarkRed],
+      [totalScreenHeight * 0.5, theme.brandRed],
+      [totalScreenHeight * 0.75, theme.brandOrange],
+      [totalScreenHeight * 1, theme.brandWhite],
+    ]
   );
-
-  console.log('backgroundColor', backgroundColor);
 
   return (
     <StyledPageWrapper
@@ -27,7 +30,11 @@ const Homepage = props => {
       <HeroWrapper>
         <StyledLogo />
       </HeroWrapper>
-      <div style={{ minHeight: '100vh' }} />
+      <div style={{ minHeight: '300vh' }}>
+        <div style={{ minHeight: '100vh' }} />
+        <div style={{ minHeight: '100vh' }} />
+        <div style={{ minHeight: '100vh' }} />
+      </div>
     </StyledPageWrapper>
   );
 };
