@@ -48,7 +48,7 @@ const Navbar = () => {
 const StyledAppBar = styled(AppBar)`
   && {
     color: ${props => props.theme.whiteColor};
-    background-color: ${props => props.theme.navbarBackground};
+    background-color: ${props => props.theme.lightDarkColor};
     box-shadow: none;
 
     .spacing {
