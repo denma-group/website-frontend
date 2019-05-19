@@ -11,6 +11,7 @@ const Homepage = () => (
     <HeroWrapper>
       <StyledLogo />
     </HeroWrapper>
+    <div style={{ minHeight: '100vh' }} />
   </StyledPageWrapper>
 );
 
