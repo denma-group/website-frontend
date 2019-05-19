@@ -15,7 +15,9 @@ import { mixColors } from 'utils/mixColors';
  *  callback: (backgroundColor: string, bracketsTuple: [[number, string], [number, string]]) => void,
  *  scrollHeight: number,
  *  throttleLimit: number,
- *  shouldSort: boolean
+ *  shouldSort: boolean,
+ *  setColorOnMount: boolean,
+ *  mixRatioChannels: [boolean, boolean, boolean]
  * }} settings Settings, each argument will:
  * - `callback`: Callback which sends the current background color, and the bracket, if any, as arguments.
  * - `scrollHeight`: Total scroll height, defaults to the entire body's height.
@@ -24,6 +26,8 @@ import { mixColors } from 'utils/mixColors';
  * from lower to higher. It defaults to false to save performance.
  * - `setColorOnMount`: Boolean that will run an initial setup during mount to change the background.
  * Defaults to `true`.
+ * - `mixRatioChannels`: Supports mixing by specific RBG channels (e.g. only red, or only green and blue).
+ * Defaults to mixing all channels.
  */
 
 export const useOnScrollBgColor = (
@@ -33,7 +37,8 @@ export const useOnScrollBgColor = (
     scrollHeight = document.body.clientHeight,
     throttleLimit = 100,
     shouldSort = false,
-    setColorOnMount = true
+    setColorOnMount = true,
+    mixRatioChannels = [true, true, true]
   } = {}
   ) => {
   const [backgroundColor, setBackgroundColor] = useState(undefined);
@@ -74,9 +79,7 @@ export const useOnScrollBgColor = (
         const mixRatio = ((currentScrollHeight - colorOneTuple[0]) / (colorTwoTuple[0] - colorOneTuple[0])) || 0;
         const mixedColor = mixColors(
           [colorOneTuple[1], colorTwoTuple[1]],
-          // Mix ratio is capped at 1, it's redundant
-          // since it should never happen, but just in case.
-          mixRatio > 1 ? 1 : mixRatio
+          mixRatioNumberToTriple(mixRatio, mixRatioChannels)
         );
         setBackgroundColor(mixedColor);
         /**
@@ -92,13 +95,12 @@ export const useOnScrollBgColor = (
       const mixRatio = currentScrollHeight / scrollHeight;
       const mixedColor = mixColors(
         [colorOne, colorTwo],
-        // Capped at 1 for whenever `currentScrollHeight` is higher than `scrollHeight`
-        mixRatio > 1 ? 1 : mixRatio
+        mixRatioNumberToTriple(mixRatio, mixRatioChannels)
       );
       setBackgroundColor(mixedColor);
       if (callback) callback(mixedColor);
     }
-  }, [backgroundColor, callback, colors, scrollHeight, shouldSort]);
+  }, [backgroundColor, callback, colors, scrollHeight, shouldSort, mixRatioChannels]);
 
   const [setupOnMount, setSetupOnMount] = useState(setColorOnMount);
 
@@ -117,4 +119,22 @@ export const useOnScrollBgColor = (
   return backgroundColor;
 };
 
-// TODO: mixRatio should support mixing by specific RBG channels (e.g. only red, or only green and blue)
+/**
+ * `mixRatioNumberToTriple` worker function to support mixing by
+ * specific RBG channels (e.g. only red, or only green and blue).
+ */
+const mixRatioNumberToTriple = (mixRatio, mixRatioChannels) => {
+  /**
+   * Capped at 1 for whenever `currentScrollHeight` is higher than `scrollHeight`.
+   * Mix ratio is capped at 1 i more ofthen than not, redundant, if using height
+   * breakpoints, ince it should never happen, but just in case.
+   */
+  const ratio = mixRatio > 1 ? 1 : mixRatio;
+  return (
+    [
+      mixRatioChannels[0] ? ratio : 0,
+      mixRatioChannels[1] ? ratio : 0,
+      mixRatioChannels[2] ? ratio : 0
+    ]
+  );
+};
