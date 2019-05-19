@@ -30,12 +30,11 @@ const linearInterpolation = (
   [firstValueB, secondValueB], // Second set of known values.
   [firstDesiredValue, secondDesiredValue = undefined] // Set of desired values, at least one has to be known.
 ) => {
-  if (firstDesiredValue) {
-    return (((secondValueB - secondValueA) / (firstValueB - firstValueA)) * (firstDesiredValue - firstValueA) + secondValueA) || 0;
+  if (firstDesiredValue !== undefined || firstDesiredValue !== null) {
+    return (((secondValueB - secondValueA) / (firstValueB - firstValueA)) * (firstDesiredValue - firstValueA) + secondValueA);
   }
-  return (((secondDesiredValue - secondValueA) / (secondValueB - secondValueA)) * (firstValueB - firstValueA) + firstValueA) || 0;
+  return (((secondDesiredValue - secondValueA) / (secondValueB - secondValueA)) * (firstValueB - firstValueA) + firstValueA);
 };
-
 
 /**
  * INTERPOLATION EXAMPLE:
