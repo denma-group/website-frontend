@@ -1,22 +1,52 @@
 // Libraries
 import React from 'react';
-import styled from 'styled-components';
+import PropTypes from 'prop-types';
+import styled, { withTheme } from 'styled-components';
+
+// Dependencies
+import { useOnScrollBgColor } from 'utils/hooks/useOnScrollBgColor';
 
 // Components
 import PageWrapper from 'layout/UI/PageWrapper';
 import Logo from 'components/SVG/Logos/DenmaHorizontal';
 
-const Homepage = () => (
-  <StyledPageWrapper>
-    <HeroWrapper>
-      <StyledLogo />
-    </HeroWrapper>
-  </StyledPageWrapper>
-);
+const Homepage = props => {
+  const { theme } = props;
+  const totalScreenHeight = window.innerHeight;
+  const backgroundColor = useOnScrollBgColor(
+    [
+      [totalScreenHeight * 0, theme.lightDarkColor],
+      [totalScreenHeight * 0.25, theme.brandDarkRed],
+      [totalScreenHeight * 0.5, theme.brandRed],
+      [totalScreenHeight * 0.75, theme.brandOrange],
+      [totalScreenHeight * 1, theme.brandWhite],
+    ]
+  );
+
+  return (
+    <StyledPageWrapper
+      backgroundColor={backgroundColor}
+    >
+      <HeroWrapper>
+        <StyledLogo />
+      </HeroWrapper>
+      <div style={{ minHeight: '300vh' }}>
+        <div style={{ minHeight: '100vh' }} />
+        <div style={{ minHeight: '100vh' }} />
+        <div style={{ minHeight: '100vh' }} />
+      </div>
+    </StyledPageWrapper>
+  );
+};
+
+Homepage.propTypes = {
+  theme: PropTypes.instanceOf(Object).isRequired
+};
 
 const StyledPageWrapper = styled(PageWrapper)`
   color: ${props => props.theme.whiteColor};
-  background-color: ${props => props.theme.lightDarkColor}
+  background-color: ${props => props.backgroundColor || props.theme.lightDarkColor};
+  transition: all ease 200ms;
 `;
 
 const HeroWrapper = styled.div`
@@ -27,11 +57,10 @@ const HeroWrapper = styled.div`
   justify-content: center;
 `;
 
-
 const StyledLogo = styled(Logo)`
   margin: 0 auto;
   width: 70%;
   height: 100%;
 `;
 
-export default Homepage;
+export default withTheme(Homepage);
