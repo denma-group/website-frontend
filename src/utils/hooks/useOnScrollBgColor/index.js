@@ -26,8 +26,8 @@ import { mixColors } from 'utils/mixColors';
  * from lower to higher. It defaults to false to save performance.
  * - `setColorOnMount`: Boolean that will run an initial setup during mount to change the background.
  * Defaults to `true`.
- * - `mixRatioChannels`: Supports mixing by specific RBG channels (e.g. only red, or only green and blue).
- * Defaults to mixing all channels.
+ * - `mixRatioChannels`: A 3-Tuple or triple boolean. Supports mixing by specific RBG channels
+ * (e.g. only red, or only green and blue). Defaults to mixing all channels.
  */
 
 export const useOnScrollBgColor = (
