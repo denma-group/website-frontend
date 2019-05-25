@@ -1,7 +1,7 @@
 // Libraries
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import styled, { withTheme } from 'styled-components';
+import styled, { css, withTheme } from 'styled-components';
 
 // Dependencies
 import { useOnScrollBgColor } from 'utils/hooks/useOnScrollBgColor';
@@ -14,36 +14,73 @@ import Logo from 'components/SVG/Logos/DenmaHorizontal';
 const Homepage = props => {
   const { theme } = props;
   const navbarContext = useContext(NavbarContext);
-  const setOpacity = navbarContext.opacityState[1];
+  const setCss = navbarContext.cssState[1];
+
+  /**
+   * Background color brackets.
+   */
+  const totalScreenHeight = window.innerHeight;
+  const BRACKET_1_HEIGHT = totalScreenHeight * 0;
+  const BRACKET_2_HEIGHT = totalScreenHeight * 0.25;
+  const BRACKET_3_HEIGHT = totalScreenHeight * 0.5;
+  const BRACKET_4_HEIGHT = totalScreenHeight * 0.75;
+  const BRACKET_5_HEIGHT = totalScreenHeight * 1;
+  const BRACKET_6_HEIGHT = totalScreenHeight * 1.25;
 
   const handleOnScrollBgColor = ({
     mixRatio,
-    bracket
+    bracket,
   }) => {
     const lowerBracketHeight = bracket[1][0];
-    console.log('lowerBracketHeight', lowerBracketHeight);
-    console.log('lowerBracketHeight <= totalScreenHeight * 0.25', lowerBracketHeight <= totalScreenHeight * 0.25);
-    console.log('lowerBracketHeight >= totalScreenHeight * 1', lowerBracketHeight >= totalScreenHeight * 1);
-    console.log('mixRatio', mixRatio);
     switch (true) {
-      case lowerBracketHeight <= totalScreenHeight * 0.25:
-        setOpacity(1 - mixRatio); // Hide Navbar
+      case lowerBracketHeight <= BRACKET_2_HEIGHT:
+         // Partially hide Navbar
+        setCss(css`
+          opacity: ${1 - mixRatio};
+          color: ${theme.whiteColor};
+          background-color: ${theme.brandLightBlack};
+          box-shadow: none;
+        `);
         break;
-      case lowerBracketHeight >= totalScreenHeight * 1:
+      case lowerBracketHeight <= BRACKET_3_HEIGHT:
+        // Hide Navbar
+        setCss(css`
+          opacity: ${0};
+          color: ${theme.whiteColor};
+          background-color: ${theme.brandLightBlack};
+          box-shadow: none;
+        `);
+        break;
+      case lowerBracketHeight <= BRACKET_4_HEIGHT:
+        // Begin changing colors
+        setCss(css`
+          opacity: ${0};
+          color: ${theme.brandLightBlack};
+          background-color: ${theme.whiteColor};
+          box-shadow: none;
+        `);
+        break;
+      case lowerBracketHeight >= BRACKET_6_HEIGHT:
+        // Show Navbar
+        setCss(css`
+          opacity: ${mixRatio};
+          color: ${theme.brandLightBlack};
+          background-color: ${theme.whiteColor};
+          box-shadow: 0px 1px 2px -1px rgba(0,0,0,0.2), 0px 1px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12);
+        `);
+        break;
       default:
-        setOpacity(1 - mixRatio); // Show Navbar
+        // Do nothing.
     }
   };
-
-  const totalScreenHeight = window.innerHeight;
   const backgroundColor = useOnScrollBgColor(
     [
-      [totalScreenHeight * 0, theme.lightDarkColor],
-      [totalScreenHeight * 0.25, theme.brandLogoRed],
-      [totalScreenHeight * 0.5, theme.brandLogoRed],
-      [totalScreenHeight * 0.75, theme.brandRed],
-      [totalScreenHeight * 1, theme.brandOrange],
-      [totalScreenHeight * 1.25, theme.brandWhite],
+      [BRACKET_1_HEIGHT, theme.lightDarkColor],
+      [BRACKET_2_HEIGHT, theme.brandLogoRed],
+      [BRACKET_3_HEIGHT, theme.brandLogoRed],
+      [BRACKET_4_HEIGHT, theme.brandRed],
+      [BRACKET_5_HEIGHT, theme.brandOrange],
+      [BRACKET_6_HEIGHT, theme.brandWhite],
     ],
     {
       callback: handleOnScrollBgColor
@@ -59,10 +96,10 @@ const Homepage = props => {
       <HeroWrapper>
         <StyledLogo />
       </HeroWrapper>
-      <div style={{ minHeight: '300vh' }}>
-        <div style={{ minHeight: '100vh' }} />
-        <div style={{ minHeight: '100vh' }} />
-        <div style={{ minHeight: '100vh' }} />
+      <div style={{ minHeight: 3 * totalScreenHeight }}>
+        <div style={{ minHeight: totalScreenHeight }} />
+        <div style={{ minHeight: totalScreenHeight }} />
+        <div style={{ minHeight: totalScreenHeight }} />
       </div>
     </StyledPageWrapper>
   );

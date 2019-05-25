@@ -1,7 +1,6 @@
 // Libraries
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import styled, { withTheme, css } from 'styled-components';
+import React, { useState, useContext } from 'react';
+import styled, { css } from 'styled-components';
 
 // Components
 import AppBar from '@material-ui/core/AppBar';
@@ -13,27 +12,35 @@ import Drawer from 'layout/UI/Drawer';
 import Logo from 'components/SVG/Logos/DenmaHorizontal_NM';
 
 // Dependencies
-import Provider from './context';
+import Provider, { NavbarContext as Context } from './context';
 
 // Navbar React Context exports
-export { NavbarContext } from './context';
+export const NavbarContext = Context;
 export const NavbarProvider = Provider;
 
-const Navbar = props => {
+const Navbar = () => {
   const [isDrawerOpen, setDrawerOpen] = useState(false);
-  const {
-    theme
-  } = props;
 
-  console.log('props', props);
+  const navbarContext = useContext(NavbarContext);
+  const [color] = navbarContext.colorState;
+  const [backgroundColor] = navbarContext.backgroundColorState;
+  const [opacity] = navbarContext.opacityState;
+  const [position] = navbarContext.positionState;
+  const [boxShadow] = navbarContext.boxShadowState;
+  const [transform] = navbarContext.transformState;
+  const [styledCss] = navbarContext.cssState;
 
   return (
     <React.Fragment>
       <Spacing />
       <StyledAppBar
-        position="fixed"
-        color={theme.whiteColor}
-        backgroundColor={theme.lightDarkColor}
+        position={position}
+        color={color}
+        backgroundColor={backgroundColor}
+        opacity={opacity}
+        boxShadow={boxShadow}
+        transform={transform}
+        styledCss={styledCss}
       >
         <Toolbar>
           <a role="button">
@@ -63,21 +70,32 @@ const Navbar = props => {
   );
 };
 
-Navbar.propTypes = {
-  theme: PropTypes.instanceOf(Object).isRequired
-};
-
-const StyledAppBar = styled(({ color, backgroundColor, ...rest }) => <AppBar {...rest} />)`
+const StyledAppBar = styled(({
+  color,
+  backgroundColor,
+  opacity,
+  boxShadow,
+  transform,
+  styledCss,
+  ...rest
+}) => <AppBar {...rest} />)`
   && {
     ${props => (
       css`
         color: ${props.color || props.theme.brandLightBlack};
         background-color: ${props.backgroundColor || 'transparent'};
-        opacity: ${props.opacity || 1};
+        opacity: ${({ opacity }) => (
+          (
+            opacity !== null ||
+            opacity !== undefined
+          ) ? opacity : 1
+        )};
+        box-shadow: ${props.boxShadow || 'none'};
+        transform: ${props.transform || undefined};
       `
     )}
-    transition: all ease 200ms;
-    box-shadow: none;
+    ${props => (props.styledCss && props.styledCss)}
+    transition: all ease 150ms;
 
     .spacing {
       flex-grow: 1;
@@ -116,6 +134,7 @@ const StyledLogo = styled(Logo)`
 `;
 
 const Spacing = styled.div`
+  background: transparent;
   @media (min-width: 600px) {
     min-height: 64px !important;
   }
@@ -126,4 +145,4 @@ const Spacing = styled.div`
   min-height: 56px;
 `;
 
-export default withTheme(Navbar);
+export default Navbar;
