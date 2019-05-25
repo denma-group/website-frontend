@@ -12,6 +12,13 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Drawer from 'layout/UI/Drawer';
 import Logo from 'components/SVG/Logos/DenmaHorizontal_NM';
 
+// Dependencies
+import Provider from './context';
+
+export { NavbarContext } from './context';
+
+export const NavbarProvider = Provider;
+
 const Navbar = props => {
   const [isDrawerOpen, setDrawerOpen] = useState(false);
   const {

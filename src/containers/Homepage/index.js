@@ -1,5 +1,5 @@
 // Libraries
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import styled, { withTheme } from 'styled-components';
 
@@ -7,11 +7,17 @@ import styled, { withTheme } from 'styled-components';
 import { useOnScrollBgColor } from 'utils/hooks/useOnScrollBgColor';
 
 // Components
+import { NavbarContext } from 'layout/UI/Navbar';
 import PageWrapper from 'layout/UI/PageWrapper';
 import Logo from 'components/SVG/Logos/DenmaHorizontal';
 
 const Homepage = props => {
   const { theme } = props;
+  const navbarContext = useContext(NavbarContext);
+
+  console.log('navbarContext', navbarContext);
+  const handleOnScrollBgColor = () => {};
+
   const totalScreenHeight = window.innerHeight;
   const backgroundColor = useOnScrollBgColor(
     [

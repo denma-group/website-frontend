@@ -16,7 +16,7 @@ const initialContext = {
   opacity: [defaultOpacity, undefined],
 };
 
-export const Context = React.createContext(initialContext);
+export const NavbarContext = React.createContext(initialContext);
 
 const NavbarThemeProvider = props => {
   const {
@@ -32,7 +32,7 @@ const NavbarThemeProvider = props => {
   const [navOpacity, setNavOpacity] = useState(opacity || defaultOpacity);
 
 	return (
-    <Context.Provider
+    <NavbarContext.Provider
       value={{
         color: [fontColor, setFontColor],
         backgroundColor: [navBackground, setNavBackground],
@@ -40,7 +40,7 @@ const NavbarThemeProvider = props => {
       }}
     >
       {children}
-    </Context.Provider>
+    </NavbarContext.Provider>
 	);
 };
 
