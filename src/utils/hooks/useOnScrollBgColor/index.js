@@ -61,7 +61,13 @@ export const useOnScrollBgColor = (
       if (backgroundColor === colorTwoTuple[1]) {
         const mixedColor = colorTwoTuple[1];
         setBackgroundColor(mixedColor);
-        if (callback) callback(mixedColor, [colorTwoTuple, colorTwoTuple]);
+        if (callback) {
+          callback({
+            mixedColor,
+            mixRatio: 1,
+            bracket: [colorTwoTuple, colorTwoTuple]
+          });
+        }
       } else {
         const colorOneTuple = colors[indexOfColorTwo - 1] || colors[0];
         /**
@@ -79,7 +85,13 @@ export const useOnScrollBgColor = (
         /**
          * On top of sending `mixedColor` as an argument, we send `colorOneTuple`
          */
-        if (callback) callback(mixedColor, [colorOneTuple, colorTwoTuple]);
+        if (callback) {
+          callback({
+            mixedColor,
+            mixRatio: mixRatio > 1 ? 1 : mixRatio,
+            bracket: [colorOneTuple, colorTwoTuple]
+          });
+        }
       }
     /**
      * If `colors` is an array of strings, then we simply mix the two colors.
@@ -93,7 +105,13 @@ export const useOnScrollBgColor = (
         mixRatio > 1 ? 1 : mixRatio
       );
       setBackgroundColor(mixedColor);
-      if (callback) callback(mixedColor);
+      if (callback) {
+        callback({
+          mixedColor,
+          mixRatio: mixRatio > 1 ? 1 : mixRatio,
+          color: mixedColor
+        });
+      }
     }
   };
 
