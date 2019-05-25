@@ -16,8 +16,6 @@ const Homepage = props => {
   const navbarContext = useContext(NavbarContext);
   const setCss = navbarContext.cssState[1];
 
-  console.log('theme', theme);
-
   /**
    * Background color brackets.
    */
