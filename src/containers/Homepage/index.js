@@ -16,15 +16,18 @@ const Homepage = props => {
   const backgroundColor = useOnScrollBgColor(
     [
       [totalScreenHeight * 0, theme.lightDarkColor],
-      [totalScreenHeight * 0.25, theme.brandDarkRed],
-      [totalScreenHeight * 0.5, theme.brandRed],
-      [totalScreenHeight * 0.75, theme.brandOrange],
-      [totalScreenHeight * 1, theme.brandWhite],
+      [totalScreenHeight * 0.25, theme.brandLogoRed],
+      [totalScreenHeight * 0.5, theme.brandLogoRed],
+      [totalScreenHeight * 0.75, theme.brandRed],
+      [totalScreenHeight * 1, theme.brandOrange],
+      [totalScreenHeight * 1.25, theme.brandWhite],
     ],
     {
       callback: (bgColor, bracket) => { console.log('bgColor', bgColor); console.log('bracket', bracket); }
     }
   );
+
+  document.body.style.backgroundColor = backgroundColor;
 
   return (
     <StyledPageWrapper
@@ -47,12 +50,13 @@ Homepage.propTypes = {
 };
 
 const StyledPageWrapper = styled(PageWrapper)`
-  color: ${props => props.theme.whiteColor};
+  color: ${props => props.theme.lightDarkColor};
   background-color: ${props => props.backgroundColor || props.theme.lightDarkColor};
   transition: all ease 200ms;
 `;
 
 const HeroWrapper = styled.div`
+  color: ${props => props.theme.whiteColor};
   width: 100%;
   height: calc(100vh - 64px);
   display: flex;

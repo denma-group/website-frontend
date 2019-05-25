@@ -1,6 +1,7 @@
 // Libraries
 import React, { useState } from 'react';
-import styled from 'styled-components';
+import PropTypes from 'prop-types';
+import styled, { withTheme, css } from 'styled-components';
 
 // Components
 import AppBar from '@material-ui/core/AppBar';
@@ -11,12 +12,22 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Drawer from 'layout/UI/Drawer';
 import Logo from 'components/SVG/Logos/DenmaHorizontal_NM';
 
-const Navbar = () => {
+const Navbar = props => {
   const [isDrawerOpen, setDrawerOpen] = useState(false);
+  const {
+    theme
+  } = props;
+
+  console.log('props', props);
 
   return (
     <React.Fragment>
-      <StyledAppBar position="static">
+      <Spacing />
+      <StyledAppBar
+        position="fixed"
+        color={theme.whiteColor}
+        backgroundColor={theme.lightDarkColor}
+      >
         <Toolbar>
           <a role="button">
             <StyledLogo
@@ -45,10 +56,20 @@ const Navbar = () => {
   );
 };
 
-const StyledAppBar = styled(AppBar)`
+Navbar.propTypes = {
+  theme: PropTypes.instanceOf(Object).isRequired
+};
+
+const StyledAppBar = styled(({ color, backgroundColor, ...rest }) => <AppBar {...rest} />)`
   && {
-    color: ${props => props.theme.whiteColor};
-    background-color: ${props => props.theme.lightDarkColor};
+    ${props => (
+      css`
+        color: ${props.color || props.theme.brandLightBlack};
+        background-color: ${props.backgroundColor || 'transparent'};
+        opacity: ${props.opacity || 1};
+      `
+    )}
+    transition: all ease 200ms;
     box-shadow: none;
 
     .spacing {
@@ -76,6 +97,26 @@ const StyledLogo = styled(Logo)`
   height: auto;
   max-width: 225px;
   cursor: pointer;
+  
+  @media (min-width: 600px) {
+    max-width: 225px !important;
+  }
+
+  @media (min-width: 0px) and (orientation: landscape) {
+    max-width: 150px;
+  }
+  max-width: 125px;
 `;
 
-export default Navbar;
+const Spacing = styled.div`
+  @media (min-width: 600px) {
+    min-height: 64px !important;
+  }
+
+  @media (min-width: 0px) and (orientation: landscape) {
+    min-height: 48px;
+  }
+  min-height: 56px;
+`;
+
+export default withTheme(Navbar);
