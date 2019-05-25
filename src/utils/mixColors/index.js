@@ -27,9 +27,9 @@ const arrayToRgbString = ([A, B, C]) => `rgb(${Number(A).toFixed(0)}, ${Number(B
  * @param {[number, undefined] | [undefined, number]} param2 Set of desired values, at least one has to be known, usually `secondDesiredValue`.
  */
 const linearInterpolation = (
-  [firstValueA, secondValueA], // First set of known values.
-  [firstValueB, secondValueB], // Second set of known values.
-  [firstDesiredValue, secondDesiredValue = undefined] // Set of desired values, at least one has to be known.
+  [firstValueA, secondValueA],
+  [firstValueB, secondValueB],
+  [firstDesiredValue, secondDesiredValue = undefined]
 ) => {
   if (firstDesiredValue !== undefined || firstDesiredValue !== null) {
     return (((secondValueB - secondValueA) / (firstValueB - firstValueA)) * (firstDesiredValue - firstValueA) + secondValueA);
