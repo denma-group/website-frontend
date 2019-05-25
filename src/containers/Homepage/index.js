@@ -51,7 +51,7 @@ const Homepage = props => {
           box-shadow: none;
         `);
         break;
-      case lowerBracketHeight <= BRACKET_4_HEIGHT:
+      case lowerBracketHeight <= BRACKET_5_HEIGHT:
         // Begin changing colors
         setCss(css`
           opacity: ${0};
