@@ -16,6 +16,8 @@ const Homepage = props => {
   const navbarContext = useContext(NavbarContext);
   const setCss = navbarContext.cssState[1];
 
+  console.log('theme', theme);
+
   /**
    * Background color brackets.
    */
@@ -66,7 +68,7 @@ const Homepage = props => {
           opacity: ${mixRatio};
           color: ${theme.brandLightBlack};
           background-color: ${theme.whiteColor};
-          box-shadow: 0px 1px 2px -1px rgba(0,0,0,0.2), 0px 1px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12);
+          box-shadow: ${theme.navbarBoxShadow};
         `);
         break;
       default:
