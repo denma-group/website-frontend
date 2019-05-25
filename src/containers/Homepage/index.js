@@ -20,7 +20,10 @@ const Homepage = props => {
       [totalScreenHeight * 0.5, theme.brandRed],
       [totalScreenHeight * 0.75, theme.brandOrange],
       [totalScreenHeight * 1, theme.brandWhite],
-    ]
+    ],
+    {
+      callback: (bgColor, bracket) => { console.log('bgColor', bgColor); console.log('bracket', bracket); }
+    }
   );
 
   return (

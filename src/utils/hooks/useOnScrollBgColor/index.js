@@ -59,9 +59,9 @@ export const useOnScrollBgColor = (
       const colorTwoTuple = colors.find(colorTuple => currentScrollHeight <= colorTuple[0]) || colors[colors.length - 1];
       const indexOfColorTwo = colors.indexOf(colorTwoTuple);
       if (backgroundColor === colorTwoTuple[1]) {
-        const mixedColors = colorTwoTuple[1];
-        setBackgroundColor(mixedColors);
-        if (callback) callback(mixedColors);
+        const mixedColor = colorTwoTuple[1];
+        setBackgroundColor(mixedColor);
+        if (callback) callback(mixedColor, [colorTwoTuple, colorTwoTuple]);
       } else {
         const colorOneTuple = colors[indexOfColorTwo - 1] || colors[0];
         /**
@@ -69,17 +69,17 @@ export const useOnScrollBgColor = (
          * current scroll height, or position, is at.
          */
         const mixRatio = ((currentScrollHeight - colorOneTuple[0]) / (colorTwoTuple[0] - colorOneTuple[0])) || 0;
-        const mixedColors = mixColors(
+        const mixedColor = mixColors(
           [colorOneTuple[1], colorTwoTuple[1]],
           // Mix ratio is capped at 1, it's redundant
           // since it should never happen, but just in case.
           mixRatio > 1 ? 1 : mixRatio
         );
-        setBackgroundColor(mixedColors);
+        setBackgroundColor(mixedColor);
         /**
-         * On top of sending `mixedColors` as an argument, we send `colorOneTuple`
+         * On top of sending `mixedColor` as an argument, we send `colorOneTuple`
          */
-        if (callback) callback(mixedColors, [colorOneTuple, colorTwoTuple]);
+        if (callback) callback(mixedColor, [colorOneTuple, colorTwoTuple]);
       }
     /**
      * If `colors` is an array of strings, then we simply mix the two colors.
@@ -87,13 +87,13 @@ export const useOnScrollBgColor = (
     } else {
       const [colorOne, colorTwo] = colors;
       const mixRatio = currentScrollHeight / scrollHeight;
-      const mixedColors = mixColors(
+      const mixedColor = mixColors(
         [colorOne, colorTwo],
         // Capped at 1 for whenever `currentScrollHeight` is higher than `scrollHeight`
         mixRatio > 1 ? 1 : mixRatio
       );
-      setBackgroundColor(mixedColors);
-      if (callback) callback(mixedColors);
+      setBackgroundColor(mixedColor);
+      if (callback) callback(mixedColor);
     }
   };
 
