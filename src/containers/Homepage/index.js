@@ -14,9 +14,26 @@ import Logo from 'components/SVG/Logos/DenmaHorizontal';
 const Homepage = props => {
   const { theme } = props;
   const navbarContext = useContext(NavbarContext);
+  const setOpacity = navbarContext.opacityState[1];
 
-  console.log('navbarContext', navbarContext);
-  const handleOnScrollBgColor = () => {};
+  const handleOnScrollBgColor = ({
+    mixRatio,
+    bracket
+  }) => {
+    const lowerBracketHeight = bracket[1][0];
+    console.log('lowerBracketHeight', lowerBracketHeight);
+    console.log('lowerBracketHeight <= totalScreenHeight * 0.25', lowerBracketHeight <= totalScreenHeight * 0.25);
+    console.log('lowerBracketHeight >= totalScreenHeight * 1', lowerBracketHeight >= totalScreenHeight * 1);
+    console.log('mixRatio', mixRatio);
+    switch (true) {
+      case lowerBracketHeight <= totalScreenHeight * 0.25:
+        setOpacity(1 - mixRatio); // Hide Navbar
+        break;
+      case lowerBracketHeight >= totalScreenHeight * 1:
+      default:
+        setOpacity(1 - mixRatio); // Show Navbar
+    }
+  };
 
   const totalScreenHeight = window.innerHeight;
   const backgroundColor = useOnScrollBgColor(
@@ -29,7 +46,7 @@ const Homepage = props => {
       [totalScreenHeight * 1.25, theme.brandWhite],
     ],
     {
-      callback: (bgColor, bracket) => { console.log('bgColor', bgColor); console.log('bracket', bracket); }
+      callback: handleOnScrollBgColor
     }
   );
 

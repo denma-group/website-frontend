@@ -15,8 +15,8 @@ import Logo from 'components/SVG/Logos/DenmaHorizontal_NM';
 // Dependencies
 import Provider from './context';
 
+// Navbar React Context exports
 export { NavbarContext } from './context';
-
 export const NavbarProvider = Provider;
 
 const Navbar = props => {

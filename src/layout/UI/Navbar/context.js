@@ -11,9 +11,9 @@ const defaultBackgroundColor = mainTheme.lightDarkColor;
 const defaultOpacity = 1;
 
 const initialContext = {
-  color: [defaultColor, undefined],
-  backgroundColor: [defaultBackgroundColor, undefined],
-  opacity: [defaultOpacity, undefined],
+  colorState: [defaultColor, undefined],
+  backgroundColorState: [defaultBackgroundColor, undefined],
+  opacityState: [defaultOpacity, undefined],
 };
 
 export const NavbarContext = React.createContext(initialContext);
@@ -34,9 +34,9 @@ const NavbarThemeProvider = props => {
 	return (
     <NavbarContext.Provider
       value={{
-        color: [fontColor, setFontColor],
-        backgroundColor: [navBackground, setNavBackground],
-        opacity: [navOpacity, setNavOpacity]
+        colorState: [fontColor, setFontColor],
+        backgroundColorState: [navBackground, setNavBackground],
+        opacityState: [navOpacity, setNavOpacity]
       }}
     >
       {children}
