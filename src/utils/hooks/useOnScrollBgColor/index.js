@@ -74,7 +74,8 @@ export const useOnScrollBgColor = (
           callback({
             mixedColor,
             mixRatio: 1,
-            bracket: [colorTwoTuple, colorTwoTuple]
+            bracket: [colorTwoTuple, colorTwoTuple],
+            currentScrollHeight
           });
         }
       // Otherwise, mix the colors.
@@ -98,7 +99,8 @@ export const useOnScrollBgColor = (
           callback({
             mixedColor,
             mixRatio: mixRatio > 1 ? 1 : mixRatio,
-            bracket: [colorOneTuple, colorTwoTuple]
+            bracket: [colorOneTuple, colorTwoTuple],
+            currentScrollHeight
           });
         }
       }
@@ -117,7 +119,8 @@ export const useOnScrollBgColor = (
         callback({
           mixedColor,
           mixRatio: mixRatio > 1 ? 1 : mixRatio,
-          color: mixedColor
+          color: mixedColor,
+          currentScrollHeight
         });
       }
     }
