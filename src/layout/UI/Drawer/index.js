@@ -68,7 +68,7 @@ const NavbarDrawer = props => {
         ))}
       </List>
       <StyledDivider />
-      <StyledListHeader variant="title">
+      <StyledListHeader variant="h6">
         How we work
       </StyledListHeader>
       <List>
@@ -86,7 +86,7 @@ const NavbarDrawer = props => {
         ))}
       </List>
       <StyledDivider />
-      <StyledListHeader variant="title">
+      <StyledListHeader variant="h6">
         How we help
       </StyledListHeader>
       <List>
@@ -117,6 +117,7 @@ const NavbarDrawer = props => {
         tabIndex={0}
         role="button"
         onKeyDown={closeDrawer}
+        className="drawer-container"
       >
         {fullList}
       </div>
@@ -134,7 +135,7 @@ const StyledDrawer = styled(Drawer)`
     * {
       color: ${props => props.theme.whiteColor};
     }
-    .MuiDrawer-paperAnchorRight-89 {
+    .drawer-container {
       background-color: ${props => props.theme.lightDarkColor};
     }
   }
