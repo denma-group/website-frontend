@@ -51,7 +51,7 @@ const Homepage = props => {
      * Handling hero patterns.
      */
     switch (true) {
-      case currentScrollHeight <= BRACKET_2_HEIGHT:
+      case currentScrollHeight <= BRACKET_1_HEIGHT:
         setHeroCss({
           pattern: (
             css`
