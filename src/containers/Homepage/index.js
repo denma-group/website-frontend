@@ -46,10 +46,11 @@ const Homepage = props => {
     currentScrollHeight
   }) => {
     const lowerBracketHeight = bracket[1][0];
-    const totalScrollRatio = currentScrollHeight / BRACKET_5_HEIGHT;
+    const totalScrollRatio = Number(currentScrollHeight / BRACKET_5_HEIGHT).toFixed(2);
     /**
      * Handling hero patterns.
      */
+    const baseTransformProp = Number(currentScrollHeight * totalScrollRatio).toFixed(2);
     switch (true) {
       case currentScrollHeight <= BRACKET_1_HEIGHT:
         setHeroCss({
@@ -67,12 +68,12 @@ const Homepage = props => {
           pattern: (
             css`
               opacity: ${totalScrollRatio};
-              transform: translateY(${-currentScrollHeight * totalScrollRatio * 0.25}px);
+              transform: translateY(${-baseTransformProp * 0.25}px);
             `
           ),
           logo: (
             css`
-              transform: translateY(${-currentScrollHeight * totalScrollRatio * 1.5}px);
+              transform: translateY(${-baseTransformProp * 1.5}px);
             `
           ),
           particles: true
@@ -82,13 +83,13 @@ const Homepage = props => {
         setHeroCss({
           pattern: (
             css`
-              transform: translateY(${-currentScrollHeight * totalScrollRatio * 0.25}px);
+              transform: translateY(${-baseTransformProp * 0.25}px);
               opacity: 0
             `
           ),
           logo: (
             css`
-              transform: translateY(${-currentScrollHeight * totalScrollRatio * 1.5}px);
+              transform: translateY(${-baseTransformProp * 1.5}px);
             `
           ),
           particles: false // Dismounts the particles
