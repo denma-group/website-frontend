@@ -13,6 +13,7 @@ import { NavbarContext } from 'layout/UI/Navbar';
 import PageWrapper from 'layout/UI/PageWrapper';
 import Logo from 'components/SVG/Logos/DenmaHorizontal';
 import Typography from '@material-ui/core/Typography';
+import HeroSlider from 'components/Homepage/HeroSlider';
 
 // Icons
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
@@ -153,7 +154,7 @@ const Homepage = props => {
     ],
     {
       callback: handleOnScrollBgColor,
-      throttleLimit: 25
+      throttleLimit: 50
     }
   );
 
@@ -207,15 +208,25 @@ const Homepage = props => {
         </StyledHeroValueProposition>
       </Container>
       <Container>
-        Hero Slider
+        <HeroSlider
+          settings={{
+            slidingDuration: 250,
+            slidingDelay: 100,
+            shouldAutoplay: true,
+            shouldDisplayButtons: true,
+            autoplayDuration: 5000,
+            height: totalScreenHeight - 64,
+            color: '#FFF'
+          }}
+        >
+        <HeroSliderInner>
+          <Typography variant="h1">
+          Title
+          </Typography>
+        </HeroSliderInner>
+        </HeroSlider>
       </Container>
-      <div style={{ minHeight: 3 * totalScreenHeight }}>
-        <div style={{ minHeight: totalScreenHeight, position: 'relative' }}>
-          <h1>Value Props</h1>
-        </div>
-        <div style={{ minHeight: totalScreenHeight }} />
-        <div style={{ minHeight: totalScreenHeight }} />
-      </div>
+      <Container />
     </StyledPageWrapper>
   );
 };
@@ -297,6 +308,15 @@ const StyledHeroValueProposition = styled(Typography)`
       color: ${props => props.theme.primary}
     }
   }
+`;
+
+const HeroSliderInner = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFF;
 `;
 
 const particlesSettings = {
