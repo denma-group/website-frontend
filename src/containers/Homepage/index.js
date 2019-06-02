@@ -159,10 +159,8 @@ const Homepage = props => {
   );
 
   document.body.style.backgroundColor = backgroundColor;
-  console.log('heroCss.particles', heroCss.particles);
 
   const Container = useMemo(() => (styled.div`
-    width: 100%;
     height: ${totalScreenHeight}px;
     ${({ styledCss }) => styledCss};
   `), [totalScreenHeight]);
@@ -187,20 +185,14 @@ const Homepage = props => {
       </HeroWrapper>
       <Container
         styledCss={(css`
-          height: ${totalScreenHeight * 0.25}px;
-        `)}
-      />
-      <Container
-        styledCss={(css`
           display: flex;
           align-items: center;
           justify-content: flex-start;
           text-align: left;
-          width: 100%;
           max-width: 1200px;
           margin-right: auto;
           margin-left: auto;
-          padding: 0 37px;
+          padding: 0 40px;
         `)}
       >
         <StyledHeroValueProposition variant="h1">
@@ -214,17 +206,11 @@ const Homepage = props => {
             slidingDelay: 100,
             shouldAutoplay: true,
             shouldDisplayButtons: true,
-            autoplayDuration: 5000,
-            height: totalScreenHeight - 64,
+            autoplayDuration: 20000,
+            height: (0.9 * totalScreenHeight) - 64,
             color: '#FFF'
           }}
-        >
-        <HeroSliderInner>
-          <Typography variant="h1">
-          Title
-          </Typography>
-        </HeroSliderInner>
-        </HeroSlider>
+        />
       </Container>
       <Container />
     </StyledPageWrapper>
@@ -308,15 +294,6 @@ const StyledHeroValueProposition = styled(Typography)`
       color: ${props => props.theme.primary}
     }
   }
-`;
-
-const HeroSliderInner = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #FFF;
 `;
 
 const particlesSettings = {

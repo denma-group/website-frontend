@@ -1,65 +1,79 @@
 // Libraries
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled, { withTheme, css } from 'styled-components';
 
 // Components
 import HeroSlider, {
   Slide,
   Nav,
-  // SideNav,
-  // MenuNav,
-  // ButtonsNav,
-  // AutoplayButton
+  AutoplayButton
 } from 'hero-slider';
-
-// Images
-import bogliasco from './Bogliasco - Italy.jpg';
-import countyClare from './County Clare - Ireland.jpg';
-import craterRock from './Crater Rock - United States.jpg';
-import giauPass from './Giau Pass - Italy.jpg';
+import Typography from '@material-ui/core/Typography';
 
 const Slider = props => (
   <HeroSlider
     slidingAnimation="left_to_right"
     orientation="horizontal"
     initialSlide={1}
-    style={{
-      backgroundColor: 'rgba(0, 0, 0, 0.33)'
-    }}
     settings={props.settings}
   >
     {props.children}
+    {/* SERVIFY */}
     <Slide
       background={{
-        backgroundImage: giauPass,
-        backgroundAttachment: 'fixed'
+        shouldLazyLoad: false,
+        backgroundColor: props.theme.servify
       }}
-    />
+    >
+      <SliderInner>
+        <Typography variant="h1">Servify</Typography>
+      </SliderInner>
+    </Slide>
+    {/* BONPREU? */}
     <Slide
       background={{
-        backgroundImage: bogliasco,
-        backgroundAttachment: 'fixed'
+        shouldLazyLoad: false,
+        backgroundColor: props.theme.bonpreuFoods
       }}
-    />
+    >
+      <SliderInner>
+        <Typography variant="h1">Bonpreu Foods</Typography>
+      </SliderInner>
+    </Slide>
+    {/* TIRE OUTLETS */}
     <Slide
       background={{
-        backgroundImage: countyClare,
-        backgroundAttachment: 'fixed'
+        shouldLazyLoad: false,
+        backgroundColor: props.theme.tireOutlet
       }}
-    />
-    <Slide
-      background={{
-        backgroundImage: craterRock,
-        backgroundAttachment: 'fixed'
-      }}
-    />
+    >
+      <SliderInner>
+        <Typography variant="h1">Tire Outlets</Typography>
+      </SliderInner>
+    </Slide>
+    <AutoplayButton />
     <Nav />
   </HeroSlider>
 );
 
 Slider.propTypes = {
   settings: PropTypes.instanceOf(Object).isRequired,
-  children: PropTypes.node.isRequired,
+  theme: PropTypes.instanceOf(Object).isRequired,
+  children: PropTypes.node
 };
 
-export default Slider;
+Slider.defaultProps = {
+  children: null
+};
+
+const SliderInner = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  ${({ styledCss }) => styledCss};
+`;
+
+export default withTheme(Slider);
