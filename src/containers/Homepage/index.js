@@ -1,5 +1,5 @@
 // Libraries
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css, withTheme } from 'styled-components';
 
@@ -12,6 +12,7 @@ import HeroPattern from 'layout/Homepage/HeroPattern';
 import { NavbarContext } from 'layout/UI/Navbar';
 import PageWrapper from 'layout/UI/PageWrapper';
 import Logo from 'components/SVG/Logos/DenmaHorizontal';
+import Typography from '@material-ui/core/Typography';
 
 // Icons
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
@@ -92,7 +93,7 @@ const Homepage = props => {
               transform: translateY(${-baseTransformProp * 1.5}px);
             `
           ),
-          particles: false // Dismounts the particles
+          particles: false // Unmounts the particles
         });
     }
     /**
@@ -134,7 +135,6 @@ const Homepage = props => {
           opacity: ${mixRatio};
           color: ${theme.brandLightBlack};
           background-color: ${theme.whiteColor};
-          box-shadow: ${theme.navbarBoxShadow};
           transform: translateY(0);
         `);
         break;
@@ -153,11 +153,18 @@ const Homepage = props => {
     ],
     {
       callback: handleOnScrollBgColor,
-      throttleLimit: 50
+      throttleLimit: 25
     }
   );
 
   document.body.style.backgroundColor = backgroundColor;
+  console.log('heroCss.particles', heroCss.particles);
+
+  const Container = useMemo(() => (styled.div`
+    width: 100%;
+    height: ${totalScreenHeight}px;
+    ${({ styledCss }) => styledCss};
+  `), [totalScreenHeight]);
 
   return (
     <StyledPageWrapper
@@ -170,63 +177,38 @@ const Homepage = props => {
           <StyledLogo />
           <ArrowDownwardIcon className="scroll-down" />
         </LogoContainer>
-        <HeroPattern css={heroCss.pattern} />
         {heroCss.particles && (
-          <StyledParticles
-            params={{
-              particles: {
-                number: {
-                  value: 80,
-                  density: {
-                    enable: false
-                  }
-                },
-                size: {
-                  value: 6,
-                  random: true,
-                  anim: {
-                    speed: 8,
-                    size_min: 0.3
-                  }
-                },
-                line_linked: {
-                  enable: false
-                },
-                move: {
-                  random: true,
-                  speed: 1.5,
-                  direction: 'bottom',
-                  out_mode: 'out'
-                }
-              },
-              interactivity: {
-                events: {
-                  onhover: {
-                    enable: true,
-                    mode: 'bubble'
-                  },
-                  onclick: {
-                    enable: true,
-                    mode: 'repulse'
-                  }
-                },
-                modes: {
-                  bubble: {
-                    distance: 250,
-                    duration: 2,
-                    size: 0,
-                    opacity: 0
-                  },
-                  repulse: {
-                    distance: 400,
-                    duration: 4
-                  }
-                }
-              }
-            }}
-          />
+          <React.Fragment>
+            <HeroPattern css={heroCss.pattern} />
+            <StyledParticles params={particlesSettings} />
+          </React.Fragment>
         )}
       </HeroWrapper>
+      <Container
+        styledCss={(css`
+          height: ${totalScreenHeight * 0.25}px;
+        `)}
+      />
+      <Container
+        styledCss={(css`
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          text-align: left;
+          width: 100%;
+          max-width: 1200px;
+          margin-right: auto;
+          margin-left: auto;
+          padding: 0 37px;
+        `)}
+      >
+        <StyledHeroValueProposition variant="h1">
+          For companies who find themselves in need of <span>high-quality</span> software applications, <span>Denma</span> is a software development studio that provides personalized software development services with a solid methodology to help companies take their businesses to the <span>next level</span>.
+        </StyledHeroValueProposition>
+      </Container>
+      <Container>
+        Hero Slider
+      </Container>
       <div style={{ minHeight: 3 * totalScreenHeight }}>
         <div style={{ minHeight: totalScreenHeight, position: 'relative' }}>
           <h1>Value Props</h1>
@@ -245,7 +227,7 @@ Homepage.propTypes = {
 const StyledPageWrapper = styled(PageWrapper)`
   color: ${props => props.theme.lightDarkColor};
   background-color: ${props => props.backgroundColor || props.theme.lightDarkColor};
-  transition: all ease 200ms;
+  transition: all ease 100ms;
 `;
 
 const HeroWrapper = styled.div`
@@ -257,7 +239,7 @@ const HeroWrapper = styled.div`
   pointer-events: none;
 
   ${Particles} {
-    transition: transform ease 250ms;
+    transition: transform ease 100ms;
   }
 
   & > *:last-child {
@@ -303,5 +285,70 @@ const StyledParticles = styled(Particles)`
   height: 100%;
   z-index: 0;
 `;
+
+const StyledHeroValueProposition = styled(Typography)`
+  &&& {
+    font-size: 54px;
+    line-height: 64px;
+    span {
+      font-size: 54px;
+      line-height: 64px;
+      font-weight: 500;
+      color: ${props => props.theme.primary}
+    }
+  }
+`;
+
+const particlesSettings = {
+  particles: {
+    number: {
+      value: 80,
+      density: {
+        enable: false
+      }
+    },
+    size: {
+      value: 6,
+      random: true,
+      anim: {
+        speed: 8,
+        size_min: 0.3
+      }
+    },
+    line_linked: {
+      enable: false
+    },
+    move: {
+      random: true,
+      speed: 1.5,
+      direction: 'bottom',
+      out_mode: 'out'
+    }
+  },
+  interactivity: {
+    events: {
+      onhover: {
+        enable: true,
+        mode: 'bubble'
+      },
+      onclick: {
+        enable: true,
+        mode: 'repulse'
+      }
+    },
+    modes: {
+      bubble: {
+        distance: 250,
+        duration: 2,
+        size: 0,
+        opacity: 0
+      },
+      repulse: {
+        distance: 400,
+        duration: 4
+      }
+    }
+  }
+};
 
 export default withTheme(Homepage);
