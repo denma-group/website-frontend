@@ -7,16 +7,22 @@ import styled, { css, withTheme } from 'styled-components';
 import { useOnScrollBgColor } from 'utils/hooks/useOnScrollBgColor';
 
 // Components
-import Particles from 'react-particles-js';
 import HeroPattern from 'layout/Homepage/HeroPattern';
 import { NavbarContext } from 'layout/UI/Navbar';
-import PageWrapper from 'layout/UI/PageWrapper';
-import Logo from 'components/SVG/Logos/DenmaHorizontal';
-import Typography from '@material-ui/core/Typography';
 import HeroSlider from 'components/Homepage/HeroSlider';
 
 // Icons
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
+
+// Styled Components
+import {
+  StyledPageWrapper,
+  HeroWrapper,
+  LogoContainer,
+  StyledLogo,
+  StyledParticles,
+  StyledHeroValueProposition
+} from './components';
 
 const Homepage = props => {
   const { theme } = props;
@@ -41,6 +47,7 @@ const Homepage = props => {
   const BRACKET_3_HEIGHT = totalScreenHeight * 0.5;
   const BRACKET_4_HEIGHT = totalScreenHeight * 0.75;
   const BRACKET_5_HEIGHT = totalScreenHeight * 1;
+  const BRACKET_6_HEIGHT = totalScreenHeight * 1.25;
 
   const handleOnScrollBgColor = ({
     mixRatio,
@@ -49,6 +56,8 @@ const Homepage = props => {
   }) => {
     const lowerBracketHeight = bracket[1][0];
     const totalScrollRatio = Number(currentScrollHeight / BRACKET_5_HEIGHT).toFixed(2);
+    const opacityRatio = (1 - totalScrollRatio) <= 0 ? 0 : 1 - totalScrollRatio; 
+    console.log('opacityRatio', opacityRatio);
     /**
      * Handling hero patterns.
      */
@@ -65,17 +74,32 @@ const Homepage = props => {
           particles: true
         });
         break;
-      case currentScrollHeight <= BRACKET_5_HEIGHT:
+      case currentScrollHeight <= BRACKET_2_HEIGHT:
         setHeroCss({
           pattern: (
             css`
-              opacity: ${totalScrollRatio};
-              transform: translateY(${-baseTransformProp * 0.25}px);
+              opacity: 0;
             `
           ),
           logo: (
             css`
               transform: translateY(${-baseTransformProp * 1.5}px);
+            `
+          ),
+          particles: true
+        });
+        break;
+      case currentScrollHeight <= BRACKET_6_HEIGHT:
+        setHeroCss({
+          pattern: (
+            css`
+              opacity: ${opacityRatio};
+              transform: translateY(${-baseTransformProp * 0.25}px);
+            `
+          ),
+          logo: (
+            css`
+              transform: translateY(${-baseTransformProp * 2}px);
             `
           ),
           particles: true
@@ -91,7 +115,7 @@ const Homepage = props => {
           ),
           logo: (
             css`
-              transform: translateY(${-baseTransformProp * 1.5}px);
+              transform: translateY(${-baseTransformProp * 2}px);
             `
           ),
           particles: false // Unmounts the particles
@@ -117,7 +141,6 @@ const Homepage = props => {
           color: ${theme.whiteColor};
           background-color: transparent;
           box-shadow: none;
-          transform: translateY(0);
         `);
         break;
       case lowerBracketHeight <= BRACKET_4_HEIGHT:
@@ -127,10 +150,9 @@ const Homepage = props => {
           color: ${theme.brandLightBlack};
           background-color: transparent;
           box-shadow: none;
-          transform: translateY(-64px);
         `);
         break;
-      case lowerBracketHeight >= BRACKET_5_HEIGHT:
+      case lowerBracketHeight >= BRACKET_6_HEIGHT:
         // Show Navbar
         setNavbarCss(css`
           opacity: ${mixRatio};
@@ -150,11 +172,11 @@ const Homepage = props => {
       [BRACKET_3_HEIGHT, theme.brandLogoRed],
       [BRACKET_4_HEIGHT, theme.brandRed],
       [BRACKET_5_HEIGHT, theme.brandOrange],
-      [BRACKET_5_HEIGHT, theme.brandWhite],
+      [BRACKET_6_HEIGHT, theme.brandWhite],
     ],
     {
       callback: handleOnScrollBgColor,
-      throttleLimit: 50
+      throttleLimit: 0
     }
   );
 
@@ -165,20 +187,22 @@ const Homepage = props => {
     ${({ styledCss }) => styledCss};
   `), [totalScreenHeight]);
 
+  const { logo, pattern, particles } = heroCss;
+
   return (
     <StyledPageWrapper
       backgroundColor={backgroundColor}
     >
       <HeroWrapper>
         <LogoContainer
-          css={heroCss.logo}
+          css={logo}
         >
           <StyledLogo />
           <ArrowDownwardIcon className="scroll-down" />
         </LogoContainer>
-        {heroCss.particles && (
+        {particles && (
           <React.Fragment>
-            <HeroPattern css={heroCss.pattern} />
+            <HeroPattern css={pattern} />
             <StyledParticles params={particlesSettings} />
           </React.Fragment>
         )}
@@ -207,7 +231,7 @@ const Homepage = props => {
             shouldAutoplay: true,
             shouldDisplayButtons: true,
             autoplayDuration: 20000,
-            height: (0.9 * totalScreenHeight) - 64,
+            height: 0.9 * (totalScreenHeight - 64),
             color: '#FFF'
           }}
         />
@@ -220,81 +244,6 @@ const Homepage = props => {
 Homepage.propTypes = {
   theme: PropTypes.instanceOf(Object).isRequired
 };
-
-const StyledPageWrapper = styled(PageWrapper)`
-  color: ${props => props.theme.lightDarkColor};
-  background-color: ${props => props.backgroundColor || props.theme.lightDarkColor};
-  transition: all ease 100ms;
-`;
-
-const HeroWrapper = styled.div`
-  position: relative;
-  color: ${props => props.theme.whiteColor};
-  width: 100%;
-  height: ${1.25 * window.innerHeight}px;
-  overflow: hidden;
-  pointer-events: none;
-
-  ${Particles} {
-    transition: transform ease 100ms;
-  }
-
-  & > *:last-child {
-    pointer-events: auto;
-    height: 100%;
-  }
-`;
-
-const LogoContainer = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  color: ${props => props.theme.whiteColor};
-  width: 100%;
-  height: ${window.innerHeight}px;
-  display: flex;
-  flex-flow: column;
-  align-items: center;
-  justify-content: center;
-  z-index: 5;
-  transition: all ease 250ms;
-
-  ${props => props.css}
-
-  .scroll-down {
-    width: 80px;
-    height: 80px;
-    padding: 0 0 24px;
-    cursor: pointer;
-    pointer-events: auto;
-  }
-`;
-
-const StyledLogo = styled(Logo)`
-  margin: 0 auto;
-  width: 70%;
-  height: 100%;
-`;
-
-const StyledParticles = styled(Particles)`
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-`;
-
-const StyledHeroValueProposition = styled(Typography)`
-  &&& {
-    font-size: 54px;
-    line-height: 64px;
-    span {
-      font-size: 54px;
-      line-height: 64px;
-      font-weight: 500;
-      color: ${props => props.theme.primary}
-    }
-  }
-`;
 
 const particlesSettings = {
   particles: {
