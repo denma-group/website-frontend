@@ -9,7 +9,7 @@ import Logo from 'components/SVG/Logos/DenmaHorizontal';
 
 export const StyledPageWrapper = styled(PageWrapper)`
   color: ${props => props.theme.lightDarkColor};
-  background-color: ${props => props.backgroundColor || props.theme.lightDarkColor};
+  background-color: transparent;
 `;
 
 export const HeroWrapper = styled.div`
@@ -30,12 +30,11 @@ export const HeroWrapper = styled.div`
 `;
 
 export const LogoContainer = styled.div`
-  position: fixed;
   top: 0;
   left: 0;
   color: ${props => props.theme.whiteColor};
   width: 100%;
-  height: ${window.innerHeight}px;
+  height: 100%;
   display: flex;
   flex-flow: column;
   align-items: center;
@@ -60,7 +59,6 @@ export const StyledLogo = styled(Logo)`
 `;
 
 export const StyledParticles = styled(Particles)`
-  position: fixed;
   width: 100%;
   height: 100%;
   z-index: 0;

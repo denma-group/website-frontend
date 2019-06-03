@@ -56,76 +56,23 @@ const Homepage = props => {
   }) => {
     const lowerBracketHeight = bracket[1][0];
     const totalScrollRatio = Number(currentScrollHeight / BRACKET_5_HEIGHT).toFixed(2);
-    const opacityRatio = (1 - totalScrollRatio) <= 0 ? 0 : 1 - totalScrollRatio; 
-    console.log('opacityRatio', opacityRatio);
+    const opacityRatio = (1 - totalScrollRatio) <= 0 ? 0 : Number(1 - totalScrollRatio).toFixed(2); 
     /**
      * Handling hero patterns.
      */
     const baseTransformProp = Number(currentScrollHeight * totalScrollRatio).toFixed(2);
-    switch (true) {
-      case currentScrollHeight <= BRACKET_1_HEIGHT:
-        setHeroCss({
-          pattern: (
-            css`
-              opacity: 0;
-            `
-          ),
-          logo: undefined,
-          particles: true
-        });
-        break;
-      case currentScrollHeight <= BRACKET_2_HEIGHT:
-        setHeroCss({
-          pattern: (
-            css`
-              opacity: 0;
-            `
-          ),
-          logo: (
-            css`
-              transform: translateY(${-baseTransformProp * 1.5}px);
-            `
-          ),
-          particles: true
-        });
-        break;
-      case currentScrollHeight <= BRACKET_6_HEIGHT:
-        setHeroCss({
-          pattern: (
-            css`
-              opacity: ${opacityRatio};
-              transform: translateY(${-baseTransformProp * 0.25}px);
-            `
-          ),
-          logo: (
-            css`
-              transform: translateY(${-baseTransformProp * 2}px);
-            `
-          ),
-          particles: true
-        });
-        break;
-      default:
-        setHeroCss({
-          pattern: (
-            css`
-              transform: translateY(${-baseTransformProp * 0.25}px);
-              opacity: 0
-            `
-          ),
-          logo: (
-            css`
-              transform: translateY(${-baseTransformProp * 2}px);
-            `
-          ),
-          particles: false // Unmounts the particles
-        });
-    }
+    setHeroCss({
+      logo: (css`
+        will-change: transform;
+        transform: translate3d(0px, ${-baseTransformProp * 1.5}px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
+        transform-style: preserve-3d;
+      `)
+    });
     /**
      * Navbar handlers.
      */
     switch (true) {
-      case lowerBracketHeight <= BRACKET_2_HEIGHT:
+      case lowerBracketHeight <= BRACKET_1_HEIGHT:
          // Partially hide Navbar
         setNavbarCss(css`
           opacity: ${1 - mixRatio};
@@ -134,7 +81,7 @@ const Homepage = props => {
           box-shadow: none;
         `);
         break;
-      case lowerBracketHeight <= BRACKET_3_HEIGHT:
+      case lowerBracketHeight <= BRACKET_2_HEIGHT:
         // Hide Navbar
         setNavbarCss(css`
           opacity: ${0};
@@ -143,7 +90,7 @@ const Homepage = props => {
           box-shadow: none;
         `);
         break;
-      case lowerBracketHeight <= BRACKET_4_HEIGHT:
+      case lowerBracketHeight <= BRACKET_3_HEIGHT:
         // Begin changing colors
         setNavbarCss(css`
           opacity: ${0};
@@ -152,17 +99,15 @@ const Homepage = props => {
           box-shadow: none;
         `);
         break;
-      case lowerBracketHeight >= BRACKET_6_HEIGHT:
+      default:
+      case lowerBracketHeight >= BRACKET_3_HEIGHT:
         // Show Navbar
         setNavbarCss(css`
-          opacity: ${mixRatio};
+          opacity: ${1 - opacityRatio};
           color: ${theme.brandLightBlack};
           background-color: ${theme.whiteColor};
-          transform: translateY(0);
         `);
         break;
-      default:
-        // Do nothing.
     }
   };
   const backgroundColor = useOnScrollBgColor(
@@ -191,19 +136,27 @@ const Homepage = props => {
 
   return (
     <StyledPageWrapper
-      backgroundColor={backgroundColor}
+      style={{
+        backgroundColor
+      }}
     >
       <HeroWrapper>
-        <LogoContainer
-          css={logo}
+        <Container
+          style={{
+            height: totalScreenHeight * 0.8
+          }}
         >
-          <StyledLogo />
-          <ArrowDownwardIcon className="scroll-down" />
-        </LogoContainer>
+          <LogoContainer
+            css={logo}
+          >
+            <StyledLogo />
+            <ArrowDownwardIcon className="scroll-down" />
+          </LogoContainer>
+        </Container>
         {particles && (
           <React.Fragment>
-            <HeroPattern css={pattern} />
-            <StyledParticles params={particlesSettings} />
+            {/* <HeroPattern css={pattern} /> */}
+            {/* <StyledParticles params={particlesSettings} /> */}
           </React.Fragment>
         )}
       </HeroWrapper>
