@@ -10,6 +10,7 @@ import { useOnScrollBgColor } from 'utils/hooks/useOnScrollBgColor';
 import HeroPattern from 'layout/Homepage/HeroPattern';
 import { NavbarContext } from 'layout/UI/Navbar';
 import HeroSlider from 'components/Homepage/HeroSlider';
+import { Parallax } from 'components/UI';
 
 // Icons
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
@@ -20,7 +21,7 @@ import {
   HeroWrapper,
   LogoContainer,
   StyledLogo,
-  StyledParticles,
+  // StyledParticles,
   StyledHeroValueProposition
 } from './components';
 
@@ -28,7 +29,10 @@ const Homepage = props => {
   const { theme } = props;
   const navbarContext = useContext(NavbarContext);
   const setNavbarCss = navbarContext.cssState[1];
-  const [heroCss, setHeroCss] = useState({
+  const [
+    heroCss,
+    // setHeroCss
+  ] = useState({
     pattern: (
       css`
         opacity: 0
@@ -60,14 +64,14 @@ const Homepage = props => {
     /**
      * Handling hero patterns.
      */
-    const baseTransformProp = Number(currentScrollHeight * totalScrollRatio).toFixed(2);
-    setHeroCss({
-      logo: (css`
-        will-change: transform;
-        transform: translate3d(0px, ${-baseTransformProp * 1.5}px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-        transform-style: preserve-3d;
-      `)
-    });
+    // const baseTransformProp = Number(currentScrollHeight * totalScrollRatio).toFixed(2);
+    // setHeroCss({
+    //   logo: (css`
+    //     will-change: transform;
+    //     transform: translate3d(0px, ${-baseTransformProp * 1.5}px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
+    //     transform-style: preserve-3d;
+    //   `)
+    // });
     /**
      * Navbar handlers.
      */
@@ -127,40 +131,43 @@ const Homepage = props => {
 
   document.body.style.backgroundColor = backgroundColor;
 
-  const Container = useMemo(() => (styled.div`
-    height: ${totalScreenHeight}px;
-    ${({ styledCss }) => styledCss};
-  `), [totalScreenHeight]);
-
-  const { logo, pattern, particles } = heroCss;
+  // const { logo, pattern, particles } = heroCss;
 
   return (
-    <StyledPageWrapper
-      style={{
-        backgroundColor
-      }}
-    >
+    <StyledPageWrapper>
       <HeroWrapper>
         <Container
+          totalScreenHeight={totalScreenHeight}
           style={{
             height: totalScreenHeight * 0.8
           }}
         >
-          <LogoContainer
-            css={logo}
+          {/* <LogoContainer
+            // css={logo}
           >
             <StyledLogo />
             <ArrowDownwardIcon className="scroll-down" />
-          </LogoContainer>
+          </LogoContainer> */}
         </Container>
-        {particles && (
+        {/* {particles && (
           <React.Fragment>
-            {/* <HeroPattern css={pattern} /> */}
-            {/* <StyledParticles params={particlesSettings} /> */}
+            <HeroPattern css={pattern} />
+            <StyledParticles params={particlesSettings} />
           </React.Fragment>
-        )}
+        )} */}
+        <Container>
+          <Parallax
+            speed={0.5}
+            zIndex={1}
+            top="0%"
+            backgroundImage="https://images.unsplash.com/photo-1480796927426-f609979314bd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
+            height={totalScreenHeight}
+            width={window.innerWidth}
+          />
+        </Container>
       </HeroWrapper>
       <Container
+        totalScreenHeight={totalScreenHeight}
         styledCss={(css`
           display: flex;
           align-items: center;
@@ -170,13 +177,16 @@ const Homepage = props => {
           margin-right: auto;
           margin-left: auto;
           padding: 0 40px;
+          background-color: transparent;
         `)}
       >
         <StyledHeroValueProposition variant="h1">
           For companies who find themselves in need of <span>high-quality</span> software applications, <span>Denma</span> is a software development studio that provides personalized software development services with a solid methodology to help companies take their businesses to the <span>next level</span>.
         </StyledHeroValueProposition>
       </Container>
-      <Container>
+      <Container
+        totalScreenHeight={totalScreenHeight}
+      >
         <HeroSlider
           settings={{
             slidingDuration: 250,
@@ -194,60 +204,65 @@ const Homepage = props => {
   );
 };
 
+const Container = styled.div`
+  height: ${props => props.totalScreenHeight || window.innerHeight}px;
+  ${({ styledCss }) => styledCss};
+`;
+
 Homepage.propTypes = {
   theme: PropTypes.instanceOf(Object).isRequired
 };
 
-const particlesSettings = {
-  particles: {
-    number: {
-      value: 80,
-      density: {
-        enable: false
-      }
-    },
-    size: {
-      value: 6,
-      random: true,
-      anim: {
-        speed: 8,
-        size_min: 0.3
-      }
-    },
-    line_linked: {
-      enable: false
-    },
-    move: {
-      random: true,
-      speed: 1.5,
-      direction: 'bottom',
-      out_mode: 'out'
-    }
-  },
-  interactivity: {
-    events: {
-      onhover: {
-        enable: true,
-        mode: 'bubble'
-      },
-      onclick: {
-        enable: true,
-        mode: 'repulse'
-      }
-    },
-    modes: {
-      bubble: {
-        distance: 250,
-        duration: 2,
-        size: 0,
-        opacity: 0
-      },
-      repulse: {
-        distance: 400,
-        duration: 4
-      }
-    }
-  }
-};
+// const particlesSettings = {
+//   particles: {
+//     number: {
+//       value: 80,
+//       density: {
+//         enable: false
+//       }
+//     },
+//     size: {
+//       value: 6,
+//       random: true,
+//       anim: {
+//         speed: 8,
+//         size_min: 0.3
+//       }
+//     },
+//     line_linked: {
+//       enable: false
+//     },
+//     move: {
+//       random: true,
+//       speed: 1.5,
+//       direction: 'bottom',
+//       out_mode: 'out'
+//     }
+//   },
+//   interactivity: {
+//     events: {
+//       onhover: {
+//         enable: true,
+//         mode: 'bubble'
+//       },
+//       onclick: {
+//         enable: true,
+//         mode: 'repulse'
+//       }
+//     },
+//     modes: {
+//       bubble: {
+//         distance: 250,
+//         duration: 2,
+//         size: 0,
+//         opacity: 0
+//       },
+//       repulse: {
+//         distance: 400,
+//         duration: 4
+//       }
+//     }
+//   }
+// };
 
 export default withTheme(Homepage);

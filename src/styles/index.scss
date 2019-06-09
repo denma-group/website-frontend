@@ -14,8 +14,8 @@ body,
 #root {
   color: $base-font-color;
   background-color: $brand-white;
-  height: 100%;
   width: 100%;
+  min-height: 100%;
 }
 
 #root {

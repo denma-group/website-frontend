@@ -12,9 +12,10 @@ import { Helmet } from 'react-helmet';
 import LazyImport from 'components/UI/LazyImport';
 import Loader from 'components/UI/Loader';
 import LogoLoader from 'components/UI/LogoLoader';
+import { ParallaxProvider } from 'react-scroll-parallax';
 
 const LOADER_DELAY = 1000;
-const LOADER_DEV_DELAY = 150;
+const LOADER_DEV_DELAY = 100;
 const RESOLVED_CALLBACK_DELAY = process.env.NODE_ENV === 'development' ? LOADER_DEV_DELAY : LOADER_DELAY;
 
 const App = () => {
@@ -47,13 +48,15 @@ const App = () => {
               </CSSTransition>
             )}
           >
-            <LazyImport
-              delay={LOADER_DELAY}
-              devDelay={LOADER_DEV_DELAY}
-              resolvedCallback={() => setIsLoading(false)}
-              resolvedCallbackDelay={RESOLVED_CALLBACK_DELAY}
-              importedComponent={import('containers/Routes')}
-            />
+            <ParallaxProvider>
+              <LazyImport
+                delay={LOADER_DELAY}
+                devDelay={LOADER_DEV_DELAY}
+                resolvedCallback={() => setIsLoading(false)}
+                resolvedCallbackDelay={RESOLVED_CALLBACK_DELAY}
+                importedComponent={import('containers/Routes')}
+              />
+            </ParallaxProvider>
           </Suspense>
       </Wrapper>
     </ThemeProvider>
@@ -64,7 +67,7 @@ const Wrapper = styled.div`
   &&& {
     display: flex;
     flex-flow: column;
-    height: 100%;
+    min-height: 100%;
 
     .loaders-enter {
       opacity: 0;
@@ -97,6 +100,7 @@ const Loaders = styled.div`
   position: relative;
   width: 100%;
   height: 100%;
+  min-height: 100vh;
 `;
 
 const StyledLoader = styled(Loader)`
