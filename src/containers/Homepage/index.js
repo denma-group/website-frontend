@@ -54,7 +54,7 @@ const Homepage = props => {
         setNavbarCss(css`
           opacity: ${opacityRatio};
           color: ${theme.whiteColor};
-          background-color: ${theme.brandLightBlack};
+          background-color: transparent;
         `);
         break;
       case currentScrollHeight <= BRACKET_3_HEIGHT:
@@ -89,7 +89,7 @@ const Homepage = props => {
 
   useOnScrollBgColor(
     [
-      [BRACKET_1_HEIGHT, theme.lightDarkColor],
+      [BRACKET_1_HEIGHT, theme.darkColor],
       [BRACKET_2_HEIGHT, theme.lightDarkColor],
       [BRACKET_3_HEIGHT, theme.brandLogoRed],
       [BRACKET_4_HEIGHT, theme.brandRed],
