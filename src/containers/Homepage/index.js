@@ -147,7 +147,7 @@ const Homepage = props => {
           settings={{
             slidingDuration: 250,
             slidingDelay: 100,
-            shouldAutoplay: true,
+            shouldAutoplay: false,
             shouldDisplayButtons: true,
             autoplayDuration: 20000,
             height: 0.9 * (totalScreenHeight - 64),

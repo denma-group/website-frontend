@@ -1,13 +1,12 @@
 // Libraries
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled, { withTheme, css } from 'styled-components';
+import styled, { withTheme } from 'styled-components';
 
 // Components
 import HeroSlider, {
   Slide,
-  Nav,
-  AutoplayButton
+  Nav
 } from 'hero-slider';
 import Typography from '@material-ui/core/Typography';
 
@@ -52,7 +51,6 @@ const Slider = props => (
         <Typography variant="h1">Tire Outlets</Typography>
       </SliderInner>
     </Slide>
-    <AutoplayButton />
     <Nav />
   </HeroSlider>
 );
