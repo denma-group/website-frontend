@@ -19,14 +19,6 @@ export const HeroWrapper = styled.div`
   height: ${1.25 * window.innerHeight}px;
   overflow: hidden;
   pointer-events: none;
-
-  ${Particles} {
-  }
-
-  & > *:last-child {
-    pointer-events: auto;
-    height: 100%;
-  }
 `;
 
 export const LogoContainer = styled.div`
@@ -53,9 +45,8 @@ export const LogoContainer = styled.div`
 `;
 
 export const StyledLogo = styled(Logo)`
-  margin: 0 auto;
-  width: 70%;
-  height: 100%;
+  margin: 72px auto;
+  width: 75%;
 `;
 
 export const StyledParticles = styled(Particles)`

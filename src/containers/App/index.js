@@ -12,7 +12,6 @@ import { Helmet } from 'react-helmet';
 import LazyImport from 'components/UI/LazyImport';
 import Loader from 'components/UI/Loader';
 import LogoLoader from 'components/UI/LogoLoader';
-import { ParallaxProvider } from 'react-scroll-parallax';
 
 const LOADER_DELAY = 1000;
 const LOADER_DEV_DELAY = 100;
@@ -32,7 +31,7 @@ const App = () => {
             Denma | Software Development Company
           </title>
         </Helmet>
-          <Suspense 
+          <Suspense
             fallback={(
               <CSSTransition
                 in={isLoading}
@@ -48,15 +47,13 @@ const App = () => {
               </CSSTransition>
             )}
           >
-            <ParallaxProvider>
-              <LazyImport
-                delay={LOADER_DELAY}
-                devDelay={LOADER_DEV_DELAY}
-                resolvedCallback={() => setIsLoading(false)}
-                resolvedCallbackDelay={RESOLVED_CALLBACK_DELAY}
-                importedComponent={import('containers/Routes')}
-              />
-            </ParallaxProvider>
+            <LazyImport
+              delay={LOADER_DELAY}
+              devDelay={LOADER_DEV_DELAY}
+              resolvedCallback={() => setIsLoading(false)}
+              resolvedCallbackDelay={RESOLVED_CALLBACK_DELAY}
+              importedComponent={import('containers/Routes')}
+            />
           </Suspense>
       </Wrapper>
     </ThemeProvider>

@@ -7,11 +7,10 @@ import styled, { css, withTheme } from 'styled-components';
 import { useOnScrollBgColor } from 'utils/hooks/useOnScrollBgColor';
 
 // Components
-import HeroPattern from 'layout/Homepage/HeroPattern';
 import { NavbarContext } from 'layout/UI/Navbar';
 import HeroSlider from 'components/Homepage/HeroSlider';
 import { Parallax } from 'components/UI';
-
+import ReactResizeDetector from 'react-resize-detector';
 // Icons
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 
@@ -21,7 +20,6 @@ import {
   HeroWrapper,
   LogoContainer,
   StyledLogo,
-  // StyledParticles,
   StyledHeroValueProposition
 } from './components';
 
@@ -29,23 +27,12 @@ const Homepage = props => {
   const { theme } = props;
   const navbarContext = useContext(NavbarContext);
   const setNavbarCss = navbarContext.cssState[1];
-  const [
-    heroCss,
-    // setHeroCss
-  ] = useState({
-    pattern: (
-      css`
-        opacity: 0
-      `
-    ),
-    logo: undefined,
-    particles: undefined
-  });
+
+  const [totalScreenHeight, setTotalScrenHeight] = useState(window.innerHeight);
 
   /**
    * Background color brackets.
    */
-  const totalScreenHeight = window.innerHeight;
   const BRACKET_1_HEIGHT = totalScreenHeight * 0;
   const BRACKET_2_HEIGHT = totalScreenHeight * 0.25;
   const BRACKET_3_HEIGHT = totalScreenHeight * 0.5;
@@ -54,38 +41,32 @@ const Homepage = props => {
   const BRACKET_6_HEIGHT = totalScreenHeight * 1.25;
 
   const handleOnScrollBgColor = ({
-    mixRatio,
-    bracket,
     currentScrollHeight
   }) => {
-    const lowerBracketHeight = bracket[1][0];
     const totalScrollRatio = Number(currentScrollHeight / BRACKET_5_HEIGHT).toFixed(2);
-    const opacityRatio = (1 - totalScrollRatio) <= 0 ? 0 : Number(1 - totalScrollRatio).toFixed(2); 
-    /**
-     * Handling hero patterns.
-     */
-    // const baseTransformProp = Number(currentScrollHeight * totalScrollRatio).toFixed(2);
-    // setHeroCss({
-    //   logo: (css`
-    //     will-change: transform;
-    //     transform: translate3d(0px, ${-baseTransformProp * 1.5}px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-    //     transform-style: preserve-3d;
-    //   `)
-    // });
+    const opacityRatio = (1 - totalScrollRatio) <= 0 ? 0 : Number(1 - totalScrollRatio).toFixed(2);
     /**
      * Navbar handlers.
      */
     switch (true) {
-      case lowerBracketHeight <= BRACKET_1_HEIGHT:
+      case currentScrollHeight <= BRACKET_2_HEIGHT:
+        // Show Navbar
+        setNavbarCss(css`
+          opacity: ${opacityRatio};
+          color: ${theme.whiteColor};
+          background-color: ${theme.brandLightBlack};
+        `);
+        break;
+      case currentScrollHeight <= BRACKET_3_HEIGHT:
          // Partially hide Navbar
         setNavbarCss(css`
-          opacity: ${1 - mixRatio};
+          opacity: ${opacityRatio};
           color: ${theme.whiteColor};
           background-color: transparent;
           box-shadow: none;
         `);
         break;
-      case lowerBracketHeight <= BRACKET_2_HEIGHT:
+      case currentScrollHeight <= BRACKET_4_HEIGHT:
         // Hide Navbar
         setNavbarCss(css`
           opacity: ${0};
@@ -94,17 +75,8 @@ const Homepage = props => {
           box-shadow: none;
         `);
         break;
-      case lowerBracketHeight <= BRACKET_3_HEIGHT:
-        // Begin changing colors
-        setNavbarCss(css`
-          opacity: ${0};
-          color: ${theme.brandLightBlack};
-          background-color: transparent;
-          box-shadow: none;
-        `);
-        break;
+      case currentScrollHeight >= BRACKET_5_HEIGHT:
       default:
-      case lowerBracketHeight >= BRACKET_3_HEIGHT:
         // Show Navbar
         setNavbarCss(css`
           opacity: ${1 - opacityRatio};
@@ -114,10 +86,11 @@ const Homepage = props => {
         break;
     }
   };
-  const backgroundColor = useOnScrollBgColor(
+
+  useOnScrollBgColor(
     [
       [BRACKET_1_HEIGHT, theme.lightDarkColor],
-      [BRACKET_2_HEIGHT, theme.brandLogoRed],
+      [BRACKET_2_HEIGHT, theme.lightDarkColor],
       [BRACKET_3_HEIGHT, theme.brandLogoRed],
       [BRACKET_4_HEIGHT, theme.brandRed],
       [BRACKET_5_HEIGHT, theme.brandOrange],
@@ -125,67 +98,50 @@ const Homepage = props => {
     ],
     {
       callback: handleOnScrollBgColor,
-      throttleLimit: 0
+      throttleLimit: 30,
     }
   );
 
-  document.body.style.backgroundColor = backgroundColor;
-
-  // const { logo, pattern, particles } = heroCss;
-
   return (
     <StyledPageWrapper>
+      <ReactResizeDetector
+        handleWidth
+        handleHeight
+        onResize={() => setTotalScrenHeight(window.innerHeight)}
+      />
       <HeroWrapper>
         <Container
-          totalScreenHeight={totalScreenHeight}
-          style={{
-            height: totalScreenHeight * 0.8
-          }}
+          height={totalScreenHeight - 64}
         >
-          {/* <LogoContainer
-            // css={logo}
-          >
-            <StyledLogo />
-            <ArrowDownwardIcon className="scroll-down" />
-          </LogoContainer> */}
-        </Container>
-        {/* {particles && (
-          <React.Fragment>
-            <HeroPattern css={pattern} />
-            <StyledParticles params={particlesSettings} />
-          </React.Fragment>
-        )} */}
-        <Container>
-          <Parallax
-            speed={0.5}
-            zIndex={1}
-            top="0%"
-            backgroundImage="https://images.unsplash.com/photo-1480796927426-f609979314bd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
-            height={totalScreenHeight}
-            width={window.innerWidth}
-          />
+          <Parallax speed={0.5}>
+            <LogoContainer>
+              <StyledLogo />
+              <ArrowDownwardIcon className="scroll-down" />
+            </LogoContainer>
+          </Parallax>
         </Container>
       </HeroWrapper>
       <Container
-        totalScreenHeight={totalScreenHeight}
-        styledCss={(css`
-          display: flex;
-          align-items: center;
-          justify-content: flex-start;
-          text-align: left;
-          max-width: 1200px;
-          margin-right: auto;
-          margin-left: auto;
-          padding: 0 40px;
-          background-color: transparent;
-        `)}
+        height={totalScreenHeight}
+        styledCss={(useMemo(() => (
+          css`
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            text-align: left;
+            max-width: 1200px;
+            margin: 100px auto 0;
+            padding: 0 40px;
+            background-color: transparent;
+          `
+        ), []))}
       >
         <StyledHeroValueProposition variant="h1">
           For companies who find themselves in need of <span>high-quality</span> software applications, <span>Denma</span> is a software development studio that provides personalized software development services with a solid methodology to help companies take their businesses to the <span>next level</span>.
         </StyledHeroValueProposition>
       </Container>
       <Container
-        totalScreenHeight={totalScreenHeight}
+        height={totalScreenHeight}
       >
         <HeroSlider
           settings={{
@@ -205,64 +161,13 @@ const Homepage = props => {
 };
 
 const Container = styled.div`
-  height: ${props => props.totalScreenHeight || window.innerHeight}px;
+  position: relative;
+  height: ${props => props.height || window.innerHeight}px;
   ${({ styledCss }) => styledCss};
 `;
 
 Homepage.propTypes = {
   theme: PropTypes.instanceOf(Object).isRequired
 };
-
-// const particlesSettings = {
-//   particles: {
-//     number: {
-//       value: 80,
-//       density: {
-//         enable: false
-//       }
-//     },
-//     size: {
-//       value: 6,
-//       random: true,
-//       anim: {
-//         speed: 8,
-//         size_min: 0.3
-//       }
-//     },
-//     line_linked: {
-//       enable: false
-//     },
-//     move: {
-//       random: true,
-//       speed: 1.5,
-//       direction: 'bottom',
-//       out_mode: 'out'
-//     }
-//   },
-//   interactivity: {
-//     events: {
-//       onhover: {
-//         enable: true,
-//         mode: 'bubble'
-//       },
-//       onclick: {
-//         enable: true,
-//         mode: 'repulse'
-//       }
-//     },
-//     modes: {
-//       bubble: {
-//         distance: 250,
-//         duration: 2,
-//         size: 0,
-//         opacity: 0
-//       },
-//       repulse: {
-//         distance: 400,
-//         duration: 4
-//       }
-//     }
-//   }
-// };
 
 export default withTheme(Homepage);

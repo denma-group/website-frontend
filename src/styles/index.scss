@@ -9,6 +9,10 @@ ol {
   padding: 0;
 }
 
+body {
+  will-change:  background-color;
+}
+
 html,
 body,
 #root {
