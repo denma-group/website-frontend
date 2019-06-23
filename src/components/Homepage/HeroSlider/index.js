@@ -12,46 +12,49 @@ import Typography from '@material-ui/core/Typography';
 import Servify from './Slides/Servify';
 import BonpreuFoods from './Slides/BonpreuFoods';
 
-const Slider = props => (
-  <HeroSlider
-    slidingAnimation="left_to_right"
-    orientation="horizontal"
-    initialSlide={1}
-    settings={props.settings}
-  >
-    {props.children}
-    {/* SERVIFY */}
-    <Slide
-      background={{
-        shouldLazyLoad: false,
-        backgroundColor: props.theme.servify
-      }}
+const Slider = props => {
+  const { theme } = props;
+  return (
+    <HeroSlider
+      slidingAnimation="left_to_right"
+      orientation="horizontal"
+      initialSlide={1}
+      settings={props.settings}
     >
-      <Servify />
-    </Slide>
-    {/* BONPREU? */}
-    <Slide
-      background={{
-        shouldLazyLoad: false,
-        backgroundColor: props.theme.bonpreuFoods
-      }}
-    >
-      <BonpreuFoods />
-    </Slide>
-    {/* TIRE OUTLETS */}
-    <Slide
-      background={{
-        shouldLazyLoad: false,
-        backgroundColor: props.theme.tireOutlet
-      }}
-    >
-      <SliderInner>
-        <Typography variant="h1">Tire Outlets</Typography>
-      </SliderInner>
-    </Slide>
-    <Nav />
-  </HeroSlider>
-);
+      {props.children}
+      {/* SERVIFY */}
+      <Slide
+        background={{
+          shouldLazyLoad: false,
+          backgroundColor: theme.servify
+        }}
+      >
+        <Servify />
+      </Slide>
+      {/* BONPREU? */}
+      <Slide
+        background={{
+          shouldLazyLoad: false,
+          backgroundColor: theme.bonpreuFoods
+        }}
+      >
+        <BonpreuFoods />
+      </Slide>
+      {/* TIRE OUTLETS */}
+      <Slide
+        background={{
+          shouldLazyLoad: false,
+          backgroundColor: theme.tireOutlet
+        }}
+      >
+        <SliderInner>
+          <Typography variant="h1">Tire Outlets</Typography>
+        </SliderInner>
+      </Slide>
+      <Nav />
+    </HeroSlider>
+  );
+};
 
 Slider.propTypes = {
   settings: PropTypes.instanceOf(Object).isRequired,
