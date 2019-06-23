@@ -8,9 +8,10 @@ import HeroSlider, {
   Slide,
   Nav
 } from 'hero-slider';
-import Typography from '@material-ui/core/Typography';
+
 import Servify from './Slides/Servify';
 import BonpreuFoods from './Slides/BonpreuFoods';
+import TireOutlet from './Slides/TireOutlet';
 
 const Slider = props => {
   const { theme } = props;
@@ -47,9 +48,7 @@ const Slider = props => {
           backgroundColor: theme.tireOutlet
         }}
       >
-        <SliderInner>
-          <Typography variant="h1">Tire Outlets</Typography>
-        </SliderInner>
+        <TireOutlet />
       </Slide>
       <Nav />
     </HeroSlider>
