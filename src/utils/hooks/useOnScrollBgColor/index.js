@@ -2,15 +2,15 @@
 import { useState, useEffect, useCallback } from 'react';
 
 // Dependencies
-import { useThrottle } from 'utils/hooks/useThrottle';
+import { useCallbackQueue } from 'use-utilities';
 import { mixColors } from 'utils/mixColors';
 
 /**
  * `useOnScrollBgColor` is a hook that will mix two colors when the on scroll event listener triggers,
  * depending on the current scroll position, total scroll height given, and the colors to be mixed.
- * The on scroll event listener callback is throttled and set at a `100ms` duration.
+ * The on scroll event listener callback is throttled and set at a `30ms` duration.
  * @param {[string, string] | [number, string][]} colors `colors` accepts an array of two colors, or an array of tuples
- * structured as `[heightBreakpoint, colors]`. 
+ * structured as `[heightBreakpoint, colors]`.
  * @param {{
  *  callback: (backgroundColor: string, bracketsTuple: [[number, string], [number, string]]) => void,
  *  scrollHeight: number,
@@ -69,7 +69,6 @@ export const useOnScrollBgColor = (
       // If on the last bracket, simply set the last color as the mixed one then run the callback.
       if (backgroundColor === colorTwoTuple[1]) {
         const mixedColor = colorTwoTuple[1];
-        setBackgroundColor(mixedColor);
         if (callback) {
           callback({
             mixedColor,
@@ -126,21 +125,22 @@ export const useOnScrollBgColor = (
     }
   }, [backgroundColor, callback, colors, scrollHeight, shouldSort, mixRatioChannels]);
 
+  const useHandleOnScroll = useCallbackQueue(onThrottledScrollHandler, throttleLimit);
   const [setupOnMount, setSetupOnMount] = useState(setColorOnMount);
 
-  const throttled = useThrottle(onThrottledScrollHandler, throttleLimit);
   useEffect(() => {
-    window.addEventListener(
-      'scroll',
-      throttled
-    );
+    window.addEventListener('scroll', useHandleOnScroll);
     if (setupOnMount) {
       onThrottledScrollHandler();
       setSetupOnMount(false);
     }
-    return () => window.removeEventListener('scroll', throttled);
-  }, [throttled, setupOnMount, onThrottledScrollHandler]);
-  return backgroundColor;
+    // Return clause.
+    return () => window.removeEventListener('scroll', useHandleOnScroll);
+  }, [useHandleOnScroll, onThrottledScrollHandler, setupOnMount]);
+
+  useEffect(() => {
+    document.body.style.backgroundColor = backgroundColor;
+  }, [backgroundColor]);
 };
 
 /**

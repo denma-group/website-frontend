@@ -14,7 +14,7 @@ import Loader from 'components/UI/Loader';
 import LogoLoader from 'components/UI/LogoLoader';
 
 const LOADER_DELAY = 1000;
-const LOADER_DEV_DELAY = 150;
+const LOADER_DEV_DELAY = 100;
 const RESOLVED_CALLBACK_DELAY = process.env.NODE_ENV === 'development' ? LOADER_DEV_DELAY : LOADER_DELAY;
 
 const App = () => {
@@ -31,7 +31,7 @@ const App = () => {
             Denma | Software Development Company
           </title>
         </Helmet>
-          <Suspense 
+          <Suspense
             fallback={(
               <CSSTransition
                 in={isLoading}
@@ -64,7 +64,7 @@ const Wrapper = styled.div`
   &&& {
     display: flex;
     flex-flow: column;
-    height: 100%;
+    min-height: 100%;
 
     .loaders-enter {
       opacity: 0;
@@ -97,6 +97,7 @@ const Loaders = styled.div`
   position: relative;
   width: 100%;
   height: 100%;
+  min-height: 100vh;
 `;
 
 const StyledLoader = styled(Loader)`

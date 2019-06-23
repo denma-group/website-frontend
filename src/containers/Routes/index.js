@@ -19,14 +19,12 @@ const Routes = props => {
   }, [location]);
 
   return (
-    <StyledRoutesWrapper>
-      <RoutesWrapper>
-        <Switch>
-          <Route exact path="/" component={Homepage} />
-          <Route path="/hello-world" render={() => <div>Hello world!</div>} />
-        </Switch>
-      </RoutesWrapper>
-    </StyledRoutesWrapper>
+    <RoutesWrapper>
+      <Switch>
+        <Route exact path="/" component={Homepage} />
+        <Route path="/hello-world" render={() => <div>Hello world!</div>} />
+      </Switch>
+    </RoutesWrapper>
   );
 };
 
