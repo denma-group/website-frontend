@@ -9,6 +9,8 @@ import HeroSlider, {
   Nav
 } from 'hero-slider';
 import Typography from '@material-ui/core/Typography';
+import Servify from './Slides/Servify';
+import BonpreuFoods from './Slides/BonpreuFoods';
 
 const Slider = props => (
   <HeroSlider
@@ -25,9 +27,7 @@ const Slider = props => (
         backgroundColor: props.theme.servify
       }}
     >
-      <SliderInner>
-        <Typography variant="h1">Servify</Typography>
-      </SliderInner>
+      <Servify />
     </Slide>
     {/* BONPREU? */}
     <Slide
@@ -36,9 +36,7 @@ const Slider = props => (
         backgroundColor: props.theme.bonpreuFoods
       }}
     >
-      <SliderInner>
-        <Typography variant="h1">Bonpreu Foods</Typography>
-      </SliderInner>
+      <BonpreuFoods />
     </Slide>
     {/* TIRE OUTLETS */}
     <Slide
