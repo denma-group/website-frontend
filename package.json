@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "^4.1.1",
-    "@material-ui/icons": "^4.2.0",
+    "@material-ui/core": "^4.1.2",
+    "@material-ui/icons": "^4.2.1",
     "axios": "^0.19.0",
     "hero-slider": "^1.2.1",
     "immutable": "^4.0.0-rc.12",
@@ -24,7 +24,7 @@
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",
     "styled-components": "^4.3.2",
-    "use-utilities": "^0.1.0"
+    "use-utilities": "^0.1.2"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -50,7 +50,7 @@
   "devDependencies": {
     "eslint": "^5.16.0",
     "eslint-config-airbnb": "^17.1.0",
-    "eslint-plugin-react": "^7.13.0",
+    "eslint-plugin-react": "^7.14.0",
     "sass-extract": "^2.1.0",
     "sass-extract-js": "^0.4.0",
     "sass-extract-loader": "^1.1.0"

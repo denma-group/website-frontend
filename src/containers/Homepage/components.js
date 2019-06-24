@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import Particles from 'react-particles-js';
 import Typography from '@material-ui/core/Typography';
 import PageWrapper from 'layout/UI/PageWrapper';
-import Logo from 'components/SVG/Logos/DenmaHorizontal';
+import ResponsiveLogo from 'components/SVG/Logos/ResponsiveLogo';
 
 export const StyledPageWrapper = styled(PageWrapper)`
   color: ${props => props.theme.lightDarkColor};
@@ -44,9 +44,13 @@ export const LogoContainer = styled.div`
   }
 `;
 
-export const StyledLogo = styled(Logo)`
+export const StyledLogo = styled(ResponsiveLogo)`
   margin: 72px auto;
   width: 75%;
+
+  @media (max-width: ${({ theme }) => theme.screenXl}) {
+    margin: 12px auto 24px;
+  }
 `;
 
 export const StyledParticles = styled(Particles)`
@@ -57,13 +61,26 @@ export const StyledParticles = styled(Particles)`
 
 export const StyledHeroValueProposition = styled(Typography)`
   &&& {
-    font-size: 54px;
+    font-size: 42px;
     line-height: 64px;
+    padding: 24px 0;
     span {
-      font-size: 54px;
-      line-height: 64px;
+      font-size: inherit;
+      line-height: inherit;
       font-weight: 500;
       color: ${props => props.theme.primary}
+    }
+    @media (max-width: ${({ theme }) => theme.screenMd}) {
+      font-size: 36px;
+      line-height: 58px;
+    }
+    @media (max-width: ${({ theme }) => theme.screenSm}) {
+      font-size: 28px;
+      line-height: 52px;
+    }
+    @media (max-width: ${({ theme }) => theme.screenXs}) {
+      font-size: 24px;
+      line-height: 36px;
     }
   }
 `;
