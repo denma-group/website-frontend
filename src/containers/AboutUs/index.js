@@ -1,28 +1,100 @@
-import React, { useContext, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { withTheme } from 'styled-components';
-import { StylesProvider } from '@material-ui/styles';
 import Button from '@material-ui/core/Button';
 
-const AboutUs = props => {
-  console.log(props);
+import FounderCard from '../../components/UI/FounderCard';
+import JoinUsImage from '../../static/images/backgrounds/join-us.jpg';
+import HookedParallax from '../../components/UI/HookedParallax';
+
+const AboutUs = (props) => {
+  const foundersData = [
+    {
+      name: 'Jorge Baralt',
+      age: '24',
+      position: 'CEO',
+      description:
+        'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a'
+    },
+    {
+      name: 'Robert Molina',
+      age: '25',
+      position: 'CTO',
+      description:
+        'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a'
+    }
+  ];
+
   return (
     <Container>
       <HeaderStyle>
         <HeaderContainer>
-          <HeaderText>
+          <AppText color={props.theme.whiteColor} fontSize="42" fontWeight="bold">
             Devoted to provide{' '}
-            <HeaderSpan color={props.theme.brandOrange}>professional advice</HeaderSpan>, deliver
-            amazing software, and{' '}
-            <HeaderSpan color={props.theme.brandDarkRed}>
-              take your company to the next level.
-            </HeaderSpan>
-          </HeaderText>
+            <SpanText color={props.theme.brandOrange} fontSize="42" fontWeight="bold">
+              professional advice
+            </SpanText>
+            , deliver amazing software, and take your company to the{' '}
+            <SpanText color={props.theme.brandDarkRed} fontSize="42" fontWeight="bold">
+              next level.
+            </SpanText>
+          </AppText>
           <GradientButton color1={props.theme.brandDarkRed} color2={props.theme.brandOrange}>
             Contact Us
           </GradientButton>
+          <HookedParallax
+            multiplierY={2}
+            style={{
+              marginTop: 20,
+              position: 'absolute',
+              bottom: -200,
+              right: -200
+            }}
+          >
+            <Circle size={400} color={props.theme.brandDarkRed} />
+          </HookedParallax>
         </HeaderContainer>
       </HeaderStyle>
+      <FounderContainer>
+        <AppText color={props.theme.brandOrange} fontSize="42" fontWeight="bold">
+          Founder`s Story
+        </AppText>
+        <AppText
+          color={props.theme.whiteColor}
+          fontSize="24"
+          fontWeight="200"
+          style={{ marginTop: 20, paddingRight: 100 }}
+        >
+          Our partnership started a few years ago. Both of us had the same passion for coding and
+          building our own company. We started simple, learning some basic stuff, and creating
+          projects around it. As we got better, we started creating more interesting and complex
+          projects. Until we realized, that we liked managing and working on multiple projects at
+          the same time. Now, we have the ability to build projects from the ground up in really
+          quick, smart, and efficient way.
+        </AppText>
+        <FoundersBioContainer>
+          {foundersData.map((founder, i) => (
+            <CardContainer key={i.toString()}>
+              <FounderCard founder={founder} />
+            </CardContainer>
+          ))}
+        </FoundersBioContainer>
+      </FounderContainer>
+      <JoinUsContainer>
+        <JoinUsTextContainer>
+          <AppText color={props.theme.brandDarkRed} fontSize="42" fontWeight="bold">
+            Want to join us?
+          </AppText>
+          <AppText color={props.theme.whiteColor} fontSize="32">
+            Do not hesitate to contact us!
+          </AppText>
+          <AppText color={props.theme.whiteColor} fontSize="22">
+            We are a small team that is always looking forward to grow. We are fun and very
+            dedicated.
+          </AppText>
+        </JoinUsTextContainer>
+        <OurProcessContainer />
+      </JoinUsContainer>
     </Container>
   );
 };
@@ -36,9 +108,10 @@ const HeaderContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 74vh;
-  width: 60%;
+  width: 800px;
   margin-left: 120px;
   margin-top: 20vh;
+  overflow: hidden;
 `;
 
 const HeaderStyle = styled.div`
@@ -47,16 +120,17 @@ const HeaderStyle = styled.div`
   color: ${props => props.theme.primary};
 `;
 
-const HeaderText = styled.h1`
-  font-size: 48px;
-  color: ${props => props.theme.whiteColor};
-  font-weight: bold;
+const AppText = styled.p`
+  font-size: ${props => `${props.fontSize}px`};
+  color: ${props => props.color};
+  font-weight: ${props => props.fontWeight};
+  margin: 0;
 `;
 
-const HeaderSpan = styled.span`
-  font-size: 48px;
+const SpanText = styled.span`
+  font-size: ${props => `${props.fontSize}px`};
   color: ${props => props.color};
-  font-weight: bold;
+  font-weight: ${props => props.fontWeight};
 `;
 
 const GradientButton = styled(Button)`
@@ -67,8 +141,68 @@ const GradientButton = styled(Button)`
     color: ${props => props.theme.brandWhite};
     height: 48px;
     font-weight: bold;
-    width: 50%;
+    width: 400px;
+    margin-top: 20px;
   }
+`;
+
+const Circle = styled.div`
+  height: ${props => `${props.size}px`};
+  width: ${props => `${props.size}px`};
+  border-radius: 50%;
+  background-color: ${props => props.color};
+  justify-content: center;
+  align-items: center;
+`;
+
+const FounderContainer = styled.div`
+  height: 100vh;
+  background-color: ${props => props.theme.lightDarkColor};
+  display: flex;
+  flex-direction: column;
+  padding: 0 10%;
+  justify-content: center;
+`;
+
+const FoundersBioContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  color: ${props => props.theme.whiteColor};
+  margin-top: 20px;
+`;
+
+const CardContainer = styled.div`
+  width: 50%;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+`;
+
+const JoinUsContainer = styled.div`
+  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.9)), url(${JoinUsImage});
+  height: 100vh;
+  width: 100%;
+  background-size: cover;
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+`;
+
+const JoinUsTextContainer = styled.div`
+  position: relative;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  height: 500px;
+  width: 30%;
+  margin-left: 240px;
+  top: 240px;
+  right: 100px;
+  text-shadow: 1px 0px black;
+`;
+
+const OurProcessContainer = styled.div`
+  background-color: ${props => props.theme.lightDarkColor};
 `;
 
 AboutUs.propTypes = {

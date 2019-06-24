@@ -1,5 +1,5 @@
 // Libraries
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css, withTheme } from 'styled-components';
 
@@ -7,301 +7,165 @@ import styled, { css, withTheme } from 'styled-components';
 import { useOnScrollBgColor } from 'utils/hooks/useOnScrollBgColor';
 
 // Components
-import Particles from 'react-particles-js';
-import HeroPattern from 'layout/Homepage/HeroPattern';
 import { NavbarContext } from 'layout/UI/Navbar';
-import PageWrapper from 'layout/UI/PageWrapper';
-import Logo from 'components/SVG/Logos/DenmaHorizontal';
-
+import HeroSlider from 'components/Homepage/HeroSlider';
+import { Parallax } from 'components/UI';
+import ReactResizeDetector from 'react-resize-detector';
 // Icons
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 
-const Homepage = props => {
+// Styled Components
+import {
+  StyledPageWrapper,
+  HeroWrapper,
+  LogoContainer,
+  StyledLogo,
+  StyledHeroValueProposition
+} from './components';
+
+const Homepage = (props) => {
   const { theme } = props;
   const navbarContext = useContext(NavbarContext);
   const setNavbarCss = navbarContext.cssState[1];
-  const [heroCss, setHeroCss] = useState({
-    pattern: (
-      css`
-        opacity: 0
-      `
-    ),
-    logo: undefined,
-    particles: undefined
-  });
+
+  const [totalScreenHeight, setTotalScrenHeight] = useState(window.innerHeight);
 
   /**
    * Background color brackets.
    */
-  const totalScreenHeight = window.innerHeight;
   const BRACKET_1_HEIGHT = totalScreenHeight * 0;
   const BRACKET_2_HEIGHT = totalScreenHeight * 0.25;
   const BRACKET_3_HEIGHT = totalScreenHeight * 0.5;
   const BRACKET_4_HEIGHT = totalScreenHeight * 0.75;
   const BRACKET_5_HEIGHT = totalScreenHeight * 1;
+  const BRACKET_6_HEIGHT = totalScreenHeight * 1.25;
 
-  const handleOnScrollBgColor = ({
-    mixRatio,
-    bracket,
-    currentScrollHeight
-  }) => {
-    const lowerBracketHeight = bracket[1][0];
+  const handleOnScrollBgColor = ({ currentScrollHeight }) => {
     const totalScrollRatio = Number(currentScrollHeight / BRACKET_5_HEIGHT).toFixed(2);
-    /**
-     * Handling hero patterns.
-     */
-    const baseTransformProp = Number(currentScrollHeight * totalScrollRatio).toFixed(2);
-    switch (true) {
-      case currentScrollHeight <= BRACKET_1_HEIGHT:
-        setHeroCss({
-          pattern: (
-            css`
-              opacity: 0;
-            `
-          ),
-          logo: undefined,
-          particles: true
-        });
-        break;
-      case currentScrollHeight <= BRACKET_5_HEIGHT:
-        setHeroCss({
-          pattern: (
-            css`
-              opacity: ${totalScrollRatio};
-              transform: translateY(${-baseTransformProp * 0.25}px);
-            `
-          ),
-          logo: (
-            css`
-              transform: translateY(${-baseTransformProp * 1.5}px);
-            `
-          ),
-          particles: true
-        });
-        break;
-      default:
-        setHeroCss({
-          pattern: (
-            css`
-              transform: translateY(${-baseTransformProp * 0.25}px);
-              opacity: 0
-            `
-          ),
-          logo: (
-            css`
-              transform: translateY(${-baseTransformProp * 1.5}px);
-            `
-          ),
-          particles: false // Dismounts the particles
-        });
-    }
+    const opacityRatio = 1 - totalScrollRatio <= 0 ? 0 : Number(1 - totalScrollRatio).toFixed(2);
     /**
      * Navbar handlers.
      */
     switch (true) {
-      case lowerBracketHeight <= BRACKET_2_HEIGHT:
-         // Partially hide Navbar
+      case currentScrollHeight <= BRACKET_2_HEIGHT:
+        // Show Navbar
         setNavbarCss(css`
-          opacity: ${1 - mixRatio};
+          opacity: ${opacityRatio};
+          color: ${theme.whiteColor};
+          background-color: transparent;
+        `);
+        break;
+      case currentScrollHeight <= BRACKET_3_HEIGHT:
+        // Partially hide Navbar
+        setNavbarCss(css`
+          opacity: ${opacityRatio};
           color: ${theme.whiteColor};
           background-color: transparent;
           box-shadow: none;
         `);
         break;
-      case lowerBracketHeight <= BRACKET_3_HEIGHT:
+      case currentScrollHeight <= BRACKET_4_HEIGHT:
         // Hide Navbar
         setNavbarCss(css`
           opacity: ${0};
           color: ${theme.whiteColor};
           background-color: transparent;
           box-shadow: none;
-          transform: translateY(0);
         `);
         break;
-      case lowerBracketHeight <= BRACKET_4_HEIGHT:
-        // Begin changing colors
-        setNavbarCss(css`
-          opacity: ${0};
-          color: ${theme.brandLightBlack};
-          background-color: transparent;
-          box-shadow: none;
-          transform: translateY(-64px);
-        `);
-        break;
-      case lowerBracketHeight >= BRACKET_5_HEIGHT:
+      case currentScrollHeight >= BRACKET_5_HEIGHT:
+      default:
         // Show Navbar
         setNavbarCss(css`
-          opacity: ${mixRatio};
+          opacity: ${1 - opacityRatio};
           color: ${theme.brandLightBlack};
           background-color: ${theme.whiteColor};
-          box-shadow: ${theme.navbarBoxShadow};
-          transform: translateY(0);
         `);
         break;
-      default:
-        // Do nothing.
     }
   };
-  const backgroundColor = useOnScrollBgColor(
+
+  useOnScrollBgColor(
     [
-      [BRACKET_1_HEIGHT, theme.lightDarkColor],
-      [BRACKET_2_HEIGHT, theme.brandLogoRed],
+      [BRACKET_1_HEIGHT, theme.darkColor],
+      [BRACKET_2_HEIGHT, theme.lightDarkColor],
       [BRACKET_3_HEIGHT, theme.brandLogoRed],
       [BRACKET_4_HEIGHT, theme.brandRed],
       [BRACKET_5_HEIGHT, theme.brandOrange],
-      [BRACKET_5_HEIGHT, theme.brandWhite],
+      [BRACKET_6_HEIGHT, theme.brandWhite]
     ],
     {
       callback: handleOnScrollBgColor,
-      throttleLimit: 50
+      throttleLimit: 30
     }
   );
 
-  document.body.style.backgroundColor = backgroundColor;
-
   return (
-    <StyledPageWrapper
-      backgroundColor={backgroundColor}
-    >
+    <StyledPageWrapper>
+      <ReactResizeDetector
+        handleWidth
+        handleHeight
+        onResize={() => setTotalScrenHeight(window.innerHeight)}
+      />
       <HeroWrapper>
-        <LogoContainer
-          css={heroCss.logo}
-        >
-          <StyledLogo />
-          <ArrowDownwardIcon className="scroll-down" />
-        </LogoContainer>
-        <HeroPattern css={heroCss.pattern} />
-        {heroCss.particles && (
-          <StyledParticles
-            params={{
-              particles: {
-                number: {
-                  value: 80,
-                  density: {
-                    enable: false
-                  }
-                },
-                size: {
-                  value: 6,
-                  random: true,
-                  anim: {
-                    speed: 8,
-                    size_min: 0.3
-                  }
-                },
-                line_linked: {
-                  enable: false
-                },
-                move: {
-                  random: true,
-                  speed: 1.5,
-                  direction: 'bottom',
-                  out_mode: 'out'
-                }
-              },
-              interactivity: {
-                events: {
-                  onhover: {
-                    enable: true,
-                    mode: 'bubble'
-                  },
-                  onclick: {
-                    enable: true,
-                    mode: 'repulse'
-                  }
-                },
-                modes: {
-                  bubble: {
-                    distance: 250,
-                    duration: 2,
-                    size: 0,
-                    opacity: 0
-                  },
-                  repulse: {
-                    distance: 400,
-                    duration: 4
-                  }
-                }
-              }
-            }}
-          />
-        )}
+        <Container height={totalScreenHeight - 64}>
+          <Parallax speed={0.5}>
+            <LogoContainer>
+              <StyledLogo />
+              <ArrowDownwardIcon className="scroll-down" />
+            </LogoContainer>
+          </Parallax>
+        </Container>
       </HeroWrapper>
-      <div style={{ minHeight: 3 * totalScreenHeight }}>
-        <div style={{ minHeight: totalScreenHeight, position: 'relative' }}>
-          <h1>Value Props</h1>
-        </div>
-        <div style={{ minHeight: totalScreenHeight }} />
-        <div style={{ minHeight: totalScreenHeight }} />
-      </div>
+      <Container
+        height={totalScreenHeight}
+        styledCss={useMemo(
+          () => css`
+              display: flex;
+              align-items: center;
+              justify-content: flex-start;
+              text-align: left;
+              max-width: 1200px;
+              margin: 100px auto 0;
+              padding: 0 40px;
+              background-color: transparent;
+            `,
+          []
+        )}
+      >
+        <StyledHeroValueProposition variant="h1">
+          For companies who find themselves in need of <span>high-quality</span> software
+          applications, <span>Denma</span> is a software development studio that provides
+          personalized software development services with a solid methodology to help companies take
+          their businesses to the <span>next level</span>.
+        </StyledHeroValueProposition>
+      </Container>
+      <Container height={totalScreenHeight}>
+        <HeroSlider
+          settings={{
+            slidingDuration: 250,
+            slidingDelay: 100,
+            shouldAutoplay: false,
+            shouldDisplayButtons: true,
+            autoplayDuration: 20000,
+            height: 0.9 * (totalScreenHeight - 64),
+            color: '#FFF'
+          }}
+        />
+      </Container>
+      <Container />
     </StyledPageWrapper>
   );
 };
 
+const Container = styled.div`
+  position: relative;
+  height: ${props => props.height || window.innerHeight}px;
+  ${({ styledCss }) => styledCss};
+`;
+
 Homepage.propTypes = {
   theme: PropTypes.instanceOf(Object).isRequired
 };
-
-const StyledPageWrapper = styled(PageWrapper)`
-  color: ${props => props.theme.lightDarkColor};
-  background-color: ${props => props.backgroundColor || props.theme.lightDarkColor};
-  transition: all ease 200ms;
-`;
-
-const HeroWrapper = styled.div`
-  position: relative;
-  color: ${props => props.theme.whiteColor};
-  width: 100%;
-  height: ${1.25 * window.innerHeight}px;
-  overflow: hidden;
-  pointer-events: none;
-
-  ${Particles} {
-    transition: transform ease 250ms;
-  }
-
-  & > *:last-child {
-    pointer-events: auto;
-    height: 100%;
-  }
-`;
-
-const LogoContainer = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  color: ${props => props.theme.whiteColor};
-  width: 100%;
-  height: ${window.innerHeight}px;
-  display: flex;
-  flex-flow: column;
-  align-items: center;
-  justify-content: center;
-  z-index: 5;
-  transition: all ease 250ms;
-
-  ${props => props.css}
-
-  .scroll-down {
-    width: 80px;
-    height: 80px;
-    padding: 0 0 24px;
-    cursor: pointer;
-    pointer-events: auto;
-  }
-`;
-
-const StyledLogo = styled(Logo)`
-  margin: 0 auto;
-  width: 70%;
-  height: 100%;
-`;
-
-const StyledParticles = styled(Particles)`
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-`;
 
 export default withTheme(Homepage);

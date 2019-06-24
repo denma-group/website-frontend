@@ -9,7 +9,7 @@ import RoutesWrapper from 'layout/UI/RoutesWrapper';
 import Homepage from 'containers/Homepage';
 import AboutUs from 'containers/AboutUs';
 
-const Routes = props => {
+const Routes = (props) => {
   const { location } = props;
 
   /**
@@ -20,15 +20,13 @@ const Routes = props => {
   }, [location]);
 
   return (
-    <StyledRoutesWrapper>
-      <RoutesWrapper>
-        <Switch>
-          <Route exact path="/" component={Homepage} />
-          <Route exact path="/about-us" component={AboutUs} />
-          <Route path="/hello-world" render={() => <div>Hello world!</div>} />
-        </Switch>
-      </RoutesWrapper>
-    </StyledRoutesWrapper>
+    <RoutesWrapper>
+      <Switch>
+        <Route exact path="/" component={Homepage} />
+        <Route exact path="/about-us" component={AboutUs} />
+        <Route path="/hello-world" render={() => <div>Hello world!</div>} />
+      </Switch>
+    </RoutesWrapper>
   );
 };
 

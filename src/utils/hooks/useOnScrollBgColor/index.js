@@ -2,15 +2,15 @@
 import { useState, useEffect, useCallback } from 'react';
 
 // Dependencies
-import { useThrottle } from 'utils/hooks/useThrottle';
+import { useCallbackQueue } from 'use-utilities';
 import { mixColors } from 'utils/mixColors';
 
 /**
  * `useOnScrollBgColor` is a hook that will mix two colors when the on scroll event listener triggers,
  * depending on the current scroll position, total scroll height given, and the colors to be mixed.
- * The on scroll event listener callback is throttled and set at a `100ms` duration.
+ * The on scroll event listener callback is throttled and set at a `30ms` duration.
  * @param {[string, string] | [number, string][]} colors `colors` accepts an array of two colors, or an array of tuples
- * structured as `[heightBreakpoint, colors]`. 
+ * structured as `[heightBreakpoint, colors]`.
  * @param {{
  *  callback: (backgroundColor: string, bracketsTuple: [[number, string], [number, string]]) => void,
  *  scrollHeight: number,
@@ -40,7 +40,7 @@ export const useOnScrollBgColor = (
     setColorOnMount = true,
     mixRatioChannels = [true, true, true]
   } = {}
-  ) => {
+) => {
   const [backgroundColor, setBackgroundColor] = useState(undefined);
 
   /**
@@ -65,11 +65,12 @@ export const useOnScrollBgColor = (
        */
       if (shouldSort) colors.sort((colorTwo, colorOne) => colorTwo[0] - colorOne[0]);
       // Declaring color two, which must be the color of the next bracket, or the same if it's the last bracket.
-      const colorTwoTuple = colors.find(colorTuple => currentScrollHeight <= colorTuple[0]) || colors[colors.length - 1];
+      const colorTwoTuple =
+        colors.find(colorTuple => currentScrollHeight <= colorTuple[0]) ||
+        colors[colors.length - 1];
       // If on the last bracket, simply set the last color as the mixed one then run the callback.
       if (backgroundColor === colorTwoTuple[1]) {
         const mixedColor = colorTwoTuple[1];
-        setBackgroundColor(mixedColor);
         if (callback) {
           callback({
             mixedColor,
@@ -78,7 +79,7 @@ export const useOnScrollBgColor = (
             currentScrollHeight
           });
         }
-      // Otherwise, mix the colors.
+        // Otherwise, mix the colors.
       } else {
         const indexOfColorTwo = colors.indexOf(colorTwoTuple);
         const colorOneTuple = colors[indexOfColorTwo - 1] || colors[0];
@@ -86,7 +87,8 @@ export const useOnScrollBgColor = (
          * The mix ratio is basically at which percentage of the bracket the
          * current scroll height, or position, is at.
          */
-        const mixRatio = ((currentScrollHeight - colorOneTuple[0]) / (colorTwoTuple[0] - colorOneTuple[0])) || 0;
+        const mixRatio =
+          (currentScrollHeight - colorOneTuple[0]) / (colorTwoTuple[0] - colorOneTuple[0]) || 0;
         const mixedColor = mixColors(
           [colorOneTuple[1], colorTwoTuple[1]],
           mixRatioNumberToTriple(mixRatio, mixRatioChannels)
@@ -104,9 +106,9 @@ export const useOnScrollBgColor = (
           });
         }
       }
-    /**
-     * If `colors` is an array of strings, then we simply mix the two colors.
-     */
+      /**
+       * If `colors` is an array of strings, then we simply mix the two colors.
+       */
     } else {
       const [colorOne, colorTwo] = colors;
       const mixRatio = currentScrollHeight / scrollHeight;
@@ -126,21 +128,22 @@ export const useOnScrollBgColor = (
     }
   }, [backgroundColor, callback, colors, scrollHeight, shouldSort, mixRatioChannels]);
 
+  const useHandleOnScroll = useCallbackQueue(onThrottledScrollHandler, throttleLimit);
   const [setupOnMount, setSetupOnMount] = useState(setColorOnMount);
 
-  const throttled = useThrottle(onThrottledScrollHandler, throttleLimit);
   useEffect(() => {
-    window.addEventListener(
-      'scroll',
-      throttled
-    );
+    window.addEventListener('scroll', useHandleOnScroll);
     if (setupOnMount) {
       onThrottledScrollHandler();
       setSetupOnMount(false);
     }
-    return () => window.removeEventListener('scroll', throttled);
-  }, [throttled, setupOnMount, onThrottledScrollHandler]);
-  return backgroundColor;
+    // Return clause.
+    return () => window.removeEventListener('scroll', useHandleOnScroll);
+  }, [useHandleOnScroll, onThrottledScrollHandler, setupOnMount]);
+
+  useEffect(() => {
+    document.body.style.backgroundColor = backgroundColor;
+  }, [backgroundColor]);
 };
 
 /**
@@ -154,11 +157,9 @@ const mixRatioNumberToTriple = (mixRatio, mixRatioChannels) => {
    * breakpoints, ince it should never happen, but just in case.
    */
   const ratio = mixRatio > 1 ? 1 : mixRatio;
-  return (
-    [
-      mixRatioChannels[0] ? ratio : 0,
-      mixRatioChannels[1] ? ratio : 0,
-      mixRatioChannels[2] ? ratio : 0
-    ]
-  );
+  return [
+    mixRatioChannels[0] ? ratio : 0,
+    mixRatioChannels[1] ? ratio : 0,
+    mixRatioChannels[2] ? ratio : 0
+  ];
 };
