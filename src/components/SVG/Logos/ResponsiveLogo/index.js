@@ -1,5 +1,5 @@
 // Libraries
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import ReactResizeDetector from 'react-resize-detector';
 import { withTheme } from 'styled-components';
@@ -12,7 +12,7 @@ const ResponsiveLogo = props => {
   const { theme, ...rest } = props;
   const [width, setWidth] = useState(window.innerWidth);
 
-  const onResizeHandler = () => setWidth(window.innerWidth);
+  const onResizeHandler = useCallback(() => setWidth(window.innerWidth), [setWidth]);
 
   const { screenXl } = theme;
   const widthBreakpoint = useMemo(() => Number(String(screenXl).replace('px', '')), [screenXl]);
@@ -30,7 +30,7 @@ const ResponsiveLogo = props => {
         <VerticalLogo {...rest} />
       )}
     </React.Fragment>
-  ), [width, widthBreakpoint, rest]);
+  ), [width, widthBreakpoint, onResizeHandler, rest]);
 };
 
 ResponsiveLogo.propTypes = {
