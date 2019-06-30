@@ -1,22 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useInView } from 'react-intersection-observer';
 import { useTranslateContent } from '../../../utils/hooks/useTranslateContent';
 
 const HookedParallax = (props) => {
   const { multiplierY, style, children } = props;
-  const [ref, inView] = useInView({
-    threshold: 0
-  });
-  const { translateYVals } = useTranslateContent([
-    { multipliersY: multiplierY, translateY: inView }
-  ]);
 
-  return (
-    <div ref={ref} style={{ ...style, transform: `translateY(${translateYVals[0]}px)` }}>
-      {children}
-    </div>
-  );
+  const { translateYVals } = useTranslateContent(multiplierY);
+
+  return <div style={{ ...style, transform: `translateY(${translateYVals}px)` }}>{children}</div>;
 };
 
 HookedParallax.propTypes = {
