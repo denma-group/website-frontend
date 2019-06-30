@@ -13,6 +13,7 @@ import { Parallax } from 'components/UI';
 import HeroSlider, { ActiveSlideThemeProvider } from 'components/Homepage/HeroSlider';
 import HelpYourBusiness from 'components/Homepage/HelpYourBusiness';
 import BackgroundAttachedDiv from 'components/Homepage/BackgroundAttachedDiv';
+import SubscribeForm from 'components/Homepage/SubscribeForm';
 
 // Icons
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
@@ -186,6 +187,12 @@ const Homepage = props => {
               color: '#FFF'
             }}
           />
+        </Container>
+        {/* SUBSCRIBE TO US FORM */}
+        <Container
+          height="auto"
+        >
+          <SubscribeForm />
         </Container>
       </StyledPageWrapper>
     </ActiveSlideThemeProvider>
