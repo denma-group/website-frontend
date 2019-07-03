@@ -2,13 +2,14 @@ import { useState, useEffect, useCallback } from 'react';
 import _ from 'lodash';
 
 /* 
-	`useTranslateContent` takes an array of objects. each object has a flag translateY and multipliersY
+	`useTranslateContent` takes a multiplier and returns the translateY value
 */
 
 export const useTranslateContent = (multipliersY) => {
   const [translateYVals, setTranslateYVals] = useState(0);
   const [lastScrollY, setLastScrollY] = useState(0);
-  // use throthle
+
+  // Defining function that gets called no throttled
   const getValues = useCallback(() => {
     const { scrollY, innerHeight } = window;
 
@@ -21,6 +22,7 @@ export const useTranslateContent = (multipliersY) => {
 
   // throttled for performance
   const throttled = _.throttle(getValues, 150);
+
   useEffect(() => {
     window.addEventListener('scroll', throttled);
     return () => window.removeEventListener('scroll', throttled);
