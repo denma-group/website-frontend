@@ -1,13 +1,28 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import styled, { withTheme } from 'styled-components';
 import Button from '@material-ui/core/Button';
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 
 import FounderCard from '../../components/UI/FounderCard';
 import JoinUsImage from '../../static/images/backgrounds/join-us.jpg';
 import HookedParallax from '../../components/UI/HookedParallax';
 
 const AboutUs = (props) => {
+  // Hooks
+  const founderContainerRef = useRef(null);
+
+  // Functions
+  const ArrowDownClickHandler = () => {
+    if (founderContainerRef && founderContainerRef.current) {
+      founderContainerRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'end',
+        inline: 'nearest'
+      });
+    }
+  };
+
   const foundersData = [
     {
       name: 'Jorge Baralt',
@@ -54,11 +69,13 @@ const AboutUs = (props) => {
               zIndex: 10
             }}
           >
-            <Circle size={500} color={props.theme.brandDarkRed} />
+            <Circle size={500} color={props.theme.brandDarkRed}>
+              <ArrowDownwardIcon onClick={ArrowDownClickHandler} className="scroll-down" />
+            </Circle>
           </HookedParallax>
         </HeaderContainer>
       </HeaderStyle>
-      <FounderContainer style={{ position: 'relative', zIndex: 9 }}>
+      <FounderContainer ref={founderContainerRef} style={{ position: 'relative', zIndex: 9 }}>
         <AppText color={props.theme.brandOrange} fontSize="42" fontWeight="bold">
           Founder`s Story
         </AppText>
@@ -114,6 +131,7 @@ const AboutUs = (props) => {
   );
 };
 
+// Components
 const Container = styled.div`
   color: ${props => props.theme.lightDarkColor};
   transition: all ease 200ms;
@@ -162,12 +180,24 @@ const GradientButton = styled(Button)`
 `;
 
 const Circle = styled.div`
+  display: flex;
   height: ${props => `${props.size}px`};
   width: ${props => `${props.size}px`};
   border-radius: 50%;
   background-color: ${props => props.color};
   justify-content: center;
   align-items: center;
+  .scroll-down {
+    width: 80px;
+    height: 80px;
+    padding: 0 0 24px;
+    cursor: pointer;
+    pointer-events: auto;
+    color: white;
+    right: ${props => `${props.size / 5}px`};
+    bottom: ${props => `${props.size / 6}px`};
+    position: relative;
+  }
 `;
 
 const Square = styled.div`
