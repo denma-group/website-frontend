@@ -5,28 +5,31 @@ import _ from 'lodash';
 	`useTranslateContent` takes a multiplier and returns the translateY value
 */
 
-export const useTranslateContent = (multipliersY) => {
-  const [translateYVals, setTranslateYVals] = useState(0);
-  const [lastScrollY, setLastScrollY] = useState(0);
+export const useTranslateContent = (multipliersY, { startingY, componentHeight }) => {
+  const [translateYVal, setTranslateYVal] = useState(0);
 
-  // Defining function that gets called no throttled
-  const getValues = useCallback(() => {
+  // throtheled function that gets the Y translate value
+  const getTranslateYValue = useCallback(() => {
     const { scrollY, innerHeight } = window;
+    // checks if component is in view before doing calculations for performance
+    if (scrollY + innerHeight >= startingY * 0.8 && scrollY < startingY * 1.2) {
+      // 'componentOffsetMultiplier' handles some weird cases when scrollY is less than the innerHeight
+      const componentOffsetMultiplier = _.clamp(1 - scrollY / innerHeight, 0, 1);
 
-    if (translateYVals > -innerHeight || scrollY <= lastScrollY) {
-      const calculation = -multipliersY * scrollY;
-      setTranslateYVals(calculation);
-      setLastScrollY(scrollY);
+      const relativeY =
+        scrollY + innerHeight - startingY - componentOffsetMultiplier * (componentHeight / 2);
+
+      const calculation = relativeY * -multipliersY;
+      setTranslateYVal(calculation);
     }
-  }, [multipliersY, lastScrollY, translateYVals]);
+  }, [componentHeight, multipliersY, startingY]);
 
   // throttled for performance
-  const throttled = _.throttle(getValues, 150);
-
+  const throttled = _.throttle(getTranslateYValue, 100);
   useEffect(() => {
     window.addEventListener('scroll', throttled);
     return () => window.removeEventListener('scroll', throttled);
-  }, [getValues, throttled]);
+  }, [getTranslateYValue, throttled]);
 
-  return { translateYVals };
+  return { translateYVal };
 };

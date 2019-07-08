@@ -14,14 +14,16 @@ const AboutUs = (props) => {
       age: '24',
       position: 'CEO',
       description:
-        'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a'
+        'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a',
+      color: props.theme.brandDarkRed
     },
     {
       name: 'Robert Molina',
       age: '25',
       position: 'CTO',
       description:
-        'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a'
+        'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a',
+      color: props.theme.brandOrange
     }
   ];
 
@@ -47,15 +49,16 @@ const AboutUs = (props) => {
             style={{
               marginTop: 20,
               position: 'absolute',
-              bottom: -200,
-              right: -200
+              bottom: -250,
+              right: -250,
+              zIndex: 10
             }}
           >
-            <Circle size={400} color={props.theme.brandDarkRed} />
+            <Circle size={500} color={props.theme.brandDarkRed} />
           </HookedParallax>
         </HeaderContainer>
       </HeaderStyle>
-      <FounderContainer>
+      <FounderContainer style={{ position: 'relative', zIndex: 9 }}>
         <AppText color={props.theme.brandOrange} fontSize="42" fontWeight="bold">
           Founder`s Story
         </AppText>
@@ -63,7 +66,7 @@ const AboutUs = (props) => {
           color={props.theme.whiteColor}
           fontSize="24"
           fontWeight="200"
-          style={{ marginTop: 20, paddingRight: 100 }}
+          style={{ marginTop: 20, paddingRight: 100, zIndex: 10 }}
         >
           Our partnership started a few years ago. Both of us had the same passion for coding and
           building our own company. We started simple, learning some basic stuff, and creating
@@ -74,11 +77,23 @@ const AboutUs = (props) => {
         </AppText>
         <FoundersBioContainer>
           {foundersData.map((founder, i) => (
-            <CardContainer key={i.toString()}>
+            <CardContainer style={{ zIndex: 10 }} key={i.toString()}>
               <FounderCard founder={founder} />
             </CardContainer>
           ))}
         </FoundersBioContainer>
+        <HookedParallax style={{ position: 'absolute', bottom: -100 }} multiplierY={2}>
+          <Square size={200} rotate={22} color={props.theme.brandDarkRed} />
+        </HookedParallax>
+        <HookedParallax
+          style={{ position: 'absolute', bottom: -100, right: 100 }}
+          multiplierY={1.5}
+        >
+          <Square size={100} rotate={44} color={props.theme.brandOrange} />
+        </HookedParallax>
+        <HookedParallax style={{ position: 'absolute', bottom: -50, right: 150 }} multiplierY={1.5}>
+          <Square size={100} rotate={-22} color={props.theme.brandOrange} />
+        </HookedParallax>
       </FounderContainer>
       <JoinUsContainer>
         <JoinUsTextContainer>
@@ -93,8 +108,8 @@ const AboutUs = (props) => {
             dedicated.
           </AppText>
         </JoinUsTextContainer>
-        <OurProcessContainer />
       </JoinUsContainer>
+      <OurProcessContainer />
     </Container>
   );
 };
@@ -155,6 +170,15 @@ const Circle = styled.div`
   align-items: center;
 `;
 
+const Square = styled.div`
+  height: ${props => `${props.size}px`};
+  width: ${props => `${props.size}px`};
+  border-radius: 30px;
+  transform: ${props => `rotateY(0deg) rotate(${props.rotate}deg)`};
+  background-color: ${props => props.color};
+  opacity: 0.7;
+`;
+
 const FounderContainer = styled.div`
   height: 100vh;
   background-color: ${props => props.theme.lightDarkColor};
@@ -186,6 +210,7 @@ const JoinUsContainer = styled.div`
   position: relative;
   display: flex;
   justify-content: flex-end;
+  z-index: 20;
 `;
 
 const JoinUsTextContainer = styled.div`
@@ -202,7 +227,8 @@ const JoinUsTextContainer = styled.div`
 `;
 
 const OurProcessContainer = styled.div`
-  background-color: ${props => props.theme.lightDarkColor};
+  background: ${props => `linear-gradient(rgba(0, 0, 0, 0.9),${props.theme.lightDarkColor});`};
+  height: 100vh;
 `;
 
 AboutUs.propTypes = {

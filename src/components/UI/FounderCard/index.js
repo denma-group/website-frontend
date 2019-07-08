@@ -9,11 +9,11 @@ const FounderCard = (props) => {
       <CircularImage src="https://www.w3schools.com/howto/img_avatar.png" alt="Avatar" />
       <Card>
         <AppText fontSize="34">{founder.name}</AppText>
-        <AppText fontSize="24" fontWeight="300" color={props.theme.brandDarkRed}>
+        <AppText fontSize="24" fontWeight="300" color={founder.color}>
           {founder.position}
         </AppText>
         <AppText fontSize="16">{founder.description}</AppText>
-        <CornerDecoration />
+        <CornerDecoration color={founder.color} />
       </Card>
     </CardOutside>
   );
@@ -39,6 +39,7 @@ const Card = styled.div`
   border-radius: 10px;
   overflow: hidden;
   padding: 100px 20px 20px 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 `;
 
 const AppText = styled.p`
@@ -61,15 +62,14 @@ const CornerDecoration = styled.div`
   height: 100px;
   width: 100px;
   border-radius: 50%;
-  background-color: ${props => props.theme.brandRed};
+  background-color: ${props => props.color};
   position: absolute;
   top: -50px;
   left: -50px;
 `;
 
 FounderCard.propTypes = {
-  founder: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired
+  founder: PropTypes.object.isRequired
 };
 
 export default withTheme(FounderCard);
