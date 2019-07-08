@@ -1,59 +1,98 @@
 // Libraries
-import React from 'react';
+import React, { useState, useContext, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import styled, { withTheme } from 'styled-components';
+import { withTheme } from 'styled-components';
 
 // Components
 import HeroSlider, {
   Slide,
   Nav
 } from 'hero-slider';
-import Typography from '@material-ui/core/Typography';
 
-const Slider = props => (
-  <HeroSlider
-    slidingAnimation="left_to_right"
-    orientation="horizontal"
-    initialSlide={1}
-    settings={props.settings}
-  >
-    {props.children}
-    {/* SERVIFY */}
-    <Slide
-      background={{
-        shouldLazyLoad: false,
-        backgroundColor: props.theme.servify
+import Servify from './Slides/Servify';
+import BonpreuFoods from './Slides/BonpreuFoods';
+import TireOutlet from './Slides/TireOutlet';
+
+export const ActiveSlideThemeContext = React.createContext({
+  activeSlideTheme: undefined
+});
+
+/**
+ * The active slide `theme` will be passed to the background
+ * attached divider component to set the bottom gradient's color
+ * equal to the active slide's color.
+ */
+export const ActiveSlideThemeProvider = withTheme(props => {
+  const { children, theme } = props;
+  const [activeSlideTheme, setActiveSlideTheme] = useState(theme.servify);
+  return useMemo(() => (
+    <ActiveSlideThemeContext.Provider
+      value={{
+        activeSlideTheme,
+        setActiveSlideTheme
       }}
     >
-      <SliderInner>
-        <Typography variant="h1">Servify</Typography>
-      </SliderInner>
-    </Slide>
-    {/* BONPREU? */}
-    <Slide
-      background={{
-        shouldLazyLoad: false,
-        backgroundColor: props.theme.bonpreuFoods
-      }}
+      {children}
+    </ActiveSlideThemeContext.Provider>
+  ), [activeSlideTheme, setActiveSlideTheme, children]);
+});
+
+const Slider = props => {
+  const { theme } = props;
+  const { setActiveSlideTheme } = useContext(ActiveSlideThemeContext);
+
+  const onChangeHandler = nextSlide => {
+    switch (nextSlide) {
+      case 1:
+        return setActiveSlideTheme(theme.servify);
+      case 2:
+        return setActiveSlideTheme(theme.bonpreuFoods);
+      case 3:
+        return setActiveSlideTheme(theme.tireOutlet);
+      default: // Do nothing
+    }
+  };
+
+  return (
+    <HeroSlider
+      slidingAnimation="left_to_right"
+      orientation="horizontal"
+      initialSlide={1}
+      settings={props.settings}
+      onChange={onChangeHandler}
     >
-      <SliderInner>
-        <Typography variant="h1">Bonpreu Foods</Typography>
-      </SliderInner>
-    </Slide>
-    {/* TIRE OUTLETS */}
-    <Slide
-      background={{
-        shouldLazyLoad: false,
-        backgroundColor: props.theme.tireOutlet
-      }}
-    >
-      <SliderInner>
-        <Typography variant="h1">Tire Outlets</Typography>
-      </SliderInner>
-    </Slide>
-    <Nav />
-  </HeroSlider>
-);
+      {props.children}
+      {/* SERVIFY */}
+      <Slide
+        background={{
+          shouldLazyLoad: false,
+          backgroundColor: theme.servify
+        }}
+      >
+        <Servify />
+      </Slide>
+      {/* BONPREU? */}
+      <Slide
+        background={{
+          shouldLazyLoad: false,
+          backgroundColor: theme.bonpreuFoods
+        }}
+      >
+        <BonpreuFoods />
+      </Slide>
+      {/* TIRE OUTLETS */}
+      <Slide
+        background={{
+          shouldLazyLoad: false,
+          backgroundColor: theme.tireOutlet
+        }}
+      >
+        <TireOutlet />
+      </Slide>
+      <Nav />
+    </HeroSlider>
+  );
+};
 
 Slider.propTypes = {
   settings: PropTypes.instanceOf(Object).isRequired,
@@ -64,14 +103,5 @@ Slider.propTypes = {
 Slider.defaultProps = {
   children: null
 };
-
-const SliderInner = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  ${({ styledCss }) => styledCss};
-`;
 
 export default withTheme(Slider);

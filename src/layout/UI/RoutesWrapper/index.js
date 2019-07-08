@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 // Components
 import Navbar, { NavbarProvider } from 'layout/UI/Navbar';
+import Footer from 'layout/UI/Footer';
 
 const RoutesWrapper = props => {
   const { children, ...rest } = props;
@@ -12,6 +13,7 @@ const RoutesWrapper = props => {
     <NavbarProvider {...rest}>
       <Navbar />
       {children}
+      <Footer />
     </NavbarProvider>
   );
 };

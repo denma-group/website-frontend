@@ -11,14 +11,14 @@ const LogoDenmaHorizontalNoMotto = props => (
   >
     <defs>
         <style>
-          {'.cls-NM-1{fill:currentColor;}.cls-NM-2{fill:#fff;}.cls-NM-3,.cls-NM-7{fill:none;}.cls-NM-4{fill:#d12959;}.cls-NM-5{fill:url(#linear-gradient);}.cls-NM-6{fill:url(#linear-gradient-2);}.cls-NM-7{stroke:#1d1d1b;stroke-miterlimit:10;}.cls-NM-8{fill:#a0224c;}'}
+          {'.cls-NM-1{fill:currentColor;}.cls-NM-2{fill:#fff;}.cls-NM-3,.cls-NM-7{fill:none;}.cls-NM-4{fill:#d12959;}.cls-NM-5{fill:url(#linear-gradient-no-motto);}.cls-NM-6{fill:url(#linear-gradient-no-motto-2);}.cls-NM-7{stroke:#1d1d1b;stroke-miterlimit:10;}.cls-NM-8{fill:#a0224c;}'}
         </style>
-        <linearGradient id="linear-gradient" x1="97.96" x2="171.68" y1="488.44" y2="425.13" gradientUnits="userSpaceOnUse">
+        <linearGradient id="linear-gradient-no-motto" x1="97.96" x2="171.68" y1="488.44" y2="425.13" gradientUnits="userSpaceOnUse">
             <stop offset="0" stopColor="#a0224c" />
             <stop offset="0.43" stopColor="#672037" />
             <stop offset="1" stopColor="#1d1d1b" />
         </linearGradient>
-        <linearGradient id="linear-gradient-2" x1="200.45" x2="149.26" y1="383" y2="427.49" gradientUnits="userSpaceOnUse">
+        <linearGradient id="linear-gradient-no-motto-2" x1="200.45" x2="149.26" y1="383" y2="427.49" gradientUnits="userSpaceOnUse">
             <stop offset="0" stopColor="#a0224c" />
             <stop offset="1" stopColor="#1d1d1b" />
         </linearGradient>

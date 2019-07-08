@@ -1,5 +1,5 @@
 // Libraries
-import React, { useContext, useState, useMemo } from 'react';
+import React, { useContext, useState, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css, withTheme } from 'styled-components';
 
@@ -7,10 +7,14 @@ import styled, { css, withTheme } from 'styled-components';
 import { useOnScrollBgColor } from 'utils/hooks/useOnScrollBgColor';
 
 // Components
-import { NavbarContext } from 'layout/UI/Navbar';
-import HeroSlider from 'components/Homepage/HeroSlider';
-import { Parallax } from 'components/UI';
 import ReactResizeDetector from 'react-resize-detector';
+import { NavbarContext } from 'layout/UI/Navbar';
+import { Parallax } from 'components/UI';
+import HeroSlider, { ActiveSlideThemeProvider } from 'components/Homepage/HeroSlider';
+import HelpYourBusiness from 'components/Homepage/HelpYourBusiness';
+import BackgroundAttachedDiv from 'components/Homepage/BackgroundAttachedDiv';
+import SubscribeForm from 'components/Homepage/SubscribeForm';
+
 // Icons
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 
@@ -96,31 +100,49 @@ const Homepage = (props) => {
     ],
     {
       callback: handleOnScrollBgColor,
-      throttleLimit: 30
+      throttleLimit: 20,
     }
   );
 
-  return (
-    <StyledPageWrapper>
-      <ReactResizeDetector
-        handleWidth
-        handleHeight
-        onResize={() => setTotalScrenHeight(window.innerHeight)}
-      />
-      <HeroWrapper>
-        <Container height={totalScreenHeight - 64}>
-          <Parallax speed={0.5}>
-            <LogoContainer>
-              <StyledLogo />
-              <ArrowDownwardIcon className="scroll-down" />
-            </LogoContainer>
-          </Parallax>
-        </Container>
-      </HeroWrapper>
-      <Container
-        height={totalScreenHeight}
-        styledCss={useMemo(
-          () => css`
+  const arrowDownOnClickHandler = () => {
+    if (valuePropositionRef && valuePropositionRef.current) {
+      valuePropositionRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'end',
+        inline: 'nearest'
+    });
+    }
+  };
+
+  const valuePropositionRef = useRef(undefined);
+
+  return useMemo(() => (
+    <ActiveSlideThemeProvider>
+      <StyledPageWrapper>
+        <ReactResizeDetector
+          handleWidth
+          handleHeight
+          onResize={() => setTotalScrenHeight(window.innerHeight)}
+        />
+        <HeroWrapper>
+          <Container
+            height={totalScreenHeight - 64}
+          >
+            <Parallax speed={0.5}>
+              <LogoContainer>
+                <StyledLogo />
+                <ArrowDownwardIcon
+                  onClick={arrowDownOnClickHandler}
+                  className="scroll-down"
+                />
+              </LogoContainer>
+            </Parallax>
+          </Container>
+        </HeroWrapper>
+        <Container
+          height={totalScreenHeight}
+          styledCss={
+            css`
               display: flex;
               align-items: center;
               justify-content: flex-start;
@@ -129,33 +151,50 @@ const Homepage = (props) => {
               margin: 100px auto 0;
               padding: 0 40px;
               background-color: transparent;
-            `,
-          []
-        )}
-      >
-        <StyledHeroValueProposition variant="h1">
-          For companies who find themselves in need of <span>high-quality</span> software
-          applications, <span>Denma</span> is a software development studio that provides
-          personalized software development services with a solid methodology to help companies take
-          their businesses to the <span>next level</span>.
-        </StyledHeroValueProposition>
-      </Container>
-      <Container height={totalScreenHeight}>
-        <HeroSlider
-          settings={{
-            slidingDuration: 250,
-            slidingDelay: 100,
-            shouldAutoplay: false,
-            shouldDisplayButtons: true,
-            autoplayDuration: 20000,
-            height: 0.9 * (totalScreenHeight - 64),
-            color: '#FFF'
-          }}
-        />
-      </Container>
-      <Container />
-    </StyledPageWrapper>
-  );
+            `}
+          ref={valuePropositionRef}
+        >
+          <StyledHeroValueProposition variant="h1">
+            For companies who find themselves in need of <span>high-quality</span> software applications, <span>Denma</span> is a software development studio that provides personalized services with a solid methodology to <span>help</span> companies take their businesses to the <span>next level</span>.
+          </StyledHeroValueProposition>
+        </Container>
+        {/* LINKS */}
+        <Container
+          height={totalScreenHeight}
+        >
+          <HelpYourBusiness />
+        </Container>
+        {/* DIVIDER */}
+        <Container
+          height={totalScreenHeight * 0.5}
+        >
+          <BackgroundAttachedDiv />
+        </Container>
+        {/* HERO-SLIDER */}
+        <Container
+          height={0.9 * (totalScreenHeight - 64)}
+        >
+          <HeroSlider
+            settings={{
+              slidingDuration: 250,
+              slidingDelay: 100,
+              shouldAutoplay: false,
+              shouldDisplayButtons: true,
+              autoplayDuration: 20000,
+              height: 0.9 * (totalScreenHeight - 64),
+              color: '#FFF'
+            }}
+          />
+        </Container>
+        {/* SUBSCRIBE TO US FORM */}
+        <Container
+          height="auto"
+        >
+          <SubscribeForm />
+        </Container>
+      </StyledPageWrapper>
+    </ActiveSlideThemeProvider>
+  ), [totalScreenHeight, valuePropositionRef]);
 };
 
 const Container = styled.div`
