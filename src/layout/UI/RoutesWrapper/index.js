@@ -10,8 +10,8 @@ const RoutesWrapper = props => {
   const { children, ...rest } = props;
 
   return (
-    <NavbarProvider {...rest}>
-      <Navbar />
+    <NavbarProvider>
+      <Navbar {...rest} />
       {children}
       <Footer />
     </NavbarProvider>
