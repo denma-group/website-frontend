@@ -6,6 +6,7 @@ const FounderCard = (props) => {
   const { founder } = props;
   return (
     <CardOutside>
+      {/* TODO: Remove placeholders */}
       <CircularImage src="https://www.w3schools.com/howto/img_avatar.png" alt="Avatar" />
       <Card>
         <AppText fontSize="34">{founder.name}</AppText>

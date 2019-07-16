@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useMemo, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled, { withTheme } from 'styled-components';
 import Button from '@material-ui/core/Button';
@@ -8,12 +8,28 @@ import FounderCard from '../../components/UI/FounderCard';
 import JoinUsImage from '../../static/images/backgrounds/join-us.jpg';
 import HookedParallax from '../../components/UI/HookedParallax';
 
+const { innerHeight } = window;
+
 const AboutUs = (props) => {
   // Hooks
   const founderContainerRef = useRef(null);
 
+  // On mount
+  useEffect(() => {
+    try {
+      window.scroll({
+        top: 0,
+        left: 0,
+        behavior: 'smooth'
+      });
+    } catch (error) {
+      // just a fallback for older browsers
+      window.scrollTo(0, 0);
+    }
+  });
+
   // Functions
-  const ArrowDownClickHandler = () => {
+  const ArrowDownClickHandler = useCallback(() => {
     if (founderContainerRef && founderContainerRef.current) {
       founderContainerRef.current.scrollIntoView({
         behavior: 'smooth',
@@ -21,37 +37,40 @@ const AboutUs = (props) => {
         inline: 'nearest'
       });
     }
-  };
+  }, []);
 
-  const foundersData = [
-    {
-      name: 'Jorge Baralt',
-      age: '24',
-      position: 'CEO',
-      description:
-        'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a',
-      color: props.theme.brandDarkRed
-    },
-    {
-      name: 'Robert Molina',
-      age: '25',
-      position: 'CTO',
-      description:
-        'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a',
-      color: props.theme.brandOrange
-    }
-  ];
+  const foundersData = useMemo(
+    () => [
+      {
+        name: 'Jorge Baralt',
+        age: '24',
+        position: 'CEO',
+        description:
+          'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a',
+        color: props.theme.brandDarkRed
+      },
+      {
+        name: 'Robert Molina',
+        age: '25',
+        position: 'CTO',
+        description:
+          'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a',
+        color: props.theme.brandOrange
+      }
+    ],
+    [props.theme.brandDarkRed, props.theme.brandOrange]
+  );
 
   return (
     <Container>
       <HeaderStyle>
-        <HeaderContainer>
+        <HeaderContainer height={innerHeight}>
           <AppText color={props.theme.whiteColor} fontSize="42" fontWeight="bold">
-            Devoted to provide{' '}
+            {'Devoted to provide '}
             <SpanText color={props.theme.brandOrange} fontSize="42" fontWeight="bold">
               professional advice
             </SpanText>
-            , deliver amazing software, and take your company to the{' '}
+            {', deliver amazing software, and take your company to the '}
             <SpanText color={props.theme.brandDarkRed} fontSize="42" fontWeight="bold">
               next level.
             </SpanText>
@@ -75,7 +94,11 @@ const AboutUs = (props) => {
           </HookedParallax>
         </HeaderContainer>
       </HeaderStyle>
-      <FounderContainer ref={founderContainerRef} style={{ position: 'relative', zIndex: 9 }}>
+      <FounderContainer
+        ref={founderContainerRef}
+        style={{ position: 'relative', zIndex: 9 }}
+        height={innerHeight}
+      >
         <AppText color={props.theme.brandOrange} fontSize="42" fontWeight="bold">
           Founder`s Story
         </AppText>
@@ -112,7 +135,7 @@ const AboutUs = (props) => {
           <Square size={100} rotate={-22} color={props.theme.brandOrange} />
         </HookedParallax>
       </FounderContainer>
-      <JoinUsContainer>
+      <JoinUsContainer height={innerHeight}>
         <JoinUsTextContainer>
           <AppText color={props.theme.brandDarkRed} fontSize="42" fontWeight="bold">
             Want to join us?
@@ -126,7 +149,7 @@ const AboutUs = (props) => {
           </AppText>
         </JoinUsTextContainer>
       </JoinUsContainer>
-      <OurProcessContainer />
+      <OurProcessContainer height={innerHeight} />
     </Container>
   );
 };
@@ -140,10 +163,10 @@ const Container = styled.div`
 const HeaderContainer = styled.div`
   display: flex;
   flex-direction: column;
-  height: 74vh;
+  height: ${props => `${props.height - 200}px`};
   width: 800px;
   margin-left: 120px;
-  margin-top: 20vh;
+  margin-top: 200px;
   overflow: hidden;
 `;
 
@@ -210,7 +233,7 @@ const Square = styled.div`
 `;
 
 const FounderContainer = styled.div`
-  height: 100vh;
+  height: ${props => `${props.height}px`};
   background-color: ${props => props.theme.lightDarkColor};
   display: flex;
   flex-direction: column;
@@ -234,7 +257,7 @@ const CardContainer = styled.div`
 
 const JoinUsContainer = styled.div`
   background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.9)), url(${JoinUsImage});
-  height: 100vh;
+  height: ${props => `${props.height}px`};
   width: 100%;
   background-size: cover;
   position: relative;
@@ -258,7 +281,7 @@ const JoinUsTextContainer = styled.div`
 
 const OurProcessContainer = styled.div`
   background: ${props => `linear-gradient(rgba(0, 0, 0, 0.9),${props.theme.lightDarkColor});`};
-  height: 100vh;
+  height: ${props => `${props.height}px`};
 `;
 
 AboutUs.propTypes = {
