@@ -23,7 +23,7 @@ const App = () => {
   React.useEffect(() => {
     document.body.style.overflowX = 'hidden';
     return () => { document.body.style.overflowX = 'visible'; };
-  });
+  }, []);
 
   return (
     <ThemeProvider theme={mainTheme}>

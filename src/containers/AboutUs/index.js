@@ -1,12 +1,15 @@
-import React, { useRef, useMemo, useCallback, useEffect } from 'react';
+import React, { useRef, useMemo, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import styled, { withTheme } from 'styled-components';
 import Button from '@material-ui/core/Button';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 
+import useScrollToTop from '../../utils/hooks/useScrollToTop';
+
 import FounderCard from '../../components/UI/FounderCard';
 import JoinUsImage from '../../static/images/backgrounds/join-us.jpg';
 import HookedParallax from '../../components/UI/HookedParallax';
+import AppText from '../../components/UI/AppText';
 
 const { innerHeight } = window;
 
@@ -15,18 +18,7 @@ const AboutUs = (props) => {
   const founderContainerRef = useRef(null);
 
   // On mount
-  useEffect(() => {
-    try {
-      window.scroll({
-        top: 0,
-        left: 0,
-        behavior: 'smooth'
-      });
-    } catch (error) {
-      // just a fallback for older browsers
-      window.scrollTo(0, 0);
-    }
-  });
+  useScrollToTop();
 
   // Functions
   const ArrowDownClickHandler = useCallback(() => {
@@ -65,15 +57,15 @@ const AboutUs = (props) => {
     <Container>
       <HeaderStyle>
         <HeaderContainer height={innerHeight}>
-          <AppText color={props.theme.whiteColor} fontSize="42" fontWeight="bold">
+          <AppText color={props.theme.whiteColor} type="h1" fontWeight="bold">
             {'Devoted to provide '}
-            <SpanText color={props.theme.brandOrange} fontSize="42" fontWeight="bold">
+            <AppText color={props.theme.brandOrange} type="h1" fontWeight="bold">
               professional advice
-            </SpanText>
+            </AppText>
             {', deliver amazing software, and take your company to the '}
-            <SpanText color={props.theme.brandDarkRed} fontSize="42" fontWeight="bold">
+            <AppText color={props.theme.brandDarkRed} type="h1" fontWeight="bold">
               next level.
-            </SpanText>
+            </AppText>
           </AppText>
           <GradientButton color1={props.theme.brandDarkRed} color2={props.theme.brandOrange}>
             Contact Us
@@ -99,12 +91,12 @@ const AboutUs = (props) => {
         style={{ position: 'relative', zIndex: 9 }}
         height={innerHeight}
       >
-        <AppText color={props.theme.brandOrange} fontSize="42" fontWeight="bold">
+        <AppText color={props.theme.brandOrange} type="h1" fontWeight="bold">
           Founder`s Story
         </AppText>
         <AppText
           color={props.theme.whiteColor}
-          fontSize="24"
+          type="h3"
           fontWeight="200"
           style={{ marginTop: 20, paddingRight: 100, zIndex: 10 }}
         >
@@ -137,13 +129,13 @@ const AboutUs = (props) => {
       </FounderContainer>
       <JoinUsContainer height={innerHeight}>
         <JoinUsTextContainer>
-          <AppText color={props.theme.brandDarkRed} fontSize="42" fontWeight="bold">
+          <AppText color={props.theme.brandDarkRed} type="h1" fontWeight="bold">
             Want to join us?
           </AppText>
-          <AppText color={props.theme.whiteColor} fontSize="32">
+          <AppText color={props.theme.whiteColor} type="h2">
             Do not hesitate to contact us!
           </AppText>
-          <AppText color={props.theme.whiteColor} fontSize="22">
+          <AppText color={props.theme.whiteColor} type="h3">
             We are a small team that is always looking forward to grow. We are fun and very
             dedicated.
           </AppText>
@@ -174,19 +166,6 @@ const HeaderStyle = styled.div`
   display: flex;
   background-color: ${props => props.backgroundColor || props.theme.lightDarkColor};
   color: ${props => props.theme.primary};
-`;
-
-const AppText = styled.p`
-  font-size: ${props => `${props.fontSize}px`};
-  color: ${props => props.color};
-  font-weight: ${props => props.fontWeight};
-  margin: 0;
-`;
-
-const SpanText = styled.span`
-  font-size: ${props => `${props.fontSize}px`};
-  color: ${props => props.color};
-  font-weight: ${props => props.fontWeight};
 `;
 
 const GradientButton = styled(Button)`
