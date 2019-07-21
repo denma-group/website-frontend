@@ -98,7 +98,8 @@ const AboutUs = (props) => {
         <AppText
           variant="h3"
           textcolor={props.theme.whiteColor}
-          fontWeight="200"
+          fontWeight="300"
+          lineheight="30"
           style={{ marginTop: 20, paddingRight: 100, zIndex: 10 }}
         >
           Our partnership started a few years ago. Both of us had the same passion for coding and
@@ -130,11 +131,19 @@ const AboutUs = (props) => {
       </FounderContainer>
       <JoinUsContainer height={innerHeight}>
         <JoinUsTextContainer>
-          <AppText variant="h1" fontWeight="bold">
+          <AppText variant="h1" fontWeight="bold" textcolor={props.theme.brandWhite} margin={10}>
             Want to join us?
           </AppText>
-          <AppText variant="h2">Do not hesitate to contact us!</AppText>
-          <AppText variant="h3">
+          <AppText variant="h2" fontWeight={500} textcolor={props.theme.brandWhite} margin={10}>
+            Do not hesitate to contact us!
+          </AppText>
+          <AppText
+            variant="h3"
+            fontWeight={500}
+            textcolor={props.theme.brandWhite}
+            lineheight={30}
+            margin={10}
+          >
             We are a small team that is always looking forward to grow. We are fun and very
             dedicated.
           </AppText>
@@ -257,11 +266,10 @@ const JoinUsTextContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 500px;
-  width: 30%;
-  margin-left: 240px;
+  width: 35%;
   top: 240px;
   right: 100px;
-  text-shadow: 1px 0px black;
+  text-shadow: 1.2px 0px black;
 `;
 
 const OurProcessContainer = styled.div`
