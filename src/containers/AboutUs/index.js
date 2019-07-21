@@ -57,15 +57,16 @@ const AboutUs = (props) => {
     <Container>
       <HeaderStyle>
         <HeaderContainer height={innerHeight}>
-          <AppText color={props.theme.whiteColor} type="h1" fontWeight="bold">
-            {'Devoted to provide '}
-            <AppText color={props.theme.brandOrange} type="h1" fontWeight="bold">
-              professional advice
-            </AppText>
-            {', deliver amazing software, and take your company to the '}
-            <AppText color={props.theme.brandDarkRed} type="h1" fontWeight="bold">
-              next level.
-            </AppText>
+          <AppText
+            variant="h1"
+            lineheight={54}
+            letterSpacing={0.3}
+            textcolor={props.theme.whiteColor}
+          >
+            Devoted to provide{' '}
+            <SpanText color={props.theme.brandDarkRed}>professional advice</SpanText> , deliver{' '}
+            <SpanText color={props.theme.brandOrange}>amazing software</SpanText>, and take your
+            company to the <SpanText color={props.theme.brandRed}>next level.</SpanText>
           </AppText>
           <GradientButton color1={props.theme.brandDarkRed} color2={props.theme.brandOrange}>
             Contact Us
@@ -91,12 +92,12 @@ const AboutUs = (props) => {
         style={{ position: 'relative', zIndex: 9 }}
         height={innerHeight}
       >
-        <AppText color={props.theme.brandOrange} type="h1" fontWeight="bold">
+        <AppText variant="h1" fontWeight="bold" textcolor={props.theme.brandOrange}>
           Founder`s Story
         </AppText>
         <AppText
-          color={props.theme.whiteColor}
-          type="h3"
+          variant="h3"
+          textcolor={props.theme.whiteColor}
           fontWeight="200"
           style={{ marginTop: 20, paddingRight: 100, zIndex: 10 }}
         >
@@ -129,13 +130,11 @@ const AboutUs = (props) => {
       </FounderContainer>
       <JoinUsContainer height={innerHeight}>
         <JoinUsTextContainer>
-          <AppText color={props.theme.brandDarkRed} type="h1" fontWeight="bold">
+          <AppText variant="h1" fontWeight="bold">
             Want to join us?
           </AppText>
-          <AppText color={props.theme.whiteColor} type="h2">
-            Do not hesitate to contact us!
-          </AppText>
-          <AppText color={props.theme.whiteColor} type="h3">
+          <AppText variant="h2">Do not hesitate to contact us!</AppText>
+          <AppText variant="h3">
             We are a small team that is always looking forward to grow. We are fun and very
             dedicated.
           </AppText>
@@ -162,6 +161,12 @@ const HeaderContainer = styled.div`
   overflow: hidden;
 `;
 
+const SpanText = styled.span`
+  font-size: inherit;
+  line-height: inherit;
+  font-weight: 500;
+  color: ${props => props.color};
+`;
 const HeaderStyle = styled.div`
   display: flex;
   background-color: ${props => props.backgroundColor || props.theme.lightDarkColor};
@@ -169,15 +174,16 @@ const HeaderStyle = styled.div`
 `;
 
 const GradientButton = styled(Button)`
-  && {
+  &&& {
     background: ${props => `linear-gradient(45deg, ${props.color1} 30%, ${props.color2} 200%);`};
     border-radius: 50px;
     border: 0;
     color: ${props => props.theme.brandWhite};
-    height: 48px;
+    height: 50px;
     font-weight: bold;
     width: 400px;
     margin-top: 20px;
+    font-size: 42px;
   }
 `;
 

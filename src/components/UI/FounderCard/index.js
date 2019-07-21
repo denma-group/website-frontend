@@ -11,13 +11,13 @@ const FounderCard = (props) => {
       {/* TODO: Remove placeholders */}
       <CircularImage src="https://www.w3schools.com/howto/img_avatar.png" alt="Avatar" />
       <Card>
-        <AppText type="h2" fontWeight="500" color={theme.brandWhite}>
+        <AppText variant="h2" fontWeight="500" textcolor={props.theme.brandWhite}>
           {founder.name}
         </AppText>
-        <AppText type="h3" color={founder.color}>
+        <AppText variant="h3" textcolor={founder.color} margin={10}>
           {founder.position}
         </AppText>
-        <AppText type="p" color={theme.brandWhite}>
+        <AppText variant="body1" textcolor={props.theme.brandWhite}>
           {founder.description}
         </AppText>
         <CornerDecoration color={founder.color} />
