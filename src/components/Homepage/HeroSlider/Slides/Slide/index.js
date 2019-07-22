@@ -7,13 +7,8 @@ import styled from 'styled-components';
 import { LazyImage } from 'components/UI';
 import Typography from '@material-ui/core/Typography';
 
-const Servify = props => {
-  const {
-    title,
-    caption,
-    src,
-    slideNumber
-  } = props;
+const Servify = (props) => {
+  const { title, caption, src, slideNumber } = props;
   return (
     <Wrapper>
       <InformationContainer slideNumber={slideNumber}>
@@ -21,10 +16,7 @@ const Servify = props => {
         <Typography variant="body1">{caption}</Typography>
       </InformationContainer>
       <ImageContainer slideNumber={slideNumber}>
-        <LazyImage
-          draggable={false}
-          src={src}
-        />
+        <LazyImage draggable={false} src={src} />
       </ImageContainer>
     </Wrapper>
   );

@@ -40,7 +40,7 @@ export const useOnScrollBgColor = (
     setColorOnMount = true,
     mixRatioChannels = [true, true, true]
   } = {}
-  ) => {
+) => {
   const maxHeightRef = useRef(undefined);
   const [backgroundColor, setBackgroundColor] = useState(undefined);
   const [currentHeight, setCurrentHeight] = useState(undefined);
@@ -69,7 +69,9 @@ export const useOnScrollBgColor = (
       // Saving the maximum height to a React reference.
       [maxHeightRef.current] = colors[colors.length - 1];
       // Declaring color two, which must be the color of the next bracket, or the same if it's the last bracket.
-      const colorTwoTuple = colors.find(colorTuple => currentScrollHeight <= colorTuple[0]) || colors[colors.length - 1];
+      const colorTwoTuple =
+        colors.find(colorTuple => currentScrollHeight <= colorTuple[0]) ||
+        colors[colors.length - 1];
       // If on the last bracket, simply set the last color as the mixed one then run the callback.
       if (backgroundColor === colorTwoTuple[1]) {
         const mixedColor = colorTwoTuple[1];
@@ -81,7 +83,7 @@ export const useOnScrollBgColor = (
             currentScrollHeight
           });
         }
-      // Otherwise, mix the colors.
+        // Otherwise, mix the colors.
       } else {
         const indexOfColorTwo = colors.indexOf(colorTwoTuple);
         const colorOneTuple = colors[indexOfColorTwo - 1] || colors[0];
@@ -91,7 +93,8 @@ export const useOnScrollBgColor = (
          * The mix ratio is basically at which percentage of the bracket the
          * current scroll height, or position, is at.
          */
-        const mixRatio = ((currentScrollHeight - colorOneTuple[0]) / (colorTwoTuple[0] - colorOneTuple[0])) || 0;
+        const mixRatio =
+          (currentScrollHeight - colorOneTuple[0]) / (colorTwoTuple[0] - colorOneTuple[0]) || 0;
         const mixedColor = mixColors(
           [colorOneTuple[1], colorTwoTuple[1]],
           mixRatioNumberToTriple(mixRatio, mixRatioChannels)
@@ -109,9 +112,9 @@ export const useOnScrollBgColor = (
           });
         }
       }
-    /**
-     * If `colors` is an array of strings, then we simply mix the two colors.
-     */
+      /**
+       * If `colors` is an array of strings, then we simply mix the two colors.
+       */
     } else {
       const [colorOne, colorTwo] = colors;
       const mixRatio = currentScrollHeight / scrollHeight;
@@ -172,11 +175,9 @@ const mixRatioNumberToTriple = (mixRatio, mixRatioChannels) => {
    * breakpoints, ince it should never happen, but just in case.
    */
   const ratio = mixRatio > 1 ? 1 : mixRatio;
-  return (
-    [
-      mixRatioChannels[0] ? ratio : 0,
-      mixRatioChannels[1] ? ratio : 0,
-      mixRatioChannels[2] ? ratio : 0
-    ]
-  );
+  return [
+    mixRatioChannels[0] ? ratio : 0,
+    mixRatioChannels[1] ? ratio : 0,
+    mixRatioChannels[2] ? ratio : 0
+  ];
 };

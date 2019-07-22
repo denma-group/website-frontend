@@ -20,6 +20,11 @@ const RESOLVED_CALLBACK_DELAY = process.env.NODE_ENV === 'development' ? LOADER_
 const App = () => {
   const [isLoading, setIsLoading] = React.useState(true);
 
+  React.useEffect(() => {
+    document.body.style.overflowX = 'hidden';
+    return () => { document.body.style.overflowX = 'visible'; };
+  }, []);
+
   return (
     <ThemeProvider theme={mainTheme}>
       <Wrapper

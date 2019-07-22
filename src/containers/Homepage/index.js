@@ -27,7 +27,7 @@ import {
   StyledHeroValueProposition
 } from './components';
 
-const Homepage = props => {
+const Homepage = (props) => {
   const { theme } = props;
   const navbarContext = useContext(NavbarContext);
   const setNavbarCss = navbarContext.cssState[1];
@@ -44,11 +44,9 @@ const Homepage = props => {
   const BRACKET_5_HEIGHT = totalScreenHeight * 1;
   const BRACKET_6_HEIGHT = totalScreenHeight * 1.25;
 
-  const handleOnScrollBgColor = ({
-    currentScrollHeight
-  }) => {
+  const handleOnScrollBgColor = ({ currentScrollHeight }) => {
     const totalScrollRatio = Number(currentScrollHeight / BRACKET_5_HEIGHT).toFixed(2);
-    const opacityRatio = (1 - totalScrollRatio) <= 0 ? 0 : Number(1 - totalScrollRatio).toFixed(2);
+    const opacityRatio = 1 - totalScrollRatio <= 0 ? 0 : Number(1 - totalScrollRatio).toFixed(2);
     /**
      * Navbar handlers.
      */
@@ -62,7 +60,7 @@ const Homepage = props => {
         `);
         break;
       case currentScrollHeight <= BRACKET_3_HEIGHT:
-         // Partially hide Navbar
+        // Partially hide Navbar
         setNavbarCss(css`
           opacity: ${opacityRatio};
           color: ${theme.whiteColor};
@@ -98,7 +96,7 @@ const Homepage = props => {
       [BRACKET_3_HEIGHT, theme.brandLogoRed],
       [BRACKET_4_HEIGHT, theme.brandRed],
       [BRACKET_5_HEIGHT, theme.brandOrange],
-      [BRACKET_6_HEIGHT, theme.brandWhite],
+      [BRACKET_6_HEIGHT, theme.brandWhite]
     ],
     {
       callback: handleOnScrollBgColor,
