@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { withTheme } from 'styled-components';
-import AppText from '../AppText';
+import Text from '../Text';
 
 const FounderCard = (props) => {
   const { founder, theme } = props;
@@ -11,15 +11,15 @@ const FounderCard = (props) => {
       {/* TODO: Remove placeholders */}
       <CircularImage src="https://www.w3schools.com/howto/img_avatar.png" alt="Avatar" />
       <Card>
-        <AppText variant="h2" fontWeight="500" textcolor={props.theme.brandWhite}>
+        <Text.H2 variant="h2" fontWeight="500" textcolor={props.theme.brandWhite}>
           {founder.name}
-        </AppText>
-        <AppText variant="h3" textcolor={founder.color} margin={10}>
+        </Text.H2>
+        <Text.H3 variant="h3" textcolor={founder.color} margin={10}>
           {founder.position}
-        </AppText>
-        <AppText variant="body1" textcolor={props.theme.brandWhite}>
+        </Text.H3>
+        <Text.P variant="body1" textcolor={props.theme.brandWhite}>
           {founder.description}
-        </AppText>
+        </Text.P>
         <CornerDecoration color={founder.color} />
       </Card>
     </CardOutside>

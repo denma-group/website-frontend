@@ -1,6 +1,6 @@
 import React, { useRef, useMemo, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import styled, { withTheme } from 'styled-components';
+import styled, { withTheme, css } from 'styled-components';
 import Button from '@material-ui/core/Button';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 
@@ -9,7 +9,7 @@ import useScrollToTop from '../../utils/hooks/useScrollToTop';
 import FounderCard from '../../components/UI/FounderCard';
 import JoinUsImage from '../../static/images/backgrounds/join-us.jpg';
 import HookedParallax from '../../components/UI/HookedParallax';
-import AppText from '../../components/UI/AppText';
+import Text from '../../components/UI/Text';
 
 const { innerHeight } = window;
 
@@ -57,17 +57,30 @@ const AboutUs = (props) => {
     <Container>
       <HeaderStyle>
         <HeaderContainer height={innerHeight}>
-          <AppText
-            variant="h1"
-            lineheight={54}
-            letterSpacing={0.3}
-            textcolor={props.theme.whiteColor}
+          <Text.H1
+            css={css`
+              color: ${props.theme.whiteColor};
+            `}
           >
             Devoted to provide{' '}
-            <SpanText color={props.theme.brandDarkRed}>professional advice</SpanText> , deliver{' '}
-            <SpanText color={props.theme.brandOrange}>amazing software</SpanText>, and take your
-            company to the <SpanText color={props.theme.brandRed}>next level.</SpanText>
-          </AppText>
+            <Text.Span
+              css={css`
+                color: ${props.theme.brandDarkRed};
+              `}
+            >
+              professional advice
+            </Text.Span>
+            , deliver{' '}
+            <Text.Span
+              css={css`
+                color: ${props.theme.brandRed};
+              `}
+            >
+              amazing software
+            </Text.Span>
+            , and take your company to the{' '}
+            <SpanText color={props.theme.brandOrange}>next level.</SpanText>
+          </Text.H1>
           <GradientButton color1={props.theme.brandDarkRed} color2={props.theme.brandOrange}>
             Contact Us
           </GradientButton>
@@ -92,15 +105,17 @@ const AboutUs = (props) => {
         style={{ position: 'relative', zIndex: 9 }}
         height={innerHeight}
       >
-        <AppText variant="h1" fontWeight="bold" textcolor={props.theme.brandOrange}>
+        <Text.H1
+          css={css`
+            color: ${props.theme.brandOrange};
+          `}
+        >
           Founder`s Story
-        </AppText>
-        <AppText
-          variant="h3"
-          textcolor={props.theme.whiteColor}
-          fontWeight="300"
-          lineheight="30"
-          style={{ marginTop: 20, paddingRight: 100, zIndex: 10 }}
+        </Text.H1>
+        <Text.H3
+          css={css`
+            color: ${props.theme.whiteColor};
+          `}
         >
           Our partnership started a few years ago. Both of us had the same passion for coding and
           building our own company. We started simple, learning some basic stuff, and creating
@@ -108,7 +123,7 @@ const AboutUs = (props) => {
           projects. Until we realized, that we liked managing and working on multiple projects at
           the same time. Now, we have the ability to build projects from the ground up in really
           quick, smart, and efficient way.
-        </AppText>
+        </Text.H3>
         <FoundersBioContainer>
           {foundersData.map((founder, i) => (
             <CardContainer style={{ zIndex: 10 }} key={i.toString()}>
@@ -131,22 +146,32 @@ const AboutUs = (props) => {
       </FounderContainer>
       <JoinUsContainer height={innerHeight}>
         <JoinUsTextContainer>
-          <AppText variant="h1" fontWeight="bold" textcolor={props.theme.brandWhite} margin={10}>
+          <Text.H1
+            css={css`
+              color: ${props.theme.whiteColor};
+              padding: 0;
+              font-weight: 500;
+            `}
+          >
             Want to join us?
-          </AppText>
-          <AppText variant="h2" fontWeight={500} textcolor={props.theme.brandWhite} margin={10}>
+          </Text.H1>
+          <Text.H2
+            css={css`
+              color: ${props.theme.whiteColor};
+              padding: 0;
+            `}
+          >
             Do not hesitate to contact us!
-          </AppText>
-          <AppText
-            variant="h3"
-            fontWeight={500}
-            textcolor={props.theme.brandWhite}
-            lineheight={30}
-            margin={10}
+          </Text.H2>
+          <Text.H3
+            css={css`
+              color: ${props.theme.whiteColor};
+              padding: 0;
+            `}
           >
             We are a small team that is always looking forward to grow. We are fun and very
             dedicated.
-          </AppText>
+          </Text.H3>
         </JoinUsTextContainer>
       </JoinUsContainer>
       <OurProcessContainer height={innerHeight} />
@@ -266,7 +291,7 @@ const JoinUsTextContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 500px;
-  width: 35%;
+  width: 40%;
   top: 240px;
   right: 100px;
   text-shadow: 1.2px 0px black;
