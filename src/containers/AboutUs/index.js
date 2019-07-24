@@ -102,7 +102,7 @@ const AboutUs = (props) => {
       </HeaderStyle>
       <FounderContainer
         ref={founderContainerRef}
-        style={{ position: 'relative', zIndex: 9 }}
+        style={{ position: 'relative', zIndex: 0 }}
         height={innerHeight}
       >
         <Text.H1
@@ -115,6 +115,7 @@ const AboutUs = (props) => {
         <Text.H3
           css={css`
             color: ${props.theme.whiteColor};
+            z-index: 11;
           `}
         >
           Our partnership started a few years ago. Both of us had the same passion for coding and

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled, { withTheme } from 'styled-components';
+import styled, { withTheme, css } from 'styled-components';
 import Text from '../Text';
 
 const FounderCard = (props) => {
@@ -11,15 +11,16 @@ const FounderCard = (props) => {
       {/* TODO: Remove placeholders */}
       <CircularImage src="https://www.w3schools.com/howto/img_avatar.png" alt="Avatar" />
       <Card>
-        <Text.H2 variant="h2" fontWeight="500" textcolor={props.theme.brandWhite}>
-          {founder.name}
-        </Text.H2>
-        <Text.H3 variant="h3" textcolor={founder.color} margin={10}>
+        <Text.H2>{founder.name}</Text.H2>
+        <Text.H3
+          css={css`
+            color: ${founder.color};
+            font-weight: 500;
+          `}
+        >
           {founder.position}
         </Text.H3>
-        <Text.P variant="body1" textcolor={props.theme.brandWhite}>
-          {founder.description}
-        </Text.P>
+        <Text.P>{founder.description}</Text.P>
         <CornerDecoration color={founder.color} />
       </Card>
     </CardOutside>
