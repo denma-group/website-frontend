@@ -44,7 +44,7 @@ const nextConfiguration = {
       })
     );
     return config;
-  },
+  }
 };
 
 module.exports = withPlugins([
