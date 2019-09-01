@@ -47,47 +47,52 @@ const navbarLogo = (
 );
 
 export default class MyApp extends App {
-  static async getInitialProps({ Component, ctx }) {
-    // Resolution order
-    //
-    // On the server:
-    // 1. app.getInitialProps
-    // 2. page.getInitialProps
-    // 3. document.getInitialProps
-    // 4. app.render
-    // 5. page.render
-    // 6. document.render
-    //
-    // On the server with error:
-    // 1. document.getInitialProps
-    // 2. app.render
-    // 3. page.render
-    // 4. document.render
-    //
-    // On the client
-    // 1. app.getInitialProps
-    // 2. page.getInitialProps
-    // 3. app.render
-    // 4. page.render
+  /**
+   * `getInitialProps` is commented out to not opt out of Automatic Prerendering
+   * due to `getInitialProps` in `pages/_app`.
+   * Read more: `https://err.sh/next.js/opt-out-automatic-prerendering`
+   */
+  // static async getInitialProps({ Component, ctx }) {
+  //   // Resolution order
+  //   //
+  //   // On the server:
+  //   // 1. app.getInitialProps
+  //   // 2. page.getInitialProps
+  //   // 3. document.getInitialProps
+  //   // 4. app.render
+  //   // 5. page.render
+  //   // 6. document.render
+  //   //
+  //   // On the server with error:
+  //   // 1. document.getInitialProps
+  //   // 2. app.render
+  //   // 3. page.render
+  //   // 4. document.render
+  //   //
+  //   // On the client
+  //   // 1. app.getInitialProps
+  //   // 2. page.getInitialProps
+  //   // 3. app.render
+  //   // 4. page.render
 
-    let pageProps = {};
-    if (Component.getInitialProps) {
-      pageProps = {
-        ...(await Component.getInitialProps(ctx))
-      };
-    }
+  //   let pageProps = {};
+  //   if (Component.getInitialProps) {
+  //     pageProps = {
+  //       ...(await Component.getInitialProps(ctx))
+  //     };
+  //   }
 
-    let isMobile;
-    // Determining if the user is on a mobile device.
-    if (pageProps.userAgent) {
-      isMobile = await getUserAgent(pageProps.userAgent);
-    } else {
-      isMobile = await getUserAgent(ctx && ctx.req && ctx.req.headers['user-agent']);
-    }
-    pageProps.isMobile = isMobile;
+  //   let isMobile;
+  //   // Determining if the user is on a mobile device.
+  //   if (pageProps.userAgent) {
+  //     isMobile = await getUserAgent(pageProps.userAgent);
+  //   } else {
+  //     isMobile = await getUserAgent(ctx && ctx.req && ctx.req.headers['user-agent']);
+  //   }
+  //   pageProps.isMobile = isMobile;
 
-    return { pageProps };
-  }
+  //   return { pageProps };
+  // }
 
   componentDidMount() {
     // Remove the server-side injected CSS.
