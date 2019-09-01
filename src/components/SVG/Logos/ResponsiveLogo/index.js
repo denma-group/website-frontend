@@ -10,9 +10,9 @@ import VerticalLogo from '../DenmaVertical';
 
 const ResponsiveLogo = props => {
   const { theme, ...rest } = props;
-  const [width, setWidth] = useState(window.innerWidth);
+  const [width, setWidth] = useState();
 
-  const onResizeHandler = useCallback(() => setWidth(window.innerWidth), [setWidth]);
+  const onResizeHandler = useCallback(windowWidth => setWidth(windowWidth || window.innerWidth), [setWidth]);
 
   const { screenXl } = theme;
   const widthBreakpoint = useMemo(() => Number(String(screenXl).replace('px', '')), [screenXl]);
@@ -24,10 +24,10 @@ const ResponsiveLogo = props => {
         handleWidth
         onResize={onResizeHandler}
       />
-      {width >= widthBreakpoint ? (
-        <HorizontalLogo {...rest} />
-      ) : (
+      {width < widthBreakpoint ? (
         <VerticalLogo {...rest} />
+      ) : (
+        <HorizontalLogo {...rest} />
       )}
     </React.Fragment>
   ), [width, widthBreakpoint, onResizeHandler, rest]);

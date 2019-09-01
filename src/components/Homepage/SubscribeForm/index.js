@@ -4,20 +4,21 @@ import styled from 'styled-components';
 
 // Components
 import TextField from '@material-ui/core/TextField';
-import Fab from '@material-ui/core/Fab';
+// import Fab from '@material-ui/core/Fab';
+import { Fab } from 'src/components/UI';
 import SubmitIcon from '@material-ui/icons/Send';
 import {
-  StyledHeroValueProposition
-} from '../../../containers/Homepage/components';
+  ValueProposition
+} from 'src/components/Homepage';
 
 const SubscribeForm = () => {
   return (
     <Container>
-      <StyledHeroValueProposition
+      <ValueProposition
         align="center"
       >
         <span>Subscribe to us to hear lorem ipsum all the time!</span>
-      </StyledHeroValueProposition>
+      </ValueProposition>
       <Form noValidate autoComplete="off">
         <StyledTextField
           id="subscribe-name-input"
@@ -33,7 +34,11 @@ const SubscribeForm = () => {
           name="subscribe-email"
           margin="normal"
         />
-        <StyledFab variant="extended" aria-label="Submit">
+        <StyledFab
+          variant="extended"
+          aria-label="Submit"
+          backgroundColor="primary"
+        >
           <SubmitIcon />
           <span className="text">Submit</span>
         </StyledFab>
@@ -96,10 +101,13 @@ const StyledTextField = styled(TextField)`
 
 const StyledFab = styled(Fab)`
   &&& {
+    .MuiFab-label {
+      display: flex;
+      align-items: center;
+    }
     flex: 0.33;
     margin-left: 72px;
     color: ${({ theme }) => theme.whiteColor};
-    background-color: ${({ theme }) => theme.secondary};
     @media (max-width: ${({ theme }) => theme.screenLg}) {
       flex: 1;
       margin-left: 0;
@@ -107,7 +115,7 @@ const StyledFab = styled(Fab)`
       padding: 12px 16px;
     }
     .text {
-      margin-left: 0.7185em;
+      margin-left: 0.4185em;
       font-weight: 700;
       font-size: 19px;
     }

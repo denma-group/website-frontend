@@ -8,7 +8,6 @@ import HeroSlider, {
   Slide,
   Nav
 } from 'hero-slider';
-
 import Servify from './Slides/Servify';
 import BonpreuFoods from './Slides/BonpreuFoods';
 import TireOutlet from './Slides/TireOutlet';
