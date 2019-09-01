@@ -1,133 +1,122 @@
 // Libraries
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
+import{ useInView } from 'react-intersection-observer';
 
 // Dependencies
 import image from 'static/images/homepage/help_your_business.png';
 
 // Components
-import Typography from '@material-ui/core/Typography';
-import Fab from '@material-ui/core/Fab';
 import { CSSTransition } from 'react-transition-group';
-import { LazyImage } from 'components/UI';
+import { Image } from 'src/components/UI';
+import { H2, H3 } from 'src/components/UI/Text';
+import {
+  Row,
+  Col,
+} from 'src/components/Layout';
 
-const ANIMATION_TIMEOUT = 500;
+const ANIMATION_TIMEOUT = 1000;
 
-const HelpYourBusiness = () => {
+const HelpYourBusiness = ({ totalScreenHeight }) => {
   const [hasLoaded, setLoaded] = useState(false);
+  const [ref, inView] = useInView({
+    /* Optional options */
+    threshold: 0,
+  });
+
+  // Whenever inView changes to true for the first time,
+  // set hasLoaded to true, this will trigger the CSS animation.
+  // This will only happen once.
+  if (!hasLoaded && inView) {
+    setLoaded(true);
+  }
 
   return (
-    <Wrapper>
+    <Wrapper
+      innerRef={ref}
+      height={totalScreenHeight}
+      alignItems="center"
+    >
+      {/* PITCH */}
       <CSSTransition
         in={hasLoaded}
         timeout={ANIMATION_TIMEOUT}
-        classNames="content"
-        onEnter={() => setLoaded(true)}
+        classNames="pitch"
       >
-        <Container>
-          <Help>
-            <StyledHeader
-              variant="h2"
-              align="center"
-            >
-              We’re committed to improve your ventures.
-            </StyledHeader>
-            <FabsWrapper>
-              <Fab>
-                New Enterprises
-              </Fab>
-              <Fab>
-                Existing Applications
-              </Fab>
-              <Fab>
-                Marketing Strategies and Analytics
-              </Fab>
-              <Fab>
-                Tech Consulting
-              </Fab>
-            </FabsWrapper>
-          </Help>
-          <Image>
-            <LazyImage
-              draggable={false}
-              src={image}
-            />
-          </Image>
-        </Container>
+        <Help alignItems="center" justifyContent="center" sm={12} md={7} ref={ref}>
+          <StyledH2>
+            We’re committed to improve your ventures.
+          </StyledH2>
+          <StyledH3>
+            We’ve experienced the cumbersome project management approach given by big firms. We <span>forgo</span> the <span>redundant</span> and <span>focus</span> on <span>generating value</span> for <span>your</span> company.
+          </StyledH3>
+          <br />
+          <StyledH3>
+            Our team knows that <span>responsiveness is key</span> for your project, and we’re here to tailor to your specific needs. And most <span>importantly</span>, you’re our team’s <span>priority</span>.
+          </StyledH3>
+        </Help>
+      </CSSTransition>
+      {/* IMAGE */}
+      <CSSTransition
+        in={hasLoaded}
+        timeout={ANIMATION_TIMEOUT * 2}
+        classNames="image"
+      >
+        <ImageContainer alignItems="center" justifyContent="center" sm={12} md={5}>
+          <Image
+            draggable={false}
+            src={image}
+          />
+        </ImageContainer>
       </CSSTransition>
     </Wrapper>
   );
 };
 
-const Wrapper = styled.div`
-  position: relative;
-  min-width: 100%;
-  min-height: 100%;
-  color: ${({ theme }) => theme.whiteColor};
-  :before {
-    position: absolute;
-    content: '';
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: ${props => props.theme.primary};
-    opacity: 0.9;
-  }
+HelpYourBusiness.propTypes = {
+  totalScreenHeight: PropTypes.number,
+};
 
-  .content-enter {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-  .content-enter-active {
-    opacity: 1;
-    transform: translateX(0);
-    transition: opacity ${props => props.animationDuration}ms, transform ${props => props.animationDuration}ms;
-  }
-  .content-exit {
-    opacity: 1;
-  }
-  .content-exit-active {
-    opacity: 0;
-    transform: scale(0.9);
-    transition: opacity ${props => props.animationDuration}ms, transform ${props => props.animationDuration}ms;
+HelpYourBusiness.defaultProps = {
+  totalScreenHeight: undefined,
+};
+
+// Wrapper
+const Wrapper = styled(Row)`
+  &&& {
+    margin: 5% auto 10%;
+    max-width: 1200px;
+    .pitch-enter, .image-enter {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    .pitch-enter-active, .image-enter-active {
+      opacity: 1;
+      transform: translateX(0);
+      transition: opacity 500ms, transform 500ms;
+      transition-delay: 500ms;
+    }
+    .pitch-exit, .image-exit {
+      opacity: 1;
+    }
+    .pitch-exit-active, .image-exit-active {
+      opacity: 0;
+      transform: scale(0.9);
+      transition: opacity 500ms, transform 500ms;
+      transition-delay: 500ms;
+    }
+
+    .image-enter-active {
+      transition-delay: 1000ms;
+    }
+    .image-exit-active {
+      transition-delay: 1000ms;
+    }
   }
 `;
 
-const Container = styled.div`
-  z-index: 1;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const Image = styled.div`
-  min-width: 55%;
-  flex: 1;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  img {
-    width: 85%;
-    margin: 0 auto;
-  }
-
-  @media (max-width: ${({ theme }) => theme.screenMd}) {
-    display: none;
-    min-width: 0%;
-  }
-`;
-
-const Help = styled.div`
-  flex: 1;
+const Help = styled(Col)`
   width: 100%;
   height: 100%;
   display: flex;
@@ -136,13 +125,29 @@ const Help = styled.div`
   padding: 0 5%;
 `;
 
-const StyledHeader = styled(Typography)`
+const ImageContainer = styled(Col)`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    width: 85%;
+    margin: 30px auto 0px;
+    max-height: 100%;
+    max-width: 620px;
+  }
+`;
+
+const StyledH2 = styled(H2)`
   &&& {
     font-size: 54px;
     line-height: 64px;
     margin-bottom: 1em;
     font-weight: 700;
-    color: ${props => props.theme.whiteColor};
+    color: ${props => props.theme.primary};
+    text-align: center;
 
     @media (max-width: ${({ theme }) => theme.screenMd}) {
       font-size: 48px;
@@ -162,50 +167,12 @@ const StyledHeader = styled(Typography)`
   }
 `;
 
-const FabsWrapper = styled.div`
+const StyledH3 = styled(H3)`
   &&& {
-    display: flex;
-    flex-flow: column;
-    justify-content: center;
-    align-items: center;
-
-    @media (max-height: ${({ theme }) => theme.screenSm}) {
-      flex-flow: row;
-      flex-wrap: wrap;
-      justify-content: space-evenly;
-      button {
-        margin-bottom: 16px !important;
-      }
-    }
-
-    button {
-      display: inline;
-      width: fit-content;
-      border-top-left-radius: 28px;
-      border-bottom-left-radius: 28px;
-      border-top-right-radius: 28px;
-      border-bottom-right-radius: 28px;
-      padding: 8px 12px;
-      margin-bottom: 12px;
-      border: 2px solid ${props => props.theme.whiteColor};
-      background-color: transparent;
-
-      @media (max-width: ${({ theme }) => theme.screenMd}) {
-        padding: 4px 8px;
-        font-size: 14px;
-        margin-bottom: 8px;
-      }
-
-      span {
-        min-width: 70px;
-        color: ${props => props.theme.whiteColor};
-        font-size: 18px;
-        font-weight: 700;
-
-        @media (max-width: ${({ theme }) => theme.screenMd}) {
-          font-size: 15px;
-        }
-      }
+    text-align: justify;
+    span {
+      color: ${props => props.theme.primary};
+      font-weight: 400;
     }
   }
 `;

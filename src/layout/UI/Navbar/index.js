@@ -1,24 +1,33 @@
 // Libraries
 import React, { useState, useContext } from 'react';
+import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 
 // Components
+import Link from 'next/link';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import Drawer from 'layout/UI/Drawer';
-import Logo from 'components/SVG/Logos/DenmaHorizontal_NM';
+import { Drawer } from 'src/layout/UI';
+import { Spacing } from './components';
 
 // Dependencies
 import Provider, { NavbarContext as Context } from './context';
+
+// Links
+import { links, getShouldRenderDrawerIcon, renderNavLinks } from './links';
 
 // Navbar React Context exports
 export const NavbarContext = Context;
 export const NavbarProvider = Provider;
 
-const Navbar = () => {
+const Navbar = props => {
+  const {
+    navbarLogo,
+    drawerLogo,
+    logoHref = '/',
+  } = props;
   const [isDrawerOpen, setDrawerOpen] = useState(false);
 
   const navbarContext = useContext(NavbarContext);
@@ -29,6 +38,8 @@ const Navbar = () => {
   const [boxShadow] = navbarContext.boxShadowState;
   const [transform] = navbarContext.transformState;
   const [styledCss] = navbarContext.cssState;
+
+  const shouldRenderDrawerIcon = getShouldRenderDrawerIcon(links);
 
   return (
     <React.Fragment>
@@ -43,35 +54,38 @@ const Navbar = () => {
         styledCss={styledCss}
       >
         <Toolbar>
-          <a role="button">
-            <StyledLogo
-              alt="Denma Home"
-              title="Denma Home"
-              focusable="false"
-            />
-          </a>
+          <Link href="/">
+            <a role="button">
+              {navbarLogo}
+            </a>
+          </Link>
           <div className="spacing" />
-          <Button color="inherit">Contact us</Button>
-          <IconButton
+          {renderNavLinks(links)}
+          <StyledIconButton
             color="inherit"
             aria-label="Menu"
             onClick={() => setDrawerOpen(!isDrawerOpen)}
+            className="menu-button"
+            shouldRenderDrawerIcon={shouldRenderDrawerIcon}
           >
             <MenuIcon />
-          </IconButton>
+          </StyledIconButton>
         </Toolbar>
       </StyledAppBar>
       <Drawer
         anchor="right"
         open={isDrawerOpen}
         closeDrawer={() => setDrawerOpen(false)}
+        logo={drawerLogo}
+        logoHref={logoHref}
+        links={links}
       />
     </React.Fragment>
   );
 };
 
 const StyledAppBar = styled(({ color, backgroundColor, opacity, boxShadow, transform, styledCss, ...rest }) => <AppBar {...rest} />)`
-  && {
+  &&& {
     ${props => (
       css`
         color: ${props.color || props.theme.brandLightBlack};
@@ -88,17 +102,18 @@ const StyledAppBar = styled(({ color, backgroundColor, opacity, boxShadow, trans
     )}
     ${props => (props.styledCss && props.styledCss)}
     transition: all ease 150ms;
+    transition-property: color, background-color, opacity;
+
+    a:any-link, a:-webkit-any-link {
+      color: unset;
+    }
 
     .spacing {
       flex-grow: 1;
     }
 
-    button:first-of-type {
-      margin-left: -12px;
-      margin-right: 20px;
-    }
-
-    button:last-of-type {
+    .menu-button {
+      margin-left: 20px;
       float: right;
     }
 
@@ -106,35 +121,45 @@ const StyledAppBar = styled(({ color, backgroundColor, opacity, boxShadow, trans
       text-decoration: none;
       background-color: rgba(255, 255, 255, 0.08);
     }
+
+    ${({ theme }) => css`
+      .MuiToolbar-root > .MuiButtonBase-root:not(.menu-button),
+      .MuiToolbar-root > .dropdown-menu {
+        @media (min-width: ${theme.screenLg}) {
+          display: inline-flex;
+        }
+
+        @media (min-width: 0px) and (max-width: ${theme.screenLg}) {
+          display: none;
+        }
+      }
+    `}
   }
 `;
 
-const StyledLogo = styled(Logo)`
-  width: 100%;
-  height: auto;
-  max-width: 225px;
-  cursor: pointer;
-  
-  @media (min-width: 600px) {
-    max-width: 225px !important;
-  }
+const StyledIconButton = styled(({ shouldRenderDrawerIcon, ...rest }) => <IconButton {...rest} />)`
+  ${({ theme, shouldRenderDrawerIcon }) => css`
+    &&& {
+      @media (min-width: ${theme.screenLg}) {
+        display: ${shouldRenderDrawerIcon ? 'inline-flex' : 'none'};
+      }
 
-  @media (min-width: 0px) and (orientation: landscape) {
-    max-width: 150px;
-  }
-  max-width: 125px;
+      @media (min-width: 0px) and (max-width: ${theme.screenLg}) {
+        display: inline-flex;
+      }
+    }
+  `}
 `;
 
-const Spacing = styled.div`
-  background: transparent;
-  @media (min-width: 600px) {
-    min-height: 64px !important;
-  }
+Navbar.propTypes = {
+  navbarLogo: PropTypes.node.isRequired,
+  logoHref: PropTypes.string,
+  drawerLogo: PropTypes.node,
+};
 
-  @media (min-width: 0px) and (orientation: landscape) {
-    min-height: 48px;
-  }
-  min-height: 56px;
-`;
+Navbar.defaultProps = {
+  logoHref: undefined,
+  drawerLogo: null,
+};
 
 export default Navbar;
