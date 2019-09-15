@@ -154,7 +154,6 @@ const StyledGridItem = styled(Col)`
       display: inline-block;
       color: ${({ theme }) => theme.whiteColor};
       font-size: 14px;
-      line-height: normal;
       text-decoration: none;
     }
     h6 {
@@ -166,7 +165,6 @@ const StyledGridItem = styled(Col)`
       color: ${({ theme }) => theme.whiteColor};
       font-size: 16px;
       margin-bottom: 8px;
-      line-height: normal;
       text-decoration: none;
     }
   }

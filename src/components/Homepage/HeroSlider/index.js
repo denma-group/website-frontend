@@ -3,14 +3,22 @@ import React, { useState, useContext, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { withTheme } from 'styled-components';
 
+// Dependencies
+import servifyBg from 'static/images/hero_slider/servify/slide-bg.jpg';
+import bopreuFoodsBg from 'static/images/hero_slider/bonpreu_foods/slide-bg.jpg';
+import tireOutletBg from 'static/images/hero_slider/tire_outlet/slide-bg.jpg';
+
+// Assets
+import servifyLogo from 'static/images/hero_slider/servify/logo.png';
+import bonpreuFoodsLogo from 'static/images/hero_slider/bonpreu_foods/logo.png';
+import tireOutletLogo from 'static/images/hero_slider/tire_outlet/logo.png';
+
 // Components
 import HeroSlider, {
-  Slide,
   Nav
 } from 'hero-slider';
-import Servify from './Slides/Servify';
-import BonpreuFoods from './Slides/BonpreuFoods';
-import TireOutlet from './Slides/TireOutlet';
+import SlideWrapper from './SlideWrapper';
+import Slide from './Slide';
 
 export const ActiveSlideThemeContext = React.createContext({
   activeSlideTheme: undefined
@@ -52,6 +60,46 @@ const Slider = props => {
     }
   };
 
+  const slidesBackgrounds = {
+    shouldLazyLoad: false,
+    backgroundAttachment: 'fixed',
+    backgroundPosition: 'center center',
+    backgroundSize: 'cover',
+  };
+
+  const slides = [
+    {
+      key: 'servify',
+      slideColor: theme.servify,
+      backgroundImage: servifyBg,
+      background: slidesBackgrounds,
+      title: 'Servify',
+      caption: 'Denma helped us solidify our corporate image and strategy.',
+      src: servifyLogo,
+      slideNumber: 1,
+    },
+    {
+      key: 'bonpreu_foods',
+      slideColor: theme.bonpreuFoods,
+      backgroundImage: bopreuFoodsBg,
+      background: slidesBackgrounds,
+      title: 'Bonpreu Foods',
+      caption: 'At Denma, we were treated as partners from day one.',
+      src: bonpreuFoodsLogo,
+      slideNumber: 2,
+    },
+    {
+      key: 'tire_outlet',
+      slideColor: theme.tireOutlet,
+      backgroundImage: tireOutletBg,
+      background: slidesBackgrounds,
+      title: 'Tire Outlet',
+      caption: 'Denma allowed our business to achieve web sales that we would have missed otherwise.',
+      src: tireOutletLogo,
+      slideNumber: 3,
+    },
+  ];
+
   return (
     <HeroSlider
       slidingAnimation="left_to_right"
@@ -62,32 +110,21 @@ const Slider = props => {
     >
       {props.children}
       {/* SERVIFY */}
-      <Slide
-        background={{
-          shouldLazyLoad: false,
-          backgroundColor: theme.servify
-        }}
-      >
-        <Servify />
-      </Slide>
-      {/* BONPREU? */}
-      <Slide
-        background={{
-          shouldLazyLoad: false,
-          backgroundColor: theme.bonpreuFoods
-        }}
-      >
-        <BonpreuFoods />
-      </Slide>
-      {/* TIRE OUTLETS */}
-      <Slide
-        background={{
-          shouldLazyLoad: false,
-          backgroundColor: theme.tireOutlet
-        }}
-      >
-        <TireOutlet />
-      </Slide>
+      {slides.map(({ key, slideColor, backgroundImage, background, ...rest }) => (
+        <SlideWrapper
+          key={key}
+          background={{
+            ...background,
+            backgroundImage,
+          }}
+          overlayColor={slideColor}
+        >
+          <Slide
+            slideThemeColor={slideColor}
+            {...rest}
+          />
+        </SlideWrapper>
+      ))}
       <Nav />
     </HeroSlider>
   );

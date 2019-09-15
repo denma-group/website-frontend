@@ -8,6 +8,7 @@ import LogoLoader from './LogoLoader';
 import NavbarLogo from './NavbarLogo';
 import Parallax from './Parallax';
 import * as Text from './Text';
+import * as Animations from './Animations';
 
 export {
   DropdownMenu,
@@ -19,4 +20,5 @@ export {
   NavbarLogo,
   Parallax,
   Text,
+  Animations,
 };
