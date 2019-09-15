@@ -1,21 +1,7 @@
 // Libraries
 import React, { useContext } from 'react';
 
-// Icons
-import InfoIcon from '@material-ui/icons/Info';
-// import WorkIcon from '@material-ui/icons/GroupWork';
-import ContactIcon from '@material-ui/icons/Mail';
-// import DesignIcon from '@material-ui/icons/DeveloperBoard';
-// import DevelopIcon from '@material-ui/icons/DeveloperMode';
-// import DeliverIcon from '@material-ui/icons/HowToReg';
-// import MaintainIcon from '@material-ui/icons/Sync';
-import NewEnterprisesIcon from '@material-ui/icons/Business';
-import ExistingAppsIcons from '@material-ui/icons/Apps';
-// import MarketingIcon from '@material-ui/icons/DataUsage';
-// import TechConsultingIcon from '@material-ui/icons/PhoneIphone';
-
 // Components
-import Link from 'next/link';
 import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
 import ListItem from 'src/layout/UI/Navbar/Drawer/ListItem';
@@ -24,45 +10,6 @@ import { Header, Divider } from './components';
 
 // Dependencies
 import { NavbarContext } from './context';
-
-const links = [
-  {
-    key: 'what_we_do',
-    type: 'button',
-    color: 'inherit',
-    title: 'What we do',
-    caption: 'An overview of how we work alongside our clients.',
-    icon: <InfoIcon />,
-    href: '/what-we-do',
-  },
-  {
-    key: 'about us',
-    type: 'button',
-    color: 'inherit',
-    title: 'About us',
-    caption: 'Who we are',
-    icon: <ExistingAppsIcons />,
-    href: '/about-us',
-  },
-  {
-    key: 'why_us',
-    type: 'button',
-    color: 'inherit',
-    title: 'Why us?',
-    caption: 'Why us? caption',
-    icon: <NewEnterprisesIcon />,
-    href: '/why-us',
-  },
-  {
-    key: 'contact_us',
-    type: 'button',
-    color: 'inherit',
-    title: 'Contact us',
-    caption: 'Say hello, get in touch with us!',
-    icon: <ContactIcon />,
-    href: '/contact-us',
-  }
-];
 
 const getShouldRenderDrawerIcon = (navLinks = []) => navLinks.find(link => {
   if (Array.isArray(link)) {
@@ -78,7 +25,7 @@ const getShouldRenderDrawerIcon = (navLinks = []) => navLinks.find(link => {
  * If it's not an array, it will evaluate if the item is a button, or a list,
  * then render the respective component.
  */
-const renderNavLinks = (navLinks = []) => navLinks.map((link, index) => {
+const renderNavLinks = (navLinks = [], LinkComponent) => navLinks.map((link, index) => {
   const navbarContext = useContext(NavbarContext);
   const [navbarColor] = navbarContext.colorState;
   const [navbarBackgroundColor] = navbarContext.backgroundColorState;
@@ -93,6 +40,7 @@ const renderNavLinks = (navLinks = []) => navLinks.map((link, index) => {
   const { type } = link;
   switch(type) {
     case 'list': {
+      // TODO: DropdownMenu support with LinkComponent
       // Placeholder before implementing dropdown
       const { key, color, header, items } = link;
       return header && (
@@ -107,17 +55,31 @@ const renderNavLinks = (navLinks = []) => navLinks.map((link, index) => {
       );
     }
     case 'button': {
-      const { key, color, title, href } = link;
-      return (
-        <Link href={href}>
-          <Button
-            key={key}
-            color={color}
-          >
-            {title}
-          </Button>
-        </Link>
+      const {
+        key,
+        color,
+        title,
+        wrapper: ButtonLinkComponent,
+        wrapperProps,
+      } = link;
+      const Wrapper = ButtonLinkComponent || LinkComponent;
+      const navLink = (
+        <Button
+          key={key}
+          color={color}
+        >
+          {title}
+        </Button>
       );
+
+      return Wrapper ? (
+        <Wrapper
+          key={key}
+          {...wrapperProps}
+        >
+          {navLink}
+        </Wrapper>
+      ) : navLink;
     }
     default:
       return null;
@@ -130,7 +92,7 @@ const renderNavLinks = (navLinks = []) => navLinks.map((link, index) => {
  * If it's not an array, it will evaluate if the item is a button, or a list,
  * then render the respective component.
  */
-const renderDrawerLinks = (navLinks = [], listItemProps) => navLinks.map((link, index) => {
+const renderDrawerLinks = (navLinks = [], listItemProps = {}, LinkComponent) => navLinks.map((link, index) => {
   if (Array.isArray(link)) {
     return (
       <React.Fragment key={index}>
@@ -144,19 +106,22 @@ const renderDrawerLinks = (navLinks = [], listItemProps) => navLinks.map((link, 
     case 'list': {
       // Placeholder before implementing dropdown
       const { key, header, color, items } = link;
-      return header && (
+      return (
         <React.Fragment
           key={key}
         >
-          <Header
-            color={color}
-          >
-            {header}
-          </Header>
+          {header && (
+            <Header
+              color={color}
+            >
+              {header}
+            </Header>
+          )}
           <List>
             {items.map(item => (
               <ListItem
                 key={item.title}
+                linkComponent={LinkComponent}
                 {...item}
                 {...listItemProps}
               />
@@ -167,17 +132,19 @@ const renderDrawerLinks = (navLinks = [], listItemProps) => navLinks.map((link, 
       );
     }
     case 'button': {
-      const { key, icon, title, caption, href } = link;
+      const { key, icon, title, caption, wrapper, wrapperProps } = link;
       return (
         <React.Fragment
           key={key}
         >
           <ListItem
             key={key}
+            linkComponent={LinkComponent}
             title={title}
             icon={icon}
             caption={caption}
-            href={href}
+            wrapper={wrapper}
+            wrapperProps={wrapperProps}
           />
           <Divider />
         </React.Fragment>
@@ -189,7 +156,6 @@ const renderDrawerLinks = (navLinks = [], listItemProps) => navLinks.map((link, 
 });
 
 export {
-  links,
   getShouldRenderDrawerIcon,
   renderNavLinks,
   renderDrawerLinks,

@@ -43,7 +43,6 @@ const Header = props => {
             @media (max-width: ${({ theme }) => theme.screenMd}) {
               &&& {
                 font-size: 30px;
-                line-height: 40px;
               }
             }
           `}
@@ -112,7 +111,6 @@ const HeaderContainer = styled.div`
 
 const SpanText = styled.span`
   font-size: inherit;
-  line-height: inherit;
   font-weight: 500;
   color: ${props => props.color};
 `;

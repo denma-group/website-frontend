@@ -12,6 +12,7 @@ const StyledRow = styled(({ height, styledCss, ...rest }) => (
   />
 ))`
   position: relative;
+  padding: ${({ padding }) => padding};
   ${({ height, minHeight }) => {
     // If minHeight, return it prioritizing it before height.
     if (minHeight) {

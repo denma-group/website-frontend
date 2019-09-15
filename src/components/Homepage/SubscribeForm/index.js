@@ -11,41 +11,39 @@ import {
   ValueProposition
 } from 'src/components/Homepage';
 
-const SubscribeForm = () => {
-  return (
-    <Container>
-      <ValueProposition
-        align="center"
+const SubscribeForm = () => (
+  <Container>
+    <ValueProposition
+      align="center"
+    >
+      <span>Subscribe to us to hear lorem ipsum all the time!</span>
+    </ValueProposition>
+    <Form noValidate autoComplete="off">
+      <StyledTextField
+        id="subscribe-name-input"
+        label="Name"
+        type="text"
+        name="subscribe-name"
+        margin="normal"
+      />
+      <StyledTextField
+        id="subscribe-email-input"
+        label="Email"
+        type="email"
+        name="subscribe-email"
+        margin="normal"
+      />
+      <StyledFab
+        variant="extended"
+        aria-label="Submit"
+        backgroundColor="primary"
       >
-        <span>Subscribe to us to hear lorem ipsum all the time!</span>
-      </ValueProposition>
-      <Form noValidate autoComplete="off">
-        <StyledTextField
-          id="subscribe-name-input"
-          label="Name"
-          type="text"
-          name="subscribe-name"
-          margin="normal"
-        />
-        <StyledTextField
-          id="subscribe-email-input"
-          label="Email"
-          type="email"
-          name="subscribe-email"
-          margin="normal"
-        />
-        <StyledFab
-          variant="extended"
-          aria-label="Submit"
-          backgroundColor="primary"
-        >
-          <SubmitIcon />
-          <span className="text">Submit</span>
-        </StyledFab>
-      </Form>
-    </Container>
-  );
-};
+        <SubmitIcon />
+        <span className="text">Submit</span>
+      </StyledFab>
+    </Form>
+  </Container>
+);
 
 const Container = styled.div`
   width: 95%;

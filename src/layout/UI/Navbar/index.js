@@ -4,19 +4,19 @@ import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 
 // Components
-import Link from 'next/link';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import { Drawer } from 'src/layout/UI';
 import { Spacing } from './components';
+import HideOnScroll from './HideOnScroll';
 
 // Dependencies
 import Provider, { NavbarContext as Context } from './context';
 
-// Links
-import { links, getShouldRenderDrawerIcon, renderNavLinks } from './links';
+// LinkComponents
+import { getShouldRenderDrawerIcon, renderNavLinks } from './links';
 
 // Navbar React Context exports
 export const NavbarContext = Context;
@@ -24,63 +24,73 @@ export const NavbarProvider = Provider;
 
 const Navbar = props => {
   const {
+    links,
     navbarLogo,
+    logoWrapperProps = {
+      href: '/'
+    },
     drawerLogo,
-    logoHref = '/',
+    linkComponent: LinkComponent,
   } = props;
   const [isDrawerOpen, setDrawerOpen] = useState(false);
 
-  const navbarContext = useContext(NavbarContext);
-  const [color] = navbarContext.colorState;
-  const [backgroundColor] = navbarContext.backgroundColorState;
-  const [opacity] = navbarContext.opacityState;
-  const [position] = navbarContext.positionState;
-  const [boxShadow] = navbarContext.boxShadowState;
-  const [transform] = navbarContext.transformState;
-  const [styledCss] = navbarContext.cssState;
+  // Styling context
+  const {
+    colorState: [color],
+    backgroundColorState: [backgroundColor],
+    opacityState: [opacity],
+    positionState: [position],
+    boxShadowState: [boxShadow],
+    transformState: [transform],
+    cssState: [styledCss],
+  } = useContext(NavbarContext);
 
+  // Will only render the burger icon to the right if necessary
   const shouldRenderDrawerIcon = getShouldRenderDrawerIcon(links);
 
   return (
-    <React.Fragment>
+    <>
       <Spacing />
-      <StyledAppBar
-        position={position}
-        color={color}
-        backgroundColor={backgroundColor}
-        opacity={opacity}
-        boxShadow={boxShadow}
-        transform={transform}
-        styledCss={styledCss}
-      >
-        <Toolbar>
-          <Link href="/">
-            <a role="button">
-              {navbarLogo}
-            </a>
-          </Link>
-          <div className="spacing" />
-          {renderNavLinks(links)}
-          <StyledIconButton
-            color="inherit"
-            aria-label="Menu"
-            onClick={() => setDrawerOpen(!isDrawerOpen)}
-            className="menu-button"
-            shouldRenderDrawerIcon={shouldRenderDrawerIcon}
-          >
-            <MenuIcon />
-          </StyledIconButton>
-        </Toolbar>
-      </StyledAppBar>
+      <HideOnScroll>
+        <StyledAppBar
+          position={position}
+          color={color}
+          backgroundColor={backgroundColor}
+          opacity={opacity}
+          boxShadow={boxShadow}
+          transform={transform}
+          styledCss={styledCss}
+        >
+          <Toolbar>
+            <LinkComponent {...logoWrapperProps}>
+              <a role="button">
+                {navbarLogo}
+              </a>
+            </LinkComponent>
+            <div className="spacing" />
+            {renderNavLinks(links, LinkComponent)}
+            <StyledIconButton
+              color="inherit"
+              aria-label="Menu"
+              onClick={() => setDrawerOpen(!isDrawerOpen)}
+              className="menu-button"
+              shouldRenderDrawerIcon={shouldRenderDrawerIcon}
+            >
+              <MenuIcon />
+            </StyledIconButton>
+          </Toolbar>
+        </StyledAppBar>
+      </HideOnScroll>
       <Drawer
         anchor="right"
         open={isDrawerOpen}
         closeDrawer={() => setDrawerOpen(false)}
         logo={drawerLogo}
-        logoHref={logoHref}
+        logoWrapperProps={logoWrapperProps}
         links={links}
+        linkComponent={LinkComponent}
       />
-    </React.Fragment>
+    </>
   );
 };
 
@@ -102,7 +112,7 @@ const StyledAppBar = styled(({ color, backgroundColor, opacity, boxShadow, trans
     )}
     ${props => (props.styledCss && props.styledCss)}
     transition: all ease 150ms;
-    transition-property: color, background-color, opacity;
+    transition-property: color, background-color, opacity, transform;
 
     a:any-link, a:-webkit-any-link {
       color: unset;
@@ -152,14 +162,17 @@ const StyledIconButton = styled(({ shouldRenderDrawerIcon, ...rest }) => <IconBu
 `;
 
 Navbar.propTypes = {
+  links: PropTypes.instanceOf(Array).isRequired,
   navbarLogo: PropTypes.node.isRequired,
-  logoHref: PropTypes.string,
+  logoWrapperProps: PropTypes.instanceOf(Object),
   drawerLogo: PropTypes.node,
+  linkComponent: PropTypes.func,
 };
 
 Navbar.defaultProps = {
-  logoHref: undefined,
+  logoWrapperProps: undefined,
   drawerLogo: null,
+  linkComponent: null,
 };
 
 export default Navbar;

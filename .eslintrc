@@ -119,6 +119,9 @@
     "no-unused-expressions": [
       2
     ],
+    "react/jsx-props-no-spreading": [
+      0
+    ],
     "react/jsx-first-prop-new-line": [
       1
     ],

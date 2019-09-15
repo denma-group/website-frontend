@@ -1,29 +1,50 @@
 // Libraries
 import React from 'react';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 // Dependencies
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 
-// Components
-import Slide from '@material-ui/core/Slide';
-
 // Wrap the navbar inside HideOnScroll to hide it when the user
 // scrolls down.
-const HideOnScroll = props => {
-  const { children } = props;
-  // useScrollTrigger will default to window.
-  const trigger = useScrollTrigger();
+export default function HideOnScroll(props) {
+  const { children, window } = props;
+  // Note that you normally won't need to set the window ref as useScrollTrigger
+  // will default to window.
+  // This is only being set here because this is Next.JS.
+  const shouldSlideUp = !useScrollTrigger({ target: window ? window() : undefined });
 
-  return (
-    <Slide appear={false} direction="down" in={!trigger}>
-      {children}
-    </Slide>
-  );
-};
+  if (typeof window === 'undefined') {
+    return children;
+  }
+
+  switch(shouldSlideUp) {
+    case true:
+      return React.cloneElement(
+        children,
+        {
+          style: {
+            transform: 'translateY(0%)',
+          }
+        }
+      );
+    default:
+      return React.cloneElement(
+      children,
+      {
+        style: {
+          transform: 'translateY(-100%)',
+        }
+      }
+    );
+  }
+}
+
+const Wrapper = styled.div`
+
+`;
 
 HideOnScroll.propTypes = {
   children: PropTypes.element.isRequired,
 };
-
-export default HideOnScroll;

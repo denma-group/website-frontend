@@ -61,7 +61,6 @@ export const ValueProposition = styled(H1)`
     text-align: center;
     span {
       font-size: inherit;
-      line-height: inherit;
       font-weight: 500;
       color: ${props => props.theme.primary}
     }

@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 // Components
-import Link from 'next/link';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -15,45 +14,64 @@ const Item = props => {
     icon,
     title,
     caption,
-    href,
+    // The following two props are handled by the render worker functions in an upper scope.
+    linkComponent: LinkComponent,
+    wrapper: ItemWrapperComponent,
+    wrapperProps,
     ...rest
   } = props;
-  return (
-    <Link href={href}>
-      <StyledListItem
-        button
-        {...rest}
-      >
-        {icon && (
-          <ListItemIcon>{icon}</ListItemIcon>
+  const Wrapper = ItemWrapperComponent || LinkComponent;
+  const navLink = (
+    <StyledListItem
+      button
+      {...rest}
+    >
+      {icon && (
+        <ListItemIcon>{icon}</ListItemIcon>
+      )}
+      <StyledListItemText
+        primary={(
+          <StyledListTitle
+            color="whiteColor"
+          >
+            {title}
+          </StyledListTitle>
         )}
-        <StyledListItemText
-          primary={(
-            <StyledListTitle
-              color="whiteColor"
-            >
-              {title}
-            </StyledListTitle>
-          )}
-          secondary={(
-            <StyledListCaption
-              color="whiteColor"
-              gutterBottom
-            >
-              {caption}
-            </StyledListCaption>
-          )}
-        />
-      </StyledListItem>
-    </Link>
+        secondary={(
+          <StyledListCaption
+            color="whiteColor"
+            gutterBottom
+          >
+            {caption}
+          </StyledListCaption>
+        )}
+      />
+    </StyledListItem>
   );
+  return ItemWrapperComponent ? (
+    <Wrapper
+      {...wrapperProps}
+    >
+      {navLink}
+    </Wrapper>
+  ) : navLink;
 };
 
 Item.propTypes = {
   icon: PropTypes.node.isRequired,
   title: PropTypes.string.isRequired,
   caption: PropTypes.string.isRequired,
-  href: PropTypes.string.isRequired,
+  href: PropTypes.string,
+  linkComponent: PropTypes.func,
+  wrapper: PropTypes.func,
+  wrapperProps: PropTypes.instanceOf(Object),
+};
+
+Item.defaultProps = {
+  href: undefined,
+  linkComponent: undefined,
+  wrapper: undefined,
+  wrapperProps: undefined,
 };
 
 const StyledListItemText = styled(ListItemText)`

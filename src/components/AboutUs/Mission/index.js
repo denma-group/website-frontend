@@ -53,6 +53,7 @@ const Mission = () => {
           &&& {
             color: ${({ theme }) => theme.brandWhite};
             width: 80%;
+            text-align: center;
           }
           @media (max-width: ${({ theme }) => theme.screenMd}) {
             &&& {
@@ -107,7 +108,7 @@ const ValuesContainer = styled(FadeScaleIn)`
   justify-content: space-between;
   flex-wrap: wrap;
   align-items: center;
-  width: 80%;
+  width: 70%;
   padding: 40px 0;
   @media (max-width: ${({ theme }) => theme.screenMd}) {
     flex-direction: column;
