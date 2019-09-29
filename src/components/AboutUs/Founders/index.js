@@ -17,7 +17,7 @@ export const Founders = props => {
         age: '24',
         position: 'CEO',
         description:
-          'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a',
+          'With endless energy and good humour, Jorge’s vision keeps us pushing forward.',
         color: props.theme.brandDarkRed,
         delay: 0,
       },
@@ -26,7 +26,7 @@ export const Founders = props => {
         age: '25',
         position: 'CTO',
         description:
-          'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a',
+          'Geek on the surface, developer to the core, Robert is always up to date with the latest tech trends.',
         color: props.theme.brandOrange,
         delay: 0.25,
       },
@@ -35,7 +35,7 @@ export const Founders = props => {
         age: '24',
         position: 'COO',
         description:
-          'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a',
+          'With a tendency to use his guitar more than advised, Diego maintains operations on time.',
         color: props.theme.brandDarkRed,
         delay: 0.5,
       },
@@ -44,7 +44,7 @@ export const Founders = props => {
         age: '25',
         position: 'CMO',
         description:
-          'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a',
+          'As prime responsible for our signature Denma look, Valeria puts our ideas on canvas.',
         color: props.theme.brandOrange,
         delay: 0.75,
       },
@@ -59,19 +59,28 @@ export const Founders = props => {
             color: ${props.theme.brandOrange};
           `}
         >
-          Founder`s Story
+          Founder's Story
         </Text.H1>
       </div>
 
       <Text.H3
         css={css`
-          color: ${props.theme.whiteColor};
-          z-index: 11;
+          &&& {
+            color: ${props.theme.whiteColor};
+            z-index: 11;
+            margin-top: 20px;
+            text-align: justify;
+            line-height: 30px;
+          }
         `}
       >
-        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
-        been the industry standard dummy text ever since the 1500s,orem Ipsum is simply dummy text
-        of the printing and typesetting ind
+        Denma’s founders have been in the software business since 2014. With experience in large
+        technology consultancies, we decided to create a more personalized way to work with clients.
+        We focus on user experience to create compelling apps and websites. To do this, we have
+        gathered a select team with experts on product design, development, and strategy. These
+        teams will help validate and support your ideas. Denma focuses on high end products, with a
+        passion to empower other visionaries. We believe that big ideas deserve proper solutions.
+        And we’re here to follow through.
       </Text.H3>
       <FoundersBioContainer>
         {foundersData.map((founder, i) => (
@@ -86,13 +95,13 @@ export const Founders = props => {
           </CardContainer>
         ))}
       </FoundersBioContainer>
-      <HookedParallax style={{ position: 'absolute', bottom: -100 }} multiplierY={2}>
+      <HookedParallax style={{ position: 'absolute', bottom: -100 }} multiplierY={0.8}>
         <Square size={200} rotate={22} color={props.theme.brandDarkRed} />
       </HookedParallax>
-      <HookedParallax style={{ position: 'absolute', bottom: -100, right: 100 }} multiplierY={1.5}>
+      <HookedParallax style={{ position: 'absolute', bottom: -100, right: 100 }} multiplierY={0.3}>
         <Square size={100} rotate={44} color={props.theme.brandOrange} />
       </HookedParallax>
-      <HookedParallax style={{ position: 'absolute', bottom: -50, right: 150 }} multiplierY={1.5}>
+      <HookedParallax style={{ position: 'absolute', bottom: -50, right: 150 }} multiplierY={0.4}>
         <Square size={100} rotate={-22} color={props.theme.brandOrange} />
       </HookedParallax>
     </FounderContainer>

@@ -25,13 +25,25 @@ const FounderCard = props => {
         </Text.H2>
         <Text.H3
           css={css`
-            color: ${founder.color};
-            font-weight: 500;
+            &&& {
+              color: ${founder.color};
+              font-weight: 500;
+              padding: 5px 0;
+            }
           `}
         >
           {founder.position}
         </Text.H3>
-        <Text.P>{founder.description}</Text.P>
+        <Text.P
+          css={css`
+            &&& {
+              padding: 10px 40px;
+              font-size: 18px;
+            }
+          `}
+        >
+          {founder.description}
+        </Text.P>
         <CornerDecoration color={founder.color} />
       </Card>
     </CardOutside>

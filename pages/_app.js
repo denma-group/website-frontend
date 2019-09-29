@@ -91,17 +91,6 @@ const links = [
     },
   },
   {
-    key: 'why_us',
-    type: 'button',
-    color: 'inherit',
-    title: 'Why us?',
-    caption: 'Why us? caption',
-    icon: <NewEnterprisesIcon />,
-    wrapperProps: {
-      href: '/why-us'
-    },
-  },
-  {
     key: 'contact_us',
     type: 'button',
     color: 'inherit',

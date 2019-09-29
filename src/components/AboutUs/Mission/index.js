@@ -64,9 +64,9 @@ const Mission = () => {
           }
         `}
       >
-        survived not only five centuries, but also the leap into electronic typesetting, remaining
-        essentially unchanged.
+        we are missing mission text, or didnt find it in docs. please helppp!!!
       </Text.H3>
+
       <Text.H1
         css={css`
           color: ${({ theme }) => theme.brandOrange};
@@ -75,13 +75,35 @@ const Mission = () => {
       >
         Values
       </Text.H1>
+      <Text.H3
+        css={css`
+          padding-top: 50px;
+          &&& {
+            color: ${({ theme }) => theme.brandWhite};
+            width: 80%;
+            text-align: center;
+          }
+          @media (max-width: ${({ theme }) => theme.screenMd}) {
+            &&& {
+              margin: 50px 0;
+              padding: 0;
+              text-align: center;
+            }
+          }
+        `}
+      >
+        At Denma, values build the foundation for our work. This is what we believe in:
+      </Text.H3>
       {values.map((value, i) => (
         <ValuesContainer delay={value.delay} key={i.toString()} reverse={i % 2 === 1}>
           <TitleContainer>
             <Text.H2 style={{ paddingBottom: 10 }}>{value.title}</Text.H2>
             <Text.P
               css={css`
-                color: white;
+                &&& {
+                  color: white;
+                  margin-top: 10px;
+                }
               `}
             >
               {value.description}
