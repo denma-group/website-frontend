@@ -35,7 +35,7 @@ const Develop = withTheme(props => {
   return (
     <Container>
       <Layout data={data} />
-      <HookedParallax multiplierY={0.4} style={{ position: 'absolute', top: 400, left: 20 }}>
+      <HookedParallax multiplierY={0.4} style={{ position: 'absolute', bottom: 400, left: 20 }}>
         <Rocket fill={props.theme.brandRed} style={{ height: 150, width: 150 }} />
       </HookedParallax>
     </Container>

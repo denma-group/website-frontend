@@ -3,11 +3,12 @@ import React, { useRef } from 'react';
 import styled, { withTheme } from 'styled-components';
 
 // Components
-import { Design, Develop, Deliver, Maintain } from 'src/components/WhatWeDo';
+import { Design, Develop, Deliver, Maintain, Hero } from 'src/components/WhatWeDo';
 
 const WhatWeDo = withTheme(() => {
   return (
     <Container>
+      <Hero />
       <Design />
       <Develop />
       <Deliver />

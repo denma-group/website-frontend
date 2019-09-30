@@ -19,6 +19,7 @@ const Layout = ({ data }) => {
         <Text.H3
           css={css`
             &&& {
+              z-index: 100;
               margin-top: 40px;
               text-align: justify;
             }
@@ -54,7 +55,7 @@ const Layout = ({ data }) => {
                 </Text.H1>
               </Step>
 
-              <Text.P>{step.description}</Text.P>
+              <Text.P css={css`&&&{text-align: center}`} >{step.description}</Text.P>
             </Process>
           ))}
         </ProcessContainer>

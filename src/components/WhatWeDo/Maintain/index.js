@@ -34,7 +34,7 @@ const Develop = withTheme(props => {
   return (
     <Container>
       <Layout data={data} />
-      <HookedParallax multiplierY={0.4} style={{ position: 'absolute', top: 400, left: 20 }}>
+      <HookedParallax multiplierY={0.4} style={{ position: 'absolute', bottom: 350, left: 20, marginBottom: 50 }}>
         <Maintain fill={props.theme.greenColor} style={{ height: 150, width: 150 }} />
       </HookedParallax>
     </Container>

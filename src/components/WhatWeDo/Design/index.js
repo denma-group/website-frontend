@@ -35,7 +35,7 @@ const Design = withTheme(props => {
   return (
     <Container>
       <Layout data={data} />
-      <HookedParallax multiplierY={0.4} style={{ position: 'absolute', top: 400, right: 20 }}>
+      <HookedParallax multiplierY={0.4} style={{ position: 'absolute', bottom: 400, right: 20 }}>
         <Brush fill={props.theme.brandOrange} style={{ height: 150, width: 150 }} />
       </HookedParallax>
     </Container>

@@ -63,7 +63,7 @@ const Header = props => {
             `}
           >
             {' '}
-            apartnerships
+            partnerships
           </Text.Span>{' '}
           to deliver
           <SpanText color={props.theme.brandOrange}> quality.</SpanText>

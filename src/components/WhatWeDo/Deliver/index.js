@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import Layout from 'src/components/WhatWeDo/Layout';
 import styled, { withTheme } from 'styled-components';
 import Deliver from 'src/components/SVG/Icons/Deliver';
@@ -13,18 +13,15 @@ const Design = withTheme(props => {
     steps: [
       {
         title: '',
-        description:
-          ' We deliver you a Beta version in record time',
+        description: ' We deliver you a Beta version in record time',
       },
       {
         title: '',
-        description:
-          ' Feedback session with you and your partners',
+        description: ' Feedback session with you and your partners',
       },
       {
         title: '',
-        description:
-          ' Polishing final product and launching your product',
+        description: ' Polishing final product and launching your product',
       },
     ],
     bannerText: 'Your dream has become a reality.',
@@ -35,7 +32,7 @@ const Design = withTheme(props => {
   return (
     <Container>
       <Layout data={data} />
-      <HookedParallax multiplierY={0.4} style={{ position: 'absolute', top: 400, right: 20 }}>
+      <HookedParallax multiplierY={0.4} style={{ position: 'absolute', bottom: 400, right: 20 }}>
         <Deliver fill={props.theme.blueColor} style={{ height: 150, width: 150 }} />
       </HookedParallax>
     </Container>
@@ -46,7 +43,6 @@ const Container = styled.div`
   position: relative;
   display: flex;
   justify-content: center;
-  align-items: center;
   min-height: 100vh;
   flex-direction: column;
 `;

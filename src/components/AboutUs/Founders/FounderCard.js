@@ -37,8 +37,9 @@ const FounderCard = props => {
         <Text.P
           css={css`
             &&& {
-              padding: 10px 40px;
+              padding: 0px 20px;
               font-size: 18px;
+              text-align: center;
             }
           `}
         >
@@ -53,25 +54,40 @@ const FounderCard = props => {
 const CardOutside = styled.div`
   display: flex;
   position: relative;
-  width: 90%;
+  width: 450px;
   padding-top: 100px;
   justify-content: center;
   align-items: center;
+  box-sizing: border-box;
+
+  @media (max-width: ${({ theme }) => theme.screenXl}) {
+    &&& {
+      width: 300px;
+    }
+  }
 `;
 
 const Card = styled.div`
   position: relative;
+  height: 300px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  box-sizing: border-box;
   border: 1px solid ${props => props.theme.darkColor};
   background-color: ${props => props.theme.darkColor};
   border-radius: 10px;
   overflow: hidden;
   padding: 100px 20px 20px 20px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  @media (max-width: ${({ theme }) => theme.screenXl}) {
+    &&& {
+      height: 350px;
+    }
+  }
 `;
+
 
 const CircularImage = styled.img`
   position: absolute;
