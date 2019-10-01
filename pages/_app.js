@@ -170,30 +170,28 @@ export default class MyApp extends App {
     const isMobile = this.getIsMobile();
     const { Component, pageProps } = this.props;
     return (
-      <Container>
-        <ThemeProvider theme={theme}>
-          <>
-            {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-            <CssBaseline />
-            {/* Website */}
-            <NavbarProvider>
-              <Navbar
-                navbarLogo={navbarLogo}
-                drawerLogo={navbarLogo}
-                links={links}
-                linkComponent={Link}
+      <ThemeProvider theme={theme}>
+        <>
+          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+          <CssBaseline />
+          {/* Website */}
+          <NavbarProvider>
+            <Navbar
+              navbarLogo={navbarLogo}
+              drawerLogo={navbarLogo}
+              links={links}
+              linkComponent={Link}
+            />
+            <PageWrapper>
+              <Component
+                isMobile={isMobile}
+                {...pageProps}
               />
-              <PageWrapper>
-                <Component
-                  isMobile={isMobile}
-                  {...pageProps}
-                />
-              </PageWrapper>
-              <Footer />
-            </NavbarProvider>
-          </>
-        </ThemeProvider>
-      </Container>
+            </PageWrapper>
+            <Footer />
+          </NavbarProvider>
+        </>
+      </ThemeProvider>
     );
   }
 }
