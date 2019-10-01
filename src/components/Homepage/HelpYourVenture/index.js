@@ -35,11 +35,9 @@ const HelpYourVenture = props => {
             We’re committed to improve your ventures
           </StyledH2>
           <StyledH3>
-            We’ve experienced the <span>cumbersome</span> project management approach given by
-            big firms. We decided to focus on <span>generating value</span> for your company,
-            knowing that <span>responsiveness</span> is <span>key</span> for your project, and we’re
-            here to tailor to <span>your</span> specific <span>needs</span>. Needless to say, you’re
-            our team’s <span>priority</span>.
+            We’ve experienced the cumbersome project management approach given by big firms. We decided to focus
+            on <span>generating value for your company</span>, knowing that responsiveness is key for your project,
+            and we’re here to tailor to yourspecific needs. Needless to say, <span>you’re our team’s priority</span>.
           </StyledH3>
         </div>
       </PopIn>
@@ -129,7 +127,7 @@ const StyledH3 = styled(H3)`
     text-align: center;
     span {
       color: ${props => props.theme.primary};
-      font-weight: 400;
+      font-weight: 600;
     }
   }
 `;

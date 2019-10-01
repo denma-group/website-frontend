@@ -25,6 +25,8 @@ const ContactUs = () => (
       variant="extended"
       aria-label="Submit"
       color="primary"
+      backgroundColor="whiteColor"
+      mouseHoverEffect
     >
       <SubmitIcon />
       <span className="text">Contact Us</span>

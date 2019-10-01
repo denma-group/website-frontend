@@ -177,7 +177,7 @@ const Homepage = props => {
               shouldAutoplay: false,
               shouldDisplayButtons: true,
               autoplayDuration: 20000,
-              height: 0.9 * (totalScreenHeight - 64),
+              height: 0.95 * (totalScreenHeight - 64),
               color: '#FFF'
             }}
           />

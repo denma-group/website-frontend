@@ -48,10 +48,11 @@ const Slide = props => {
           >
             {title}
           </StyledH1>
-          <Underscore
-            slideThemeColor={slideThemeColor}
-          />
-          <i><P>{caption}</P></i>
+          <i>
+            <StyledP slideThemeColor={slideThemeColor}>
+              {caption}
+            </StyledP>
+          </i>
         </InformationContainer>
         <ImageContainer
           slideNumber={slideNumber}
@@ -89,29 +90,48 @@ const Wrapper = styled.div`
 `;
 
 const StyledRow = styled(Row)`
-  max-width: 1200px;
-  padding: 0 120px;
-  margin: 0 -20px;
-  @media (max-width: ${({ theme }) => theme.screenSm}) {
-    padding: 0 24px;
+  &&& {
+    max-width: 1200px;
+    padding: 0 120px;
+    margin: 0 -20px;
+    @media (max-width: ${({ theme }) => theme.screenLg}) {
+      padding: 0 24px;
+      flex-flow: column;
+      align-items: center;
+      justify-content: center;
+    }
   }
 `;
 
 const InformationContainer = styled(Col)`
   &&& {
-    order: ${({ slideNumber }) => (slideNumber % 2 === 0 ? 2 : 'initial')};
+    display: flex;
+    flex-flow: column;
+    align-items: center;
     color: ${({ theme }) => theme.whiteColor};
 
     h1 {
       font-weight: bold;
       text-align: center;
+      font-size: 48px;
     }
 
-    p {
-      margin-top: 4px;
-      font-size: 24px;
-      text-decoration: none;
-      text-align: center;
+    i {
+      display: flex;
+      justify-content: center;
+      p {
+        font-size: 24px;
+        text-decoration: none;
+        text-align: center;
+      }
+    }
+
+    @media (min-width: ${({ theme }) => theme.screenLg}) {
+      order: ${({ slideNumber }) => (slideNumber % 2 === 0 ? 2 : 'initial')};
+    }
+
+    @media (max-width: ${({ theme }) => theme.screenLg}) {
+      flex: 0 !important;
     }
   }
 `;
@@ -119,9 +139,19 @@ const InformationContainer = styled(Col)`
 const ImageContainer = styled(Col)`
   &&& {
     max-height: 100%;
+    @media (max-width: ${({ theme }) => theme.screenLg}) {
+      flex: 0 !important;
+    }
     img {
-      max-height: 300px;
+      display: block;
+      max-height: 200px;
       margin: 0 auto;
+      @media (max-width: ${({ theme }) => theme.screenMd}) {
+        max-width: 66%;
+      }
+      @media (max-width: ${({ theme }) => theme.screenSm}) {
+        display: none;
+      }
     }
   }
 `;
@@ -131,36 +161,49 @@ const whiteColor = css`${({ theme }) => theme.whiteColor}`;
 
 const StyledH1 = styled(H1)`
   &&& {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: inline-block;
+    margin: 0 auto 36px;
     font-weight: 700;
     text-align: center;
     color: ${whiteColor};
-    margin-top: -40px;
-    &:before {
-      content: open-quote;
-      font-weight: bold;
-      font-size: 5rem;
-      margin-right: 15px;
-      color: ${({ slideThemeColor }) => slideThemeColor};
-    }
-    &:after {
-      content: close-quote;
-      font-weight: 700;
-      font-size: 5rem;
-      margin-left: 15px;
-      color: ${({ slideThemeColor }) => slideThemeColor};
+    .underscore {
+      position: relative;
+      &:before {
+        position: absolute;
+        content: '';
+        left: 0;
+        bottom: -4px;
+        width: 100%;
+        height: 4px;
+        border-radius: 8px;
+        background-color: ${({ slideThemeColor }) => slideThemeColor};
+      }
     }
   }
 `;
 
-const Underscore = styled.div`
-  width: 100px;
-  height: 86x;
-  border-radius: 12px;
-  background-color: ${({ slideThemeColor }) => slideThemeColor};
-  margin: -40px auto 30px;
+const StyledP = styled(P)`
+  &&& {
+    position: relative;
+    margin: 4px 22px;
+    padding: 0 18px;
+    max-width: 66%;
+    &:before, &:after {
+      position: absolute;
+      top: -20px;
+      font-weight: bold;
+      font-size: 3.535rem;
+      color: ${({ slideThemeColor }) => slideThemeColor};
+    }
+    &:before {
+      right: 100%;
+      content: open-quote;
+    }
+    &:after {
+      left: 100%;
+      content: close-quote;
+    }
+  }
 `;
 
 export default Slide;
