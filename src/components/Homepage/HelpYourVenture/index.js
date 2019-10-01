@@ -26,7 +26,6 @@ const HelpYourVenture = props => {
       <PopIn
         classNames="pitch"
         wrapper={Help}
-        alignItems="center"
         sm={12}
         md={7}
       >
@@ -45,7 +44,6 @@ const HelpYourVenture = props => {
       <PopIn
         classNames="image"
         wrapper={ImageContainer}
-        alignItems="center"
         sm={12}
         md={5}
         animationMultiplier={2}

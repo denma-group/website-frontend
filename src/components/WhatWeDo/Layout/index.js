@@ -1,7 +1,10 @@
-import React, { useMemo } from 'react';
+// Libraries
+import React from 'react';
 import PropTypes from 'prop-types';
-import styled, { css } from 'styled-components';
-import * as Text from 'src/components/UI/Text/index';
+import styled from 'styled-components';
+
+// Components
+import { H1, H2, H3, P } from 'src/components/UI/Text';
 import FadeScaleIn from 'src/components/UI/FadeScaleIn/index';
 
 const Layout = ({ data }) => {
@@ -9,69 +12,56 @@ const Layout = ({ data }) => {
   return (
     <Container>
       <Center>
-        <Text.H1
-          css={css`
-            color: ${color};
-          `}
-        >
+        <Title color={color}>
           {title}
-        </Text.H1>
-        <Text.H3
-          css={css`
-            &&& {
-              z-index: 100;
-              margin-top: 40px;
-              text-align: justify;
-            }
-          `}
-        >
+        </Title>
+        <Description>
           {description}
-        </Text.H3>
+        </Description>
         <div style={{ marginTop: 20 }}>
-          <Text.H2
-            css={css`
-              color: ${color};
-              &&& {
-                margin-top: 30px;
-                margin-bottom: 30px;
-              }
-            `}
-          >
+          <Subtitle>
             {subtitle}
-          </Text.H2>
+          </Subtitle>
         </div>
         <ProcessContainer>
           {steps.map((step, i) => (
             <Process key={i.toString()} delay={0} time={0.15}>
               <Step color={color}>
-                <Text.H1
-                  css={css`
-                    &&& {
-                      color: ${({ theme }) => theme.whiteColor};
-                    }
-                  `}
-                >
+                <H1 color="whiteColor">
                   {i + 1}
-                </Text.H1>
+                </H1>
               </Step>
-
-              <Text.P css={css`&&&{text-align: center}`} >{step.description}</Text.P>
+              <P align="center">{step.description}</P>
             </Process>
           ))}
         </ProcessContainer>
       </Center>
       <Banner color={color}>
-        <Text.H2
-          css={css`
-            color: ${({ theme }) => theme.whiteColor};
-          `}
-        >
+        <H2 color="whiteColor">
           {bannerText}
-        </Text.H2>
+        </H2>
       </Banner>
     </Container>
   );
 };
+
+const Title = styled(H1)`
+  color: ${({ color }) => color};
+`;
+
+const Subtitle = styled(H2)`
+  color: ${({ color }) => color};
+  &&& {
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+`;
+
+const Description = styled(H3)`
+  z-index: 100;
+  margin-top: 40px;
+  text-align: justify;
+`;
 
 const Container = styled.div`
   display: flex;

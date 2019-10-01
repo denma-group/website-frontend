@@ -1,21 +1,19 @@
 // Libraries
-import React, { useRef } from 'react';
+import React from 'react';
 import styled, { withTheme } from 'styled-components';
 
 // Components
 import { Design, Develop, Deliver, Maintain, Hero } from 'src/components/WhatWeDo';
 
-const WhatWeDo = withTheme(() => {
-  return (
-    <Container>
-      <Hero />
-      <Design />
-      <Develop />
-      <Deliver />
-      <Maintain />
-    </Container>
-  );
-});
+const WhatWeDo = withTheme(() => (
+  <Container>
+    <Hero />
+    <Design />
+    <Develop />
+    <Deliver />
+    <Maintain />
+  </Container>
+));
 
 const Container = styled.div`
   display: flex;
@@ -25,7 +23,5 @@ const Container = styled.div`
   background-color: ${({ theme }) => theme.whiteColor};
   flex-direction: column;
 `;
-
-const Content = styled.div``;
 
 export default WhatWeDo;

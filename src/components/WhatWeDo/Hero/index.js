@@ -1,15 +1,17 @@
+// Libraries
 import React from 'react';
 import styled from 'styled-components';
 
+// Components
 import * as Text from 'src/components/UI/Text/index';
 
-const Hero = () => {
+export default function Hero() {
   return (
     <Container>
       <Text.H1>Designed so you are involved in every phase</Text.H1>
     </Container>
   );
-};
+}
 
 const Container = styled.div`
   display: flex;
@@ -21,5 +23,3 @@ const Container = styled.div`
 		padding: 0px 100px;
   }
 `;
-
-export default Hero;

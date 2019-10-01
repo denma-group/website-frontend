@@ -1,7 +1,7 @@
 // Libraries
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
-import App, { Container } from 'next/app';
+import App from 'next/app';
 import Router from 'next/router';
 import NProgress from 'nprogress';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -30,7 +30,6 @@ import ContactIcon from '@material-ui/icons/Mail';
 // import DevelopIcon from '@material-ui/icons/DeveloperMode';
 // import DeliverIcon from '@material-ui/icons/HowToReg';
 // import MaintainIcon from '@material-ui/icons/Sync';
-import NewEnterprisesIcon from '@material-ui/icons/Business';
 import ExistingAppsIcons from '@material-ui/icons/Apps';
 // import MarketingIcon from '@material-ui/icons/DataUsage';
 // import TechConsultingIcon from '@material-ui/icons/PhoneIphone';
@@ -171,30 +170,28 @@ export default class MyApp extends App {
     const isMobile = this.getIsMobile();
     const { Component, pageProps } = this.props;
     return (
-      <Container>
-        <ThemeProvider theme={theme}>
-          <>
-            {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-            <CssBaseline />
-            {/* Website */}
-            <NavbarProvider>
-              <Navbar
-                navbarLogo={navbarLogo}
-                drawerLogo={navbarLogo}
-                links={links}
-                linkComponent={Link}
+      <ThemeProvider theme={theme}>
+        <>
+          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+          <CssBaseline />
+          {/* Website */}
+          <NavbarProvider>
+            <Navbar
+              navbarLogo={navbarLogo}
+              drawerLogo={navbarLogo}
+              links={links}
+              linkComponent={Link}
+            />
+            <PageWrapper>
+              <Component
+                isMobile={isMobile}
+                {...pageProps}
               />
-              <PageWrapper>
-                <Component
-                  isMobile={isMobile}
-                  {...pageProps}
-                />
-              </PageWrapper>
-              <Footer />
-            </NavbarProvider>
-          </>
-        </ThemeProvider>
-      </Container>
+            </PageWrapper>
+            <Footer />
+          </NavbarProvider>
+        </>
+      </ThemeProvider>
     );
   }
 }

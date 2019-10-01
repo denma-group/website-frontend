@@ -128,7 +128,6 @@ export function useOnScrollBgColor(
   } = {},
   delay = 50
 ) {
-
   const listener = useCallback(
     debounce(
       () => {
@@ -161,7 +160,11 @@ export function useOnScrollBgColor(
       const elementBackground = elementBackgroundRef || document.body;
       elementBackground.style.transition = `background-color ${delay * 4}ms ease`;
     }
-  }, []);
+    return () => {
+      const elementBackground = elementBackgroundRef || document.body;
+      elementBackground.style.transition = null;
+    };
+  }, [delay, elementBackgroundRef, listener]);
 
   useEffect(() => {
     window.addEventListener(

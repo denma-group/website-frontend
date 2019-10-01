@@ -39,7 +39,6 @@ const Slide = props => {
       >
         <InformationContainer
           slideNumber={slideNumber}
-          alignItems="center"
           sm={12}
           md={7}
         >
@@ -55,9 +54,7 @@ const Slide = props => {
           </i>
         </InformationContainer>
         <ImageContainer
-          slideNumber={slideNumber}
-          alignItems="center"
-          sm={0}
+          sm={false}
           md={5}
         >
           <LazyImage
@@ -71,11 +68,11 @@ const Slide = props => {
 };
 
 Slide.propTypes = {
-  title: PropTypes.string.isRequired,
+  title: PropTypes.node.isRequired,
   caption: PropTypes.string.isRequired,
   src: PropTypes.string.isRequired,
   slideNumber: PropTypes.number.isRequired,
-  slideThemeColor: PropTypes.number.isRequired,
+  slideThemeColor: PropTypes.string.isRequired,
 };
 
 const Wrapper = styled.div`
@@ -103,7 +100,7 @@ const StyledRow = styled(Row)`
   }
 `;
 
-const InformationContainer = styled(Col)`
+const InformationContainer = styled(({ slideNumber, ...rest }) => <Col {...rest} />)`
   &&& {
     display: flex;
     flex-flow: column;
@@ -156,10 +153,9 @@ const ImageContainer = styled(Col)`
   }
 `;
 
-// const primaryColor = css`${({ theme }) => theme.primary}`;
 const whiteColor = css`${({ theme }) => theme.whiteColor}`;
 
-const StyledH1 = styled(H1)`
+const StyledH1 = styled(({ slideThemeColor, ...rest }) => <H1 {...rest} />)`
   &&& {
     display: inline-block;
     margin: 0 auto 36px;
@@ -182,7 +178,7 @@ const StyledH1 = styled(H1)`
   }
 `;
 
-const StyledP = styled(P)`
+const StyledP = styled(({ slideThemeColor, ...rest }) => <P {...rest} />)`
   &&& {
     position: relative;
     margin: 4px 22px;
