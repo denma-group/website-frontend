@@ -92,7 +92,7 @@ const Mission = () => {
         At Denma, values build the foundation for our work. This is what we believe in:
       </Text.H3>
       {values.map((value, i) => (
-        <ValuesContainer delay={value.delay} key={i.toString()} reverse={true}>
+        <ValuesContainer delay={value.delay} key={i.toString()} reverse>
           <TitleContainer>
             <Text.H2 style={{ paddingBottom: 10 }}>{value.title}</Text.H2>
             <Text.P
