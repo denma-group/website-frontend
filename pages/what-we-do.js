@@ -7,6 +7,8 @@ import { Design, Develop, Deliver, Maintain, Hero } from 'src/components/WhatWeD
 import { NavbarContext } from 'src/layout/UI/Navbar';
 
 const WhatWeDo = withTheme(props => {
+  const { theme } = props;
+
   const {
     resetCss: resetNavbarCss,
     colorState: [, setNavbarColor],
@@ -14,11 +16,13 @@ const WhatWeDo = withTheme(props => {
   } = useContext(NavbarContext);
 
   useEffect(() => {
-    setNavbarBgColor(props.theme.whiteColor);
-    setNavbarColor(props.theme.lightDarkColor);
+    setNavbarBgColor(theme.whiteColor);
+    setNavbarColor(theme.lightDarkColor);
     return () => {
       resetNavbarCss();
     };
+    
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -40,7 +44,5 @@ const Container = styled.div`
   background-color: ${({ theme }) => theme.whiteColor};
   flex-direction: column;
 `;
-
-const Content = styled.div``;
 
 export default WhatWeDo;

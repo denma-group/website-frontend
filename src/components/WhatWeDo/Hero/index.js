@@ -1,14 +1,12 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 import * as Text from 'src/components/UI/Text/index';
 
 const Hero = () => {
   return (
     <Container>
-      <Text.H1 align={center}>
-        Designed so you are involved in every phase
-      </Text.H1>
+      <Text.H1 align="center">Designed so you are involved in every phase</Text.H1>
     </Container>
   );
 };
