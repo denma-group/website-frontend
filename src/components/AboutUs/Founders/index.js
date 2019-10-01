@@ -52,7 +52,7 @@ export const Founders = props => {
     [props.theme.brandDarkRed, props.theme.brandOrange]
   );
   return (
-    <FounderContainer ref={props.innerRef} style={{ position: 'relative', zIndex: 0 }}>
+    <FounderContainer style={{ position: 'relative', zIndex: 0 }}>
       <div ref={props.innerRef}>
         <Text.H1
           css={css`
