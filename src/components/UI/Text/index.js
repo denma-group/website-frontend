@@ -6,43 +6,43 @@ import styled from 'styled-components';
 // Components
 import Typography from '@material-ui/core/Typography';
 
-const H1 = ({ children, ...rest }) => (
+const H1 = ({ children, color, ...rest }) => (
   <Typography variant="h1" {...rest}>
     {children}
   </Typography>
 );
 
-const H2 = ({ children, ...rest }) => (
+const H2 = ({ children, color, ...rest }) => (
   <Typography variant="h2" {...rest}>
     {children}
   </Typography>
 );
 
-const H3 = ({ children, ...rest }) => (
+const H3 = ({ children, color, ...rest }) => (
   <Typography variant="h3" {...rest}>
     {children}
   </Typography>
 );
 
-const H6 = ({ children, ...rest }) => (
+const H6 = ({ children, color, ...rest }) => (
   <Typography variant="h6" {...rest}>
     {children}
   </Typography>
 );
 
-const P = ({ children, ...rest }) => (
+const P = ({ children, color, ...rest }) => (
   <Typography variant="body1" {...rest}>
     {children}
   </Typography>
 );
 
-const Caption = ({ children, ...rest }) => (
+const Caption = ({ children, color, ...rest }) => (
   <Typography variant="caption" {...rest}>
     {children}
   </Typography>
 );
 
-const Subtitle = ({ children, ...rest }) => (
+const Subtitle = ({ children, color, ...rest }) => (
   <Typography variant="subtitle1" {...rest}>
     {children}
   </Typography>
@@ -50,6 +50,7 @@ const Subtitle = ({ children, ...rest }) => (
 
 const StyledH1 = styled(H1)`
   &&& {
+    color: ${({ theme, color }) => (color ? theme[color] : null)};
     font-size: 52px;
     line-height: 1.8;
     font-weight: 600;
@@ -72,6 +73,7 @@ const StyledH1 = styled(H1)`
 
 const StyledH2 = styled(H2)`
   &&& {
+    color: ${({ theme, color }) => (color ? theme[color] : null)};
     font-size: 34px;
     line-height: 1.7;
     font-weight: 400;
@@ -163,6 +165,11 @@ const StyledSpan = styled.span`
 
 const propTypes = {
   children: PropTypes.node.isRequired,
+  color: PropTypes.string,
+};
+
+const defaultProps = {
+  color: undefined,
 };
 
 H1.propTypes = propTypes;
@@ -172,6 +179,14 @@ H6.propTypes = propTypes;
 P.propTypes = propTypes;
 Caption.propTypes = propTypes;
 Subtitle.propTypes = propTypes;
+
+H1.defaultProps = defaultProps;
+H2.defaultProps = defaultProps;
+H3.defaultProps = defaultProps;
+H6.defaultProps = defaultProps;
+P.defaultProps = defaultProps;
+Caption.defaultProps = defaultProps;
+Subtitle.defaultProps = defaultProps;
 
 export {
   StyledH1 as H1,

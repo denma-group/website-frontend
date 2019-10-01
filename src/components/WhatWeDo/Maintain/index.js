@@ -1,6 +1,9 @@
-import React, { useMemo } from 'react';
-import Layout from 'src/components/WhatWeDo/Layout';
+// Libraries
+import React from 'react';
 import styled, { withTheme } from 'styled-components';
+
+// Components
+import Layout from 'src/components/WhatWeDo/Layout';
 import Maintain from 'src/components/SVG/Icons/Maintain';
 import HookedParallax from 'src/components/UI/HookedParallax';
 

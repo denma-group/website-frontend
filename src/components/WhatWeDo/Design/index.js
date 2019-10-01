@@ -1,6 +1,9 @@
-import React, { useMemo } from 'react';
-import Layout from 'src/components/WhatWeDo/Layout';
+// Libraries
+import React from 'react';
 import styled, { withTheme } from 'styled-components';
+
+// Components
+import Layout from 'src/components/WhatWeDo/Layout';
 import Brush from 'src/components/SVG/Icons/Brush';
 import HookedParallax from 'src/components/UI/HookedParallax';
 
@@ -13,25 +16,22 @@ const Design = withTheme(props => {
     steps: [
       {
         title: '',
-        description:
-          ' Discussing your vision with our Design Team',
+        description: ' Discussing your vision with our Design Team',
       },
       {
         title: '',
-        description:
-          ' Live Sketch of your future software solution',
+        description: ' Live Sketch of your future software solution',
       },
       {
         title: '',
-        description:
-          ' Adding that signature Denma touch',
+        description: ' Adding that signature Denma touch',
       },
     ],
     bannerText: 'Where we shape your ideas.',
     color: props.theme.brandOrange,
     icons: [],
   };
-  
+
   return (
     <Container>
       <Layout data={data} />

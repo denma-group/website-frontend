@@ -52,10 +52,11 @@ const PopIn = props => {
         opacity: !firstInView && 0,
       }}
       className={classNames}
-      {...{
-        innerRef: WrapperComponent ? ref : null,
-        ref: !WrapperComponent ? ref : null,
-      }}
+      ref={!WrapperComponent ? ref : null}
+      // This will throw a warning in the console saying it's deprecated in favor of "ref".
+      // However, innerRef is the only way to pass the ref as a prop down to the WrapperComponent
+      // Prop.
+      innerRef={WrapperComponent ? ref : null}
     >
       <CSSTransition
         in={shouldPopOutOnExit ? inView : firstInView}
@@ -76,7 +77,10 @@ const PopIn = props => {
 PopIn.propTypes = {
   children: PropTypes.node.isRequired,
   style: PropTypes.instanceOf(Object),
-  wrapper: PropTypes.func,
+  wrapper: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.object,
+  ]),
   shouldPopOutOnExit: PropTypes.bool,
   animationMultiplier: PropTypes.number,
   animationDelayMultiplier: PropTypes.number,

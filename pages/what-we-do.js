@@ -21,7 +21,6 @@ const WhatWeDo = withTheme(props => {
     return () => {
       resetNavbarCss();
     };
-    
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
