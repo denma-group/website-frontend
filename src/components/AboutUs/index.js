@@ -1,5 +1,5 @@
 import Header from 'src/components/AboutUs/Header';
 import Founder from 'src/components/AboutUs/Founders';
-import Mission from 'src/components/AboutUs/Mission';
+import Values from 'src/components/AboutUs/Values';
 
-export { Header, Founder, Mission };
+export { Header, Founder, Values };

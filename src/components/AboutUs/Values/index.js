@@ -7,7 +7,7 @@ import * as Text from 'src/components/UI/Text';
 import Quality from 'src/components/SVG/Icons/Quality';
 import Diagram from 'src/components/SVG/Icons/Diagram';
 import Communities from 'src/components/SVG/Icons/Communities';
-import FadeScaleIn from 'src/components/UI/FadeScaleIn/index';
+import FadeScaleIn from 'src/components/UI/FadeScaleIn';
 
 const Mission = () => {
   const values = useMemo(
@@ -39,33 +39,6 @@ const Mission = () => {
 
   return (
     <Container>
-      <Text.H1
-        css={css`
-          color: ${({ theme }) => theme.brandDarkRed};
-          padding-top: 100px;
-        `}
-      >
-        Mission
-      </Text.H1>
-      <Text.H3
-        css={css`
-          padding-top: 50px;
-          &&& {
-            width: 80%;
-            text-align: center;
-          }
-          @media (max-width: ${({ theme }) => theme.screenMd}) {
-            &&& {
-              margin: 50px 0;
-              padding: 0;
-              text-align: center;
-            }
-          }
-        `}
-      >
-        we are missing mission text, or didnt find it in docs. please helppp!!!
-      </Text.H3>
-
       <Text.H1
         css={css`
           color: ${({ theme }) => theme.brandOrange};
