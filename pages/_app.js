@@ -1,7 +1,7 @@
 // Libraries
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
-import App, { Container } from 'next/app';
+import App from 'next/app';
 import Router from 'next/router';
 import NProgress from 'nprogress';
 import CssBaseline from '@material-ui/core/CssBaseline';
