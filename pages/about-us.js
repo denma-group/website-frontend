@@ -3,7 +3,7 @@ import React, { useRef } from 'react';
 import styled, { withTheme } from 'styled-components';
 
 // Components
-import { Header, Founder, Mission } from 'src/components/AboutUs';
+import { Header, Founder } from 'src/components/AboutUs';
 
 const AboutUs = withTheme(() => {
   const founderRef = useRef(null);
@@ -13,7 +13,6 @@ const AboutUs = withTheme(() => {
       <>
         <Header scrollRef={founderRef} />
         <Founder innerRef={founderRef} />
-        <Mission />
       </>
     </Container>
   );
