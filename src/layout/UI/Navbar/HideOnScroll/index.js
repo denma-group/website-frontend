@@ -25,7 +25,7 @@ export default function HideOnScroll(props) {
         children,
         {
           style: {
-            transform: 'translateY(0%)',
+            transform: null,
           }
         }
       );
@@ -40,10 +40,6 @@ export default function HideOnScroll(props) {
     );
   }
 }
-
-const Wrapper = styled.div`
-
-`;
 
 HideOnScroll.propTypes = {
   children: PropTypes.element.isRequired,

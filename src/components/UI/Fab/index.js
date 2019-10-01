@@ -10,7 +10,7 @@ const Fab = props => (
 );
 
 
-const StyledFab = styled(RawFab)`
+const StyledFab = styled(({ color, backgroundColor, mouseHoverEffect, ...rest }) => <RawFab {...rest} />)`
   &&& {
     display: inline-block;
     width: fit-content;

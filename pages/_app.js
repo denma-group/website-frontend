@@ -30,7 +30,6 @@ import ContactIcon from '@material-ui/icons/Mail';
 // import DevelopIcon from '@material-ui/icons/DeveloperMode';
 // import DeliverIcon from '@material-ui/icons/HowToReg';
 // import MaintainIcon from '@material-ui/icons/Sync';
-import NewEnterprisesIcon from '@material-ui/icons/Business';
 import ExistingAppsIcons from '@material-ui/icons/Apps';
 // import MarketingIcon from '@material-ui/icons/DataUsage';
 // import TechConsultingIcon from '@material-ui/icons/PhoneIphone';

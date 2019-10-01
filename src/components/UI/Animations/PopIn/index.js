@@ -76,7 +76,10 @@ const PopIn = props => {
 PopIn.propTypes = {
   children: PropTypes.node.isRequired,
   style: PropTypes.instanceOf(Object),
-  wrapper: PropTypes.func,
+  wrapper: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.object,
+  ]),
   shouldPopOutOnExit: PropTypes.bool,
   animationMultiplier: PropTypes.number,
   animationDelayMultiplier: PropTypes.number,

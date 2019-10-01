@@ -1,6 +1,9 @@
+// Libraries
 import React from 'react';
-import Layout from 'src/components/WhatWeDo/Layout';
 import styled, { withTheme } from 'styled-components';
+
+// Components
+import Layout from 'src/components/WhatWeDo/Layout';
 import Deliver from 'src/components/SVG/Icons/Deliver';
 import HookedParallax from 'src/components/UI/HookedParallax';
 

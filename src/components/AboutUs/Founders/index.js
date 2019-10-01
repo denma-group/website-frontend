@@ -59,7 +59,7 @@ export const Founders = props => {
             color: ${props.theme.brandOrange};
           `}
         >
-          Founder's Story
+          Founder&apos;s Story
         </Text.H1>
       </div>
 

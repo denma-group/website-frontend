@@ -84,6 +84,7 @@ const Homepage = props => {
   // When this component unmounts, reset the Navbar CSS.
   useEffect(() => () => {
     resetNavbarCss();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useOnScrollBgColor(

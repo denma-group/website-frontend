@@ -15,14 +15,6 @@ const NavbarLogo = () => (
   />
 );
 
-const DrawerLogo = () => (
-  <StyledDrawerLogo
-    alt="Denma Home"
-    title="Denma Home"
-    focusable="false"
-  />
-);
-
 const Spacing = styled.div`
   background: transparent;
   @media (min-width: 600px) {
