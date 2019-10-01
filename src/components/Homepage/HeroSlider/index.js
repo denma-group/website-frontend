@@ -73,7 +73,7 @@ const Slider = props => {
       slideColor: theme.servify,
       backgroundImage: servifyBg,
       background: slidesBackgrounds,
-      title: 'Servify',
+      title: () => <><span className="underscore">CEO</span> - Servify</>,
       caption: 'Denma helped us solidify our corporate image and strategy.',
       src: servifyLogo,
       slideNumber: 1,
@@ -83,8 +83,8 @@ const Slider = props => {
       slideColor: theme.bonpreuFoods,
       backgroundImage: bopreuFoodsBg,
       background: slidesBackgrounds,
-      title: 'Bonpreu Foods',
-      caption: 'At Denma, we were treated as partners from day one.',
+      title: () => <><span className="underscore">Founder</span> <br /> Bonpreu Foods</>,
+      caption: 'Denma allowed our business to boost our web sales.',
       src: bonpreuFoodsLogo,
       slideNumber: 2,
     },
@@ -93,8 +93,8 @@ const Slider = props => {
       slideColor: theme.tireOutlet,
       backgroundImage: tireOutletBg,
       background: slidesBackgrounds,
-      title: 'Tire Outlet',
-      caption: 'Denma allowed our business to achieve web sales that we would have missed otherwise.',
+      title: () => <><span className="underscore">CMO</span> - Tire Outlet</>,
+      caption: 'At Denma, we were treated as partners from day one.',
       src: tireOutletLogo,
       slideNumber: 3,
     },
@@ -110,7 +110,7 @@ const Slider = props => {
     >
       {props.children}
       {/* SERVIFY */}
-      {slides.map(({ key, slideColor, backgroundImage, background, ...rest }) => (
+      {slides.map(({ key, slideColor, backgroundImage, background, title, ...rest }) => (
         <SlideWrapper
           key={key}
           background={{
@@ -121,6 +121,7 @@ const Slider = props => {
         >
           <Slide
             slideThemeColor={slideColor}
+            title={title()}
             {...rest}
           />
         </SlideWrapper>

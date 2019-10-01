@@ -1,6 +1,6 @@
 // Libraries
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 // Components
 import RawFab from '@material-ui/core/Fab';
@@ -26,6 +26,15 @@ const StyledFab = styled(RawFab)`
     border: 2px solid ${({ theme, color }) => theme[color]};
     background-color: ${({ theme, backgroundColor }) => theme[backgroundColor] || 'transparent'};
     box-shadow: none;
+
+    ${({ mouseHoverEffect }) => mouseHoverEffect && css`
+      &:hover {
+        color: ${({ theme, backgroundColor }) => theme[backgroundColor] || 'transparent'};
+        background-color: ${({ theme, color }) => theme[color]};
+      }
+    `}
+
+    transition: all ease 200ms;
 
     @media (max-width: ${({ theme }) => theme.screenMd}) {
       padding: 4px 8px;
