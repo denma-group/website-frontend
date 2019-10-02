@@ -7,7 +7,7 @@ import * as Text from 'src/components/UI/Text';
 import Quality from 'src/components/SVG/Icons/Quality';
 import Diagram from 'src/components/SVG/Icons/Diagram';
 import Communities from 'src/components/SVG/Icons/Communities';
-import FadeScaleIn from 'src/components/UI/FadeScaleIn/index';
+import FadeScaleIn from 'src/components/UI/FadeScaleIn';
 
 const Mission = () => {
   const values = useMemo(
@@ -41,34 +41,6 @@ const Mission = () => {
     <Container>
       <Text.H1
         css={css`
-          color: ${({ theme }) => theme.brandDarkRed};
-          padding-top: 100px;
-        `}
-      >
-        Mission
-      </Text.H1>
-      <Text.H3
-        css={css`
-          padding-top: 50px;
-          &&& {
-            color: ${({ theme }) => theme.brandWhite};
-            width: 80%;
-            text-align: center;
-          }
-          @media (max-width: ${({ theme }) => theme.screenMd}) {
-            &&& {
-              margin: 50px 0;
-              padding: 0;
-              text-align: center;
-            }
-          }
-        `}
-      >
-        we are missing mission text, or didnt find it in docs. please helppp!!!
-      </Text.H3>
-
-      <Text.H1
-        css={css`
           color: ${({ theme }) => theme.brandOrange};
           padding-top: 100px;
         `}
@@ -79,13 +51,11 @@ const Mission = () => {
         css={css`
           padding-top: 50px;
           &&& {
-            color: ${({ theme }) => theme.brandWhite};
             width: 80%;
             text-align: center;
           }
           @media (max-width: ${({ theme }) => theme.screenMd}) {
             &&& {
-              margin: 50px 0;
               padding: 0;
               text-align: center;
             }
@@ -95,13 +65,12 @@ const Mission = () => {
         At Denma, values build the foundation for our work. This is what we believe in:
       </Text.H3>
       {values.map((value, i) => (
-        <ValuesContainer delay={value.delay} key={i.toString()} reverse={i % 2 === 1}>
+        <ValuesContainer delay={value.delay} key={i.toString()} reverse>
           <TitleContainer>
             <Text.H2 style={{ paddingBottom: 10 }}>{value.title}</Text.H2>
             <Text.P
               css={css`
                 &&& {
-                  color: white;
                   margin-top: 10px;
                 }
               `}
@@ -121,7 +90,9 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
-  background-color: ${({ theme }) => theme.lightDarkColor};
+  background-color: ${({ theme }) => theme.whiteColor};
+  color: ${({ theme }) => theme.lightDarkColor};
+  padding-bottom: 100px;
 `;
 
 const ValuesContainer = styled(FadeScaleIn)`

@@ -95,13 +95,13 @@ export const Founders = props => {
           </CardContainer>
         ))}
       </FoundersBioContainer>
-      <HookedParallax style={{ position: 'absolute', bottom: -100 }} multiplierY={0.8}>
+      <HookedParallax style={{ position: 'absolute', bottom: 50 }} multiplierY={0.8}>
         <Square size={200} rotate={22} color={props.theme.brandDarkRed} />
       </HookedParallax>
-      <HookedParallax style={{ position: 'absolute', bottom: -100, right: 100 }} multiplierY={0.3}>
+      <HookedParallax style={{ position: 'absolute', bottom: 450, right: 70 }} multiplierY={0.3}>
         <Square size={100} rotate={44} color={props.theme.brandOrange} />
       </HookedParallax>
-      <HookedParallax style={{ position: 'absolute', bottom: -50, right: 150 }} multiplierY={0.4}>
+      <HookedParallax style={{ position: 'absolute', bottom: 500, right: 50 }} multiplierY={0.4}>
         <Square size={100} rotate={-22} color={props.theme.brandOrange} />
       </HookedParallax>
     </FounderContainer>
@@ -136,8 +136,10 @@ const FounderContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0 10%;
+  padding-bottom: 200px;
   justify-content: center;
   position: relative;
+  
 `;
 
 const FoundersBioContainer = styled.div`
