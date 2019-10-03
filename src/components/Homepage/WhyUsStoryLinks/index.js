@@ -41,6 +41,7 @@ const WhyUsStoryLinks = () => (
             style={{
               minWidth: 150
             }}
+            mouseHoverEffect
           >
             {fab}
           </Fab>

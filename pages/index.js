@@ -124,9 +124,7 @@ const Homepage = props => {
           }}
         />
         <HeroWrapper>
-          <Row
-            height={totalScreenHeight - 64}
-          >
+          <Row height={totalScreenHeight}>
             <Parallax speed={0.5}>
               <LogoContainer>
                 <StyledLogo />
@@ -178,27 +176,21 @@ const Homepage = props => {
               shouldAutoplay: false,
               shouldDisplayButtons: true,
               autoplayDuration: 20000,
-              height: 0.95 * (totalScreenHeight - 64),
+              height: 0.95 * (totalScreenHeight),
               color: '#FFF'
             }}
           />
         </Row>
         {/* PRIORITY/BACKGROUND PARALLAX DIVIDER */}
-        <Row
-          height={totalScreenHeight * 0.5}
-        >
+        <Row height={totalScreenHeight * 0.5}>
           <Priority />
         </Row>
         {/* WHY US/OUR STORY LINKS */}
-        <Row
-          height="auto"
-        >
+        <Row height="auto">
           <WhyUsStoryLinks />
         </Row>
         {/* SUBSCRIBE TO US FORM */}
-        <Row
-          height="auto"
-        >
+        <Row height="auto">
           <ContactUs />
         </Row>
       </StyledPageWrapper>

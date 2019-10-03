@@ -2,21 +2,21 @@
 import React from 'react';
 import styled from 'styled-components';
 
-// Components
-import { H1, P } from 'src/components/UI/Text';
-import { PopIn } from 'src/components/UI/Animations';
-
-// Icons
+// Assets
 import DesignIcon from '@material-ui/icons/DeveloperBoard';
 import DevelopIcon from '@material-ui/icons/DeveloperMode';
 import DeliverIcon from '@material-ui/icons/HowToReg';
 import MaintainIcon from '@material-ui/icons/Sync';
 
-import List from '@material-ui/core/List';
+// Components
+import Link from 'next/link';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
+import { Row, Col } from 'src/components/Layout';
+import { H1, P } from 'src/components/UI/Text';
+import { PopIn } from 'src/components/UI/Animations';
 
 const GetToKnowUs = () => (
   <Container>
@@ -27,52 +27,65 @@ const GetToKnowUs = () => (
       We are experts in high-quality design and development of both mobile and web applications. Here in Denma, we will
       help you in all the stages of your venture:
     </P>
-    <StyledList>
+    <StyledRow spacing={2}>
         {[
           {
             key: 'design',
-            primary: <><b>Design:</b> Functionality with dazzling visuals. Guaranteed.</>,
-            secondary: 'Design - ("See more" maybe?)',
+            primary: <b>Design</b>,
+            secondary: 'Functionality with dazzling visuals. Guaranteed.',
             icon: <DesignIcon />,
           },
           {
             key: 'develop',
-            primary: <><b>Develop:</b> We develop for you and with you. You’re the team’s priority.</>,
-            secondary: 'Develop - ("See more" maybe?)',
+            primary: <b>Develop</b>,
+            secondary: 'We develop for you and with you. You’re the team’s priority.',
             icon: <DevelopIcon />,
           },
           {
             key: 'deliver',
-            primary: <><b>Deliver:</b> Have a working beta in record time.</>,
-            secondary: 'Deliver - ("See more" maybe?)',
+            primary: <b>Deliver</b>,
+            secondary: 'Have a working beta in record time.',
             icon: <DeliverIcon />,
           },
           {
             key: 'maintain',
-            primary: <><b>Maintain:</b> Sometimes people need a little help. We’re here for you.</>,
-            secondary: 'Maintain - ("See more" maybe?)',
+            primary: <b>Maintain</b>,
+            secondary: 'Sometimes people need a little help. We’re here for you.',
             icon: <MaintainIcon />,
           },
-        ].map(({ key, primary, secondary, icon }, index) => (
-          <PopIn
-            classNames="list-item"
+        ].map(({ key, primary, secondary, icon, href = '/what-we-do' }, index) => (
+          <Link
             key={key}
-            animationDelayMultiplier={index}
+            href={href}
           >
-            <ListItem>
-              <ListItemAvatar>
-                <Avatar>
-                  {icon}
-                </Avatar>
-              </ListItemAvatar>
-              <ListItemText primary={primary} secondary={secondary} />
-            </ListItem>
-          </PopIn>
+            <StyledCol
+              md={6}
+              xs={12}
+            >
+              <PopIn
+                classNames="list-item-wrapper"
+                animationDelayMultiplier={index}
+              >
+                <div className="list-item-container">
+                  <StyledListItem>
+                    <ListItemAvatar>
+                      <Avatar sizes="25px">
+                        {icon}
+                      </Avatar>
+                    </ListItemAvatar>
+                    <ListItemText
+                      primary={primary}
+                      secondary={secondary}
+                    />
+                  </StyledListItem>
+                </div>
+              </PopIn>
+            </StyledCol>
+          </Link>
         ))}
-    </StyledList>
+    </StyledRow>
   </Container>
 );
-
 
 const Container = styled.div`
   &&& {
@@ -81,8 +94,9 @@ const Container = styled.div`
     padding: 12px;
     margin: 0 auto;
     > p {
-      max-width: 800px;
+      max-width: ${({ theme }) => theme.screenMd};
       text-align: center;
+      margin: 0 auto;
     }
     .MuiAvatar-root {
       background-color: ${props => props.theme.primary};
@@ -118,17 +132,83 @@ const Title = styled(H1)`
   }
 `;
 
-const StyledList = styled(List)`
+const StyledRow = styled(Row)`
   &&& {
     margin: 2rem auto 1rem;
-    max-width: 720px;
-    .MuiListItemAvatar-root {
-      align-self: flex-start;
-      margin-top: 0.66em;
-    }
+    max-width: ${({ theme }) => theme.screenLg};
     b {
       font-size: inherit;
       color: ${props => props.theme.primary}
+    }
+  }
+`;
+
+const StyledCol = styled(Col)`
+  &&& {
+    .list-item-wrapper,
+    .list-item-container {
+      width: 100%;
+      height: 100%;
+    }
+    .list-item-container {
+      padding: 8px;
+      border: 1px solid ${({ theme }) => theme.primary};
+      transition: all ease 300ms;
+      cursor: pointer;
+    }
+    .list-item-container:hover {
+      background-color: ${({ theme }) => theme.primary};
+        .MuiListItemAvatar-root {
+          .MuiAvatar-root {
+            background-color: ${({ theme }) => theme.whiteColor};
+            .MuiSvgIcon-root {
+              fill: ${({ theme }) => theme.primary};
+            }
+          }
+        }
+      .MuiListItemText-root {
+        text-align: center;
+        .MuiListItemText-primary b,
+        .MuiListItemText-secondary {
+          color: ${({ theme }) => theme.whiteColor};
+        }
+      }
+    }
+  }
+`;
+
+const StyledListItem = styled(ListItem)`
+  &&& {
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 2px;
+    .MuiListItemAvatar-root {
+      margin-top: 0.535rem;
+      .MuiAvatar-root {
+        margin: 0 auto;
+        width: 56px;
+        height: 56px;
+        border: 2px solid ${({ theme }) => theme.whiteColor};
+        box-sizing: content-box;
+        transition: all ease 300ms;
+        .MuiSvgIcon-root {
+          width: 66%;
+          height: 66%;
+        }
+      }
+    }
+    .MuiListItemText-root {
+      text-align: center;
+      .MuiListItemText-secondary {
+        color: ${({ theme }) => theme.grayColor};
+      }
+    }
+    .MuiListItemText-primary b,
+    .MuiListItemText-secondary,
+    .MuiAvatar-root,
+    .MuiSvgIcon-root {
+      transition: all ease 300ms;
     }
   }
 `;

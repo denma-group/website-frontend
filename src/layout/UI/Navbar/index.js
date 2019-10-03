@@ -9,7 +9,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import { Drawer } from 'src/layout/UI';
-import { Spacing } from './components';
 import HideOnScroll from './HideOnScroll';
 
 // Dependencies
@@ -50,7 +49,8 @@ const Navbar = props => {
 
   return (
     <>
-      <Spacing />
+      {/* Navbar spacing component. */}
+      {/* <Spacing /> */}
       <HideOnScroll>
         <StyledAppBar
           position={position}
