@@ -156,14 +156,14 @@ const Homepage = props => {
         >
           <GetToKnowUs />
         </Row>
-        {/* PROMO VIDEO */}
-        <Row
+        {/* TODO: PROMO VIDEO */}
+        {/* <Row
           height={totalScreenHeight}
           alignItems="center"
           justify="center"
         >
           <PromoVideo />
-        </Row>
+        </Row> */}
         {/* LINKS */}
         <HelpYourVenture height={totalScreenHeight} />
         {/* HERO_SLIDER */}

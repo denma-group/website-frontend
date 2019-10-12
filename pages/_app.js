@@ -73,6 +73,7 @@ const links = [
     //     {...props}
     //   />
     // ),
+    wrapper: Link,
     wrapperProps: {
       href: '/what-we-do'
     },
@@ -96,6 +97,7 @@ const links = [
     title: 'Contact us',
     caption: 'Say hello, get in touch with us!',
     icon: <ContactIcon />,
+    wrapper: Link,
     wrapperProps: {
       href: '/contact-us'
     },
