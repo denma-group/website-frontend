@@ -10,11 +10,9 @@ const AboutUs = withTheme(() => {
 
   return (
     <Container>
-      <>
-        <Header scrollRef={founderRef} />
-        <Founder innerRef={founderRef} />
-        <Values />
-      </>
+      <Header scrollRef={founderRef} />
+      <Founder innerRef={founderRef} />
+      <Values />
     </Container>
   );
 });

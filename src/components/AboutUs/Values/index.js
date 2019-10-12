@@ -42,14 +42,13 @@ const Mission = () => {
       <Text.H1
         css={css`
           color: ${({ theme }) => theme.brandOrange};
-          padding-top: 100px;
+          padding-top: 3rem;
         `}
       >
         Values
       </Text.H1>
       <Text.H3
         css={css`
-          padding-top: 50px;
           &&& {
             width: 80%;
             text-align: center;

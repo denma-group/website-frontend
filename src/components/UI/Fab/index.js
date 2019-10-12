@@ -31,10 +31,11 @@ const StyledFab = styled(({ color, backgroundColor, mouseHoverEffect, ...rest })
       &:hover {
         color: ${({ theme, backgroundColor }) => theme[backgroundColor] || 'transparent'};
         background-color: ${({ theme, color }) => theme[color]};
+        border-color: ${({ theme, backgroundColor }) => theme[backgroundColor] || 'transparent'};
       }
     `}
 
-    transition: all ease 200ms;
+    transition: all ease 300ms;
 
     @media (max-width: ${({ theme }) => theme.screenMd}) {
       padding: 4px 8px;
