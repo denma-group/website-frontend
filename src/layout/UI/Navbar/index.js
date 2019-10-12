@@ -1,7 +1,8 @@
 // Libraries
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
+import Router from 'next/router';
 
 // Components
 import AppBar from '@material-ui/core/AppBar';
@@ -46,6 +47,17 @@ const Navbar = props => {
 
   // Will only render the burger icon to the right if necessary
   const shouldRenderDrawerIcon = getShouldRenderDrawerIcon(links);
+
+  const handleRouteChange = () => {
+    setDrawerOpen(false);
+  };
+
+  useEffect(() => {
+    Router.events.on('routeChangeStart', handleRouteChange);
+    return () => {
+      Router.events.off('routeChangeStart', handleRouteChange);
+    };
+  }, []);
 
   return (
     <>

@@ -1,6 +1,7 @@
 // Libraries
 import React from 'react';
-import styled from 'styled-components';
+import styled, { withTheme } from 'styled-components';
+import PropTypes from 'prop-types';
 
 // Assets
 import DesignIcon from '@material-ui/icons/DeveloperBoard';
@@ -18,74 +19,89 @@ import { Row, Col } from 'src/components/Layout';
 import { H1, P } from 'src/components/UI/Text';
 import { PopIn } from 'src/components/UI/Animations';
 
-const GetToKnowUs = () => (
-  <Container>
-    <Title>
-      <span>Get to know us</span>
-    </Title>
-    <P>
-      We are experts in high-quality design and development of both mobile and web applications. Here in Denma, we will
-      help you in all the stages of your venture:
-    </P>
-    <StyledRow spacing={2}>
-        {[
-          {
-            key: 'design',
-            primary: <b>Design</b>,
-            secondary: 'Functionality with dazzling visuals. Guaranteed.',
-            icon: <DesignIcon />,
-          },
-          {
-            key: 'develop',
-            primary: <b>Develop</b>,
-            secondary: 'We develop for you and with you. You’re the team’s priority.',
-            icon: <DevelopIcon />,
-          },
-          {
-            key: 'deliver',
-            primary: <b>Deliver</b>,
-            secondary: 'Have a working beta in record time.',
-            icon: <DeliverIcon />,
-          },
-          {
-            key: 'maintain',
-            primary: <b>Maintain</b>,
-            secondary: 'Sometimes people need a little help. We’re here for you.',
-            icon: <MaintainIcon />,
-          },
-        ].map(({ key, primary, secondary, icon, href = '/what-we-do' }, index) => (
-          <Link
-            key={key}
-            href={href}
-          >
-            <StyledCol
-              md={6}
-              xs={12}
+function GetToKnowUs(props) {
+  const {
+    theme: {
+      brandOrange,
+      brandRed,
+      blueColor,
+      greenColor,
+    }
+  } = props;
+  return (
+    <Container>
+      <Title>
+        <span>Get to know us</span>
+      </Title>
+      <P>
+        We are experts in high-quality design and development of both mobile and web applications. Here in Denma, we will
+        help you in all the stages of your venture:
+      </P>
+      <StyledRow spacing={2}>
+          {[
+            {
+              key: 'design',
+              primary: <b>Design</b>,
+              secondary: 'Functionality with dazzling visuals. Guaranteed.',
+              icon: <DesignIcon />,
+              themeColor: brandOrange,
+            },
+            {
+              key: 'develop',
+              primary: <b>Develop</b>,
+              secondary: 'We develop for you and with you. You’re the team’s priority.',
+              icon: <DevelopIcon />,
+              themeColor: brandRed,
+            },
+            {
+              key: 'deliver',
+              primary: <b>Deliver</b>,
+              secondary: 'Have a working beta in record time.',
+              icon: <DeliverIcon />,
+              themeColor: blueColor,
+            },
+            {
+              key: 'maintain',
+              primary: <b>Maintain</b>,
+              secondary: 'Sometimes people need a little help. We’re here for you.',
+              icon: <MaintainIcon />,
+              themeColor: greenColor,
+            },
+          ].map(({ key, primary, secondary, icon, href = '/what-we-do', themeColor }, index) => (
+            <Link
+              key={key}
+              href={href}
             >
-              <PopIn
-                classNames="list-item-wrapper"
-                animationDelayMultiplier={index}
+              <StyledCol
+                md={6}
+                xs={12}
+                themeColor={themeColor}
               >
-                <div className="list-item-container">
-                  <StyledListItem>
-                    <ListItemAvatar>
-                      <Avatar sizes="25px">
-                        {icon}
-                      </Avatar>
-                    </ListItemAvatar>
-                    <ListItemText
-                      primary={primary}
-                      secondary={secondary}
-                    />
-                  </StyledListItem>
-                </div>
-              </PopIn>
-            </StyledCol>
-          </Link>
-        ))}
-    </StyledRow>
-  </Container>
-);
+                <PopIn
+                  classNames="list-item-wrapper"
+                  animationDelayMultiplier={index}
+                >
+                  <div className="list-item-container">
+                    <StyledListItem>
+                      <ListItemAvatar>
+                        <Avatar sizes="25px">
+                          {icon}
+                        </Avatar>
+                      </ListItemAvatar>
+                      <ListItemText
+                        primary={primary}
+                        secondary={secondary}
+                      />
+                    </StyledListItem>
+                  </div>
+                </PopIn>
+              </StyledCol>
+            </Link>
+          ))}
+      </StyledRow>
+    </Container>
+  );
+}
 
 const Container = styled.div`
   &&& {
@@ -97,9 +113,6 @@ const Container = styled.div`
       max-width: ${({ theme }) => theme.screenMd};
       text-align: center;
       margin: 0 auto;
-    }
-    .MuiAvatar-root {
-      background-color: ${props => props.theme.primary};
     }
     @media (min-width: ${({ theme }) => theme.screenMd}) {
       .MuiTypography-root:not(h1):not(.MuiListItemText-secondary) {
@@ -127,24 +140,27 @@ const Title = styled(H1)`
     span {
       font-size: inherit;
       font-weight: 500;
-      color: ${props => props.theme.primary}
+      color: ${({ themeColor }) => themeColor};
     }
   }
 `;
 
 const StyledRow = styled(Row)`
   &&& {
-    margin: 2rem auto 1rem;
+    padding: 2rem 0 1rem;
     max-width: ${({ theme }) => theme.screenLg};
-    b {
-      font-size: inherit;
-      color: ${props => props.theme.primary}
-    }
   }
 `;
 
 const StyledCol = styled(Col)`
   &&& {
+    .MuiAvatar-root {
+      background-color: ${({ themeColor }) => themeColor};
+    }
+    b {
+      font-size: inherit;
+      color: ${({ themeColor }) => themeColor};
+    }
     .list-item-wrapper,
     .list-item-container {
       width: 100%;
@@ -152,17 +168,17 @@ const StyledCol = styled(Col)`
     }
     .list-item-container {
       padding: 8px;
-      border: 1px solid ${({ theme }) => theme.primary};
+      border: 1px solid ${({ themeColor }) => themeColor};
       transition: all ease 300ms;
       cursor: pointer;
     }
     .list-item-container:hover {
-      background-color: ${({ theme }) => theme.primary};
+      background-color: ${({ themeColor }) => themeColor};
         .MuiListItemAvatar-root {
           .MuiAvatar-root {
             background-color: ${({ theme }) => theme.whiteColor};
             .MuiSvgIcon-root {
-              fill: ${({ theme }) => theme.primary};
+              fill: ${({ themeColor }) => themeColor};
             }
           }
         }
@@ -213,4 +229,8 @@ const StyledListItem = styled(ListItem)`
   }
 `;
 
-export default GetToKnowUs;
+GetToKnowUs.propTypes = {
+  theme: PropTypes.instanceOf(Object).isRequired,
+};
+
+export default withTheme(GetToKnowUs);

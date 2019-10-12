@@ -30,7 +30,7 @@ const NavbarDrawer = props => {
   const fullList = (
     <DrawerList>
       {logo && (
-        <React.Fragment>
+        <>
           <LogoWrapper>
             {LinkComponent ? (
               <LinkComponent {...logoWrapperProps}>
@@ -46,7 +46,7 @@ const NavbarDrawer = props => {
             </IconButton>
           </LogoWrapper>
           <Divider />
-        </React.Fragment>
+        </>
       )}
       {renderDrawerLinks(
         links,
