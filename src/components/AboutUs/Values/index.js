@@ -98,9 +98,9 @@ const Container = styled.div`
 const ValuesContainer = styled(FadeScaleIn)`
   display: flex;
   flex-direction: ${({ reverse }) => (reverse ? 'row-reverse' : 'row')};
-  justify-content: space-between;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: center;
   width: 70%;
   padding: 40px 0;
   @media (max-width: ${({ theme }) => theme.screenMd}) {
@@ -113,11 +113,12 @@ const ValuesContainer = styled(FadeScaleIn)`
 `;
 
 const IconContainer = styled.div`
+  
   @media (max-width: ${({ theme }) => theme.screenMd}) {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-top: 50px;
+    margin-top: 50px;
   }
 `;
 
@@ -126,6 +127,10 @@ const TitleContainer = styled.div`
   justify-content: flex-start;
   flex-direction: column;
   width: 60%;
+  margin-left: 80px;
+  @media (max-width: ${({ theme }) => theme.screenMd}) {
+    margin-left: 0px;
+  }
 `;
 
 export default Mission;
