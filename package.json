@@ -15,7 +15,7 @@
     "@material-ui/icons": "^4.4.1",
     "@zeit/next-sass": "^1.0.1",
     "hero-slider": "^2.0.3",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "intersection-observer": "^0.7.0",
     "next": "9.0.5",
     "node-sass": "^4.12.0",
